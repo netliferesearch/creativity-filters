@@ -2,4 +2,9 @@
 
 .page {
     $this: &;
+    min-height: 100vh;
+
+    &--animating {
+        background-color: color(neutral, xlight);
+    }
 }
