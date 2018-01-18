@@ -1,0 +1,48 @@
+$breakpoints: (
+    xs: 440px, // Small and up
+    md: 720px, // Medium and up
+    lg: 960px, // Large and up
+    xl: 1120px, // Extra large and up
+);
+
+
+// Grids max-width
+$container-width: (
+    base: 1200px,
+    tight: 800px,
+);
+
+// spacings
+$unit: 8px;
+$spacing--xlarge: $unit * 12;
+$spacing--large: $unit * 8;
+$spacing: $unit * 3;
+$spacing--medium: $unit * 2;
+$spacing--small: $unit;
+$spacing--xsmall: $unit / 2;
+
+// Indention
+$indention: $unit * 5;
+
+// Border-width
+$border-width--small: 1px;
+$border-width: 2px;
+$border-width--large: 5px;
+$border-style: $border-width solid color(neutral, light);
+
+
+// Better easing
+$swift-out: cubic-bezier(0, 0, 0.1, 1);
+$ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+$ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
+$ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+$ease-in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+$ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+
+// Z-index levels
+// TODO: Set it up better?
+$level-1: 10;
+$level-2: 20;
+$level-3: 30;
+$level-4: 40;

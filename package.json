@@ -1,0 +1,51 @@
+{
+  "name": "creativity-tool",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build-css":
+      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "start-react": "react-scripts start",
+    "build-react": "react-scripts build",
+    "dev": "npm run watch-css & npm run start-react",
+    "build": "npm run build-css && npm run build-react"
+  },
+  "dependencies": {
+    "node-sass-chokidar": "^0.0.3",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-bem-helper": "^1.4.1",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.17"
+  },
+  "devDependencies": {
+    "eslint": "^4.14.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-standard": "^3.0.1",
+    "standard": "^10.0.3",
+    "standard-loader": "^6.0.1"
+  },
+  "babel": {
+    "presets": ["es2015", "react", "stage-0"]
+  },
+  "standard": {
+    "ignore": ["public"]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": ["standard", "standard-react"],
+    "rules": {
+      "react/forbid-prop-types": 0,
+      "react/jsx-filename-extension": 0
+    }
+  }
+}

@@ -1,0 +1,31 @@
+// $import-fonts: (
+//     Bold: (
+//         'Fira Code',
+//         'FiraCode-Bold',
+//         bold,
+//         normal,
+//     ),
+//     Regular: (
+//         'Fira Code',
+//         'FiraCode-Regular',
+//         normal,
+//         normal,
+//     ),
+// );
+//
+// @each $key, $value in $import-fonts {
+//     @font-face {
+//         font-family: '#{nth($value, 1)}';
+//         src: url('../fonts/#{nth($value, 2)}.eot');
+//         src: url('../fonts/#{nth($value, 2)}.eot') format('embedded-opentype'),
+//              url('../fonts/#{nth($value, 2)}.woff2') format('woff2'),
+//              url('../fonts/#{nth($value, 2)}.woff') format('woff'),
+//              url('../fonts/#{nth($value, 2)}.ttf') format('truetype');
+//         font-weight: nth($value, 3);
+//         font-style: nth($value, 4);
+//         // font-display: optional;
+//     }
+// }
+
+// eslint-disable-next-line no-use-before-define
+@import url('//fonts.googleapis.com/css?family=Montserrat:400,500,700&subset=latin-ext');

@@ -1,0 +1,46 @@
+h1,
+h2,
+h3,
+h4 {
+    @include hyphens;
+    @include font(header, bold);
+    margin: 0;
+    margin-bottom: $spacing;
+}
+
+h1 {
+    @include font-size(xlarge);
+    margin-bottom: $spacing;
+}
+
+h2 {
+    @include font-size(large);
+}
+
+h3 {
+    @include font-size(medium);
+}
+
+h4 {
+    @include font(header, normal);
+    @include font-size(base);
+}
+
+// Paragraph
+p {
+    @include font(base, normal);
+    margin-bottom: $spacing;
+    // max-width: 65ch;
+}
+
+
+// Strong / Bold
+strong,
+b {
+    @include font(base, bold);
+}
+
+em {
+    // @include font(base, bold);
+    color: $color-muted;
+}

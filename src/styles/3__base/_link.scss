@@ -1,0 +1,18 @@
+a,
+.link {
+    @include font(base, black);
+    cursor: pointer;
+    text-decoration: none;
+
+    color: $color-links;
+    border-bottom: $border-width--small solid currentColor;
+
+    &:hover,
+    &:focus {
+        color: $color-links--hover;
+    }
+
+    &--promo {
+        border-width: $border-width--large;
+    }
+}
