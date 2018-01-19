@@ -1,20 +1,20 @@
-$color-primary: #ffc204;
+$color-primary: #F5D664;
 $color-secondary: #0092c2;
 
 $colors: (
     primary: (
         base: $color-primary,
-        dark: #f9b200,
-    ),
-    secondary: (
-        base: $color-secondary,
+        light: tint($color-primary, 5%),
+        xlight: tint($color-primary, 10%),
+        xxlight: tint($color-primary, 15%),
+        xxxlight: tint($color-primary, 20%),
+        xxxxlight: tint($color-primary, 25%),
     ),
     neutral: (
-        xlight: #f2f5f6,
-        light: #e1e5e5,
-        base: #b1b5b5,
-        dark: #848989,
-        xdark: #222728,
+        light: #fff,
+        base: #424147,
+        dark: #25262D,
+        xdark: #000,
     )
 );
 
@@ -24,7 +24,7 @@ $color-dark: color(neutral, xdark);
 // Specific colors.
 // Variables are there to be reused, so being to specific or creating to many will create the opposite situation
 $color-warning: #b20e10;
-$color-background: $color-light;
+$color-background: color(neutral, dark);
 $color-text: $color-dark;
 $color-muted: color(neutral, dark);
 $color-links: $color-text;

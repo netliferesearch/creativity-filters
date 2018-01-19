@@ -1,0 +1,21 @@
+@import '../../styles/helpers';
+
+.tool {
+    $this: &;
+    overflow-x: auto;
+
+    &__content {
+        display: flex;
+        transform: scale(0.8);
+
+        &:after {
+            content: '';
+            width: 13vw;
+            flex-shrink: 0;
+        }
+    }
+
+    &--focus {
+        overflow-x: hidden;
+    }
+}

@@ -1,16 +1,14 @@
 h1,
 h2,
-h3,
-h4 {
+h3 {
     @include hyphens;
     @include font(header, bold);
     margin: 0;
-    margin-bottom: $spacing;
+    margin-bottom: 1em;
 }
 
 h1 {
-    @include font-size(xlarge);
-    margin-bottom: $spacing;
+    @include font-size(large);
 }
 
 h2 {
@@ -19,11 +17,6 @@ h2 {
 
 h3 {
     @include font-size(medium);
-}
-
-h4 {
-    @include font(header, normal);
-    @include font-size(base);
 }
 
 // Paragraph

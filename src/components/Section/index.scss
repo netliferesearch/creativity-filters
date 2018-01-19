@@ -1,0 +1,40 @@
+@import '../../styles/helpers';
+
+.section {
+    $this: &;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 100vw;
+    min-height: 100vh;
+    padding-bottom: $spacing--large;
+    background-color: color(primary);
+
+    transition: transform 400ms $ease-in-quart, box-shadow 400ms ease-in;
+
+    &:not(:last-child) {
+        margin-right: $spacing--small;
+    }
+
+    // @for $i from 1 through 6 {
+    //     &:nth-child(#{$i}) {
+    //         background-color: ting(color(primary), 8% * $i);
+    //     }
+    // }
+
+    &__title {
+        @include min-width(lg) {
+            margin-top: -($spacing--large);
+        }
+    }
+
+    &--active {
+        transform: scale(1.25);
+
+        box-shadow: 0 0 32px rgba(black, 0.2);
+        transition: transform 550ms $ease-in-out-quart;
+    }
+}

@@ -1,0 +1,19 @@
+@import '../../styles/helpers';
+
+.list {
+    $this: &;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    counter-reset: counter;
+
+    &__item {
+        &:before {
+            content: counter(counter);
+            @include font(header, bold);
+            counter-increment: counter;
+        }
+    }
+}

@@ -26,10 +26,13 @@ export default function scrollTo ({
     document.body.style.willChange = 'scroll-position'
 
     // Don't support left scroll for body, don't really see the need for it
-    start =
-      window.pageYOffset ||
-      document.body.scrollTop ||
-      document.documentElement.scrollTop
+    start = left
+      ? window.pageXOffset ||
+        document.body.scrollLeft ||
+        document.documentElement.scrollLeft
+      : window.pageYOffset ||
+        document.body.scrollTop ||
+        document.documentElement.scrollTop
 
     setTimeout(() => {
       document.body.style.pointerEvents = 'auto'
@@ -53,7 +56,11 @@ export default function scrollTo ({
         element.scrollTop = val
       }
     } else {
-      window.scrollTo(0, val)
+      if (left) {
+        window.scrollTo(val, 0)
+      } else {
+        window.scrollTo(0, val)
+      }
     }
 
     if (currentTime < duration) {

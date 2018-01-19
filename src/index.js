@@ -6,8 +6,7 @@ import { Switch, BrowserRouter, Route } from 'react-router-dom'
 
 import registerServiceWorker from './registerServiceWorker'
 import Page from './components/Page'
-
-import routes from './routes'
+import Tool from './components/Tool'
 
 class App extends Component {
   render () {
@@ -15,9 +14,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Page>
-            {routes.map(({ path, component }) => (
-              <Route path={path} exact component={component} key={path} />
-            ))}
+            <Route path="/" exact component={Tool} />
           </Page>
         </Switch>
       </BrowserRouter>
