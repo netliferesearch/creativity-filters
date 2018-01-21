@@ -1,26 +1,52 @@
 import './index.css'
 
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 import Section from '../Section'
 import List from '../List'
 
 import getPosition from '../../helpers/getPosition'
 import scrollTo from '../../helpers/scrollTo'
 
-import React, { Component } from 'react'
-// import { Link } from 'react-router-dom'
+import createHistory from 'history/createBrowserHistory'
 import BEMHelper from 'react-bem-helper'
+
 const classes = new BEMHelper('tool')
+const history = createHistory()
 
 // This needs to match the scale in css
 const SCALE = 0.8
 // TODO: Ditch scale and use 80(ish)vw units for sections, since the zooming happens there anyway
 
 export default class Tool extends Component {
-  constructor () {
-    super()
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+  }
+
+  static defaultProps = {
+    match: {
+      params: {},
+    },
+  }
+
+  constructor (props) {
+    super(props)
+
+    const { page } = this.props.match.params
 
     this.state = {
-      focus: false,
+      focus: page || false,
+    }
+  }
+
+  componentDidMount () {
+    const { page } = this.props.match.params
+    if (page) {
+      // TODO: Use ref for active element
+      const element = this.wrapper.querySelector('.section--active')
+      const { focus } = this.state
+      this.animateTo({ element, name: focus })
     }
   }
 
@@ -37,20 +63,34 @@ export default class Tool extends Component {
 
     setTimeout(
       () =>
-        this.setState({
-          focus: name,
-        }),
+        this.setState(
+          {
+            focus: name,
+          },
+          this.makeURL
+        ),
       duration / (speedy ? 5 : 3)
     )
+  }
+
+  makeURL = () => {
+    const { focus } = this.state
+
+    history.push({
+      pathname: `/${focus || ''}`,
+    })
   }
 
   handleSectionClick = ({ element, name }) => {
     if (this.state.focus !== name) {
       this.animateTo({ element, name, speedy: this.state.focus })
     } else {
-      this.setState({
-        focus: false,
-      })
+      this.setState(
+        {
+          focus: false,
+        },
+        this.makeURL
+      )
     }
   }
 
