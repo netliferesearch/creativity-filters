@@ -21,6 +21,7 @@ const isLocalhost = Boolean(
 export default function register () {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
+    // eslint-disable-next-line
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location)
     if (publicUrl.origin !== window.location.origin) {
       // Our service worker won't work if PUBLIC_URL is on a different origin
@@ -74,6 +75,7 @@ function registerValidSW (swUrl) {
 
 function checkValidServiceWorker (swUrl) {
   // Check if the service worker can be found. If it can't reload the page.
+  // eslint-disable-next-line
   fetch(swUrl)
     .then(response => {
       // Ensure service worker exists, and that we really are getting a JS file.

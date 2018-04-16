@@ -3,12 +3,9 @@ $color-secondary: #0092c2;
 
 $colors: (
     primary: (
+        dark: #EDC451,
         base: $color-primary,
         light: tint($color-primary, 5%),
-        xlight: tint($color-primary, 10%),
-        xxlight: tint($color-primary, 15%),
-        xxxlight: tint($color-primary, 20%),
-        xxxxlight: tint($color-primary, 25%),
     ),
     neutral: (
         light: #fff,

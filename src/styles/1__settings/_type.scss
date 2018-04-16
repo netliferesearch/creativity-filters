@@ -16,14 +16,13 @@ $fonts: (
 
 $font-size: (
     base: (
-        base: (2vw, 1.4),
+        base: (calc(16px + 1vw), 1.4),
     ),
     medium: (
-        base: (2.2vw, 1.2),
+        base: (calc(24px + 1.2vw), 1.2),
     ),
     large: (
-        base: (6vw, 1.1),
-        md: (5vw, 1.1),
-        xl: (60px, 1.1),
+        base: (calc(26px + 3.2vw), 1.1),
+        xl: (62px, 1.1),
     ),
 );

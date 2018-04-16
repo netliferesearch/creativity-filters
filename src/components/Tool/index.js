@@ -3,6 +3,8 @@ import './index.css'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { withState } from '../../storage'
+
 import Section from '../Section'
 import List from '../List'
 
@@ -17,9 +19,8 @@ const history = createHistory()
 
 // This needs to match the scale in css
 const SCALE = 0.8
-// TODO: Ditch scale and use 80(ish)vw units for sections, since the zooming happens there anyway
 
-export default class Tool extends Component {
+class Tool extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
   }
@@ -33,24 +34,44 @@ export default class Tool extends Component {
   constructor (props) {
     super(props)
 
-    const { page } = this.props.match.params
+    // const { page } = this.props.match.params
 
     this.state = {
-      focus: page || false,
+      focus: false,
     }
+
+    this.sections = {}
   }
 
   componentDidMount () {
     const { page } = this.props.match.params
+
     if (page) {
-      // TODO: Use ref for active element
-      const element = this.wrapper.querySelector('.section--active')
-      const { focus } = this.state
-      this.animateTo({ element, name: focus })
+      setTimeout(() => this.toggleSectionFocus({ name: page }), 50)
+    }
+
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleResize = () => {
+    const { focus } = this.state
+
+    if (focus) {
+      this.toggleSectionFocus({ name: false })
     }
   }
 
-  animateTo = ({ element, name, speedy }) => {
+  animateTo = ({ name, speedy }) => {
+    const { element } = this.sections[name]
+
+    if (!element) {
+      return
+    }
+
     const duration = 300
     const to = getPosition(element).x * SCALE
 
@@ -81,9 +102,9 @@ export default class Tool extends Component {
     })
   }
 
-  handleSectionClick = ({ element, name }) => {
-    if (this.state.focus !== name) {
-      this.animateTo({ element, name, speedy: this.state.focus })
+  toggleSectionFocus = ({ name }) => {
+    if (name && this.state.focus !== name) {
+      this.animateTo({ name, speedy: this.state.focus })
     } else {
       this.setState(
         {
@@ -102,9 +123,10 @@ export default class Tool extends Component {
         <div {...classes('content')}>
           <Section
             title="Problemstillinger"
-            handleClick={this.handleSectionClick}
+            handleClick={this.toggleSectionFocus}
             name="problems"
             active={focus === 'problems'}
+            ref={ref => (this.sections.problems = ref)}
           >
             <List
               items={[
@@ -114,27 +136,43 @@ export default class Tool extends Component {
               ]}
             />
           </Section>
+
+          <Section
+            title="Målgrupper"
+            handleClick={this.toggleSectionFocus}
+            name="targetgroup"
+            active={focus === 'targetgroup'}
+            ref={ref => (this.sections.targetgroup = ref)}
+          >
+            Her putter du målgrupper i prioritert rekkefølge
+          </Section>
+
           <Section
             title="Målsetninger"
-            handleClick={this.handleSectionClick}
+            handleClick={this.toggleSectionFocus}
             name="goals"
             active={focus === 'goals'}
+            ref={ref => (this.sections.goals = ref)}
           >
             Her putter du målsetninger
           </Section>
+
           <Section
             title="Brukeroppgaver"
-            handleClick={this.handleSectionClick}
+            handleClick={this.toggleSectionFocus}
             name="usertasks"
             active={focus === 'usertasks'}
+            ref={ref => (this.sections.usertasks = ref)}
           >
             Her putter du brukeroppgaver
           </Section>
+
           <Section
             title="Oppfattelse"
-            handleClick={this.handleSectionClick}
+            handleClick={this.toggleSectionFocus}
             name="attributes"
             active={focus === 'attributes'}
+            ref={ref => (this.sections.attributes = ref)}
           >
             Her putter du hvordan du ønsker å oppfattes
           </Section>
@@ -143,3 +181,5 @@ export default class Tool extends Component {
     )
   }
 }
+
+export default withState(Tool)

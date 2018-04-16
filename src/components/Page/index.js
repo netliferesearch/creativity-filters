@@ -36,18 +36,15 @@ class Page extends Component {
     })
 
     if (!this.state.animating) {
-      this.setState({
-        animating: true,
-      })
+      this.setState({ animating: true })
     } else {
       clearTimeout(this.pageTransitionTimeout)
     }
 
-    this.pageTransitionTimeout = setTimeout(() => {
-      this.setState({
-        animating: false,
-      })
-    }, 1500)
+    this.pageTransitionTimeout = setTimeout(
+      () => this.setState({ animating: false }),
+      1500
+    )
   }
 
   render () {

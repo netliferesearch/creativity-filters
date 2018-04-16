@@ -3,16 +3,15 @@
 .section {
     $this: &;
 
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    // width: 100vw;
-    // min-height: 100vh;
     width: 100vw;
     min-height: 100vh;
-    padding-bottom: $spacing--large;
+    padding: $spacing--small $spacing $spacing--large;
     background-color: color(primary);
 
     transition: transform 400ms $ease-in-quart, box-shadow 400ms ease-in;
@@ -21,11 +20,24 @@
         margin-right: $spacing--small;
     }
 
-    // @for $i from 1 through 6 {
-    //     &:nth-child(#{$i}) {
-    //         background-color: ting(color(primary), 8% * $i);
-    //     }
-    // }
+    &[role='button'] {
+        cursor: pointer;
+        outline: 0;
+
+        &:hover,
+        &:focus {
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: $border-width solid color(primary, dark);
+                animation: section-focus 650ms $ease-out-quart both;
+            }
+        }
+    }
 
     &__title {
         @include min-width(lg) {
@@ -33,10 +45,76 @@
         }
     }
 
+    &__close {
+        pointer-events: none;
+        outline: 0;
+
+        position: absolute;
+        top: $spacing;
+        right: $spacing;
+        width: $unit * 5;
+        height: $unit * 5;
+        border-radius: 50%;
+        color: $color-light;
+        background-color: $color-background;
+
+        animation: section-close-out 300ms $ease-in-quart forwards;
+        transition: box-shadow 200ms ease-out;
+
+        &:hover,
+        &:focus {
+            background-color: $color-dark;
+        }
+
+        &:focus {
+            will-change: box-shadow;
+            box-shadow: 0 0 0 $border-width color(primary, dark);
+        }
+    }
+
+    &__close-icon {
+        display: block;
+        transform: rotate(45deg);
+        font-size: 24px;
+
+        &:before {
+            content: '+';
+        }
+    }
+
     &--active {
+        z-index: 2;
         transform: scale(1.25);
 
         box-shadow: 0 0 32px rgba(black, 0.2);
         transition: transform 550ms $ease-in-out-quart;
+
+        #{$this}__close {
+            pointer-events: auto;
+
+            animation: section-close-in 700ms $ease-out-quart both;
+            animation-delay: 250ms;
+        }
+    }
+}
+
+
+@keyframes section-focus {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes section-close-in {
+    from {
+        opacity: 0;
+        transform: translate(-0.75em, 0.75em) scale(0.2);
+    }
+}
+
+@keyframes section-close-out {
+    to {
+        opacity: 0;
+        transform: translate(-0.75em, 0.75em) scale(0.2);
     }
 }
