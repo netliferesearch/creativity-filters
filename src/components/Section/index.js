@@ -53,7 +53,7 @@ export default class Section extends PureComponent {
           <span {...classes('close-icon')} />
         </button>
 
-        <h2 {...classes('title')}>{title}</h2>
+        <input {...classes('title')} value={title} />
         {children}
       </section>
     )

@@ -40,6 +40,9 @@
     }
 
     &__title {
+        @include font(header, bold);
+        @include font-size(large);
+
         @include min-width(lg) {
             margin-top: -($spacing--large);
         }
