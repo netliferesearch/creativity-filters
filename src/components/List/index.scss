@@ -7,7 +7,9 @@
     flex-direction: column;
     // align-items: center;
 
-    counter-reset: counter;
+    &__list {
+        counter-reset: counter;
+    }
 
     &__item {
         margin-bottom: $spacing--small;
@@ -20,5 +22,11 @@
             display: inline-block;
             width: 1.3em;
         }
+    }
+
+    &__add-new {
+        @include font(base, bold);
+        font-size: 1.1em;
+        align-self: flex-start;
     }
 }

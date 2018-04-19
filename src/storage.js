@@ -3,7 +3,7 @@ import './styles/styles.css'
 import React, { Component, createContext } from 'react'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import * as slugify from '@sindresorhus/slugify';
+import slugify from './helpers/slugify'
 
 import * as firebase from 'firebase/app'
 import 'firebase/database'
@@ -23,13 +23,13 @@ const database = firebase.database()
 
 const projectTemplate = {
   title: '',
-  sections: [{
-    title: "Problemstillinger",
-    type: "priority",
-    content: [
-      { content: "Kake" }
-    ]
-  }]
+  sections: [
+    {
+      title: 'Problemstillinger',
+      type: 'priority',
+      content: [{ content: 'Kake' }],
+    },
+  ],
 }
 
 const store = {
@@ -118,7 +118,7 @@ class Storage extends Component {
     }
 
     if (props.newProject) {
-      this.createProject(props.newProject);
+      this.createProject(props.newProject)
     }
   }
 
@@ -166,18 +166,21 @@ class Storage extends Component {
   }
 
   createProject (project) {
-    const slug = slugify(project.title);
-    const sections = projectTemplate.sections;
+    const slug = slugify(project.title)
+    const sections = projectTemplate.sections
 
     // Does project exist?
 
     // Create new
-    let updates = {};
-    updates[`projects/${slug}`] = project;
-    updates[`sections/${slug}`] = sections;
-    database.ref().update(updates).then(() => {
-      window.location.href = `/${slug}`
-    });
+    const updates = {}
+    updates[`projects/${slug}`] = project
+    updates[`sections/${slug}`] = sections
+    database
+      .ref()
+      .update(updates)
+      .then(() => {
+        window.location.href = `/${slug}`
+      })
 
     // database.ref(`projects/${slug}`).set(project);
     // database.ref(`sections/${slug}`).set(sections);

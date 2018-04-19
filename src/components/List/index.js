@@ -15,14 +15,28 @@ export default function Section ({ content, handleChange }) {
 
     handleChange('content', newItems)
   }
+
+  const addNew = () => {
+    const newItems = [...content]
+    newItems.push({ content: '' })
+
+    handleChange('content', newItems)
+  }
+
   return (
-    <ol {...classes('')}>
-      {content.map((item, index) => (
-        <li key={index} {...classes('item')}>
-          <Input value={item.content} onChange={handleItemChange(index)} />
-        </li>
-      ))}
-    </ol>
+    <div {...classes('')}>
+      <ol {...classes('list')}>
+        {content.map((item, index) => (
+          <li key={index} {...classes('item')}>
+            <Input value={item.content} onChange={handleItemChange(index)} />
+          </li>
+        ))}
+      </ol>
+
+      <button type="button" {...classes('add-new')} onClick={addNew}>
+        +
+      </button>
+    </div>
   )
 }
 

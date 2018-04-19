@@ -10,12 +10,13 @@
     "start-react": "react-scripts start",
     "build-react": "react-scripts build",
     "dev": "npm run watch-css & npm run start-react",
-    "build": "npm run build-css && npm run build-react"
+    "build": "npm run build-css && npm run build-react",
+    "deploy": "npm run build && firebase deploy"
   },
   "dependencies": {
-    "@sindresorhus/slugify": "^0.1.1",
     "firebase": "^4.12.1",
     "history": "^4.7.2",
+    "lodash": "^4.17.5",
     "node-sass-chokidar": "^1.2.2",
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
