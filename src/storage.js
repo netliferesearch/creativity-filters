@@ -4,21 +4,21 @@ import React, { Component, createContext } from 'react'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import * as firebase from 'firebase/app';
-import 'firebase/database';
+import * as firebase from 'firebase/app'
+import 'firebase/database'
 
 const { Consumer, Provider } = createContext()
 
 firebase.initializeApp({
-  apiKey: "AIzaSyDDxR0BcYP0GRsT70RJLJ27hr_b4z5DEys",
-  authDomain: "creativity-filters.firebaseapp.com",
-  databaseURL: "https://creativity-filters.firebaseio.com",
-  projectId: "creativity-filters",
-  storageBucket: "creativity-filters.appspot.com",
-  messagingSenderId: "740131108588"
-});
+  apiKey: 'AIzaSyDDxR0BcYP0GRsT70RJLJ27hr_b4z5DEys',
+  authDomain: 'creativity-filters.firebaseapp.com',
+  databaseURL: 'https://creativity-filters.firebaseio.com',
+  projectId: 'creativity-filters',
+  storageBucket: 'creativity-filters.appspot.com',
+  messagingSenderId: '740131108588',
+})
 
-const database = firebase.database();
+const database = firebase.database()
 // let slug = new Date().getTime();
 // database.ref(`projects/${slug}`).set({
 //   'title': 'Moo'
@@ -27,7 +27,7 @@ const database = firebase.database();
 const store = {
   slug: '',
   project: {
-    title: ''
+    title: '',
   },
   sections: [
     // {
@@ -99,61 +99,67 @@ const store = {
 class Storage extends Component {
   static propTypes = {
     children: PropTypes.any,
+    location: PropTypes.object,
+  }
+
+  setGlobalState ({ ...props }) {
+    this.setState({ ...props })
+
+    if (props.sections) {
+      database.ref(`sections/${this.state.slug}`).set(props.sections)
+    }
   }
 
   state = {
     ...store,
-    setGlobalState: this.setState.bind(this),
+    setGlobalState: this.setGlobalState.bind(this),
   }
 
   componentDidMount () {
     // This is where we fetch stuff
-    this.loadProjectData();
+    this.loadProjectData()
   }
 
   componentDidUpdate (prevProps) {
     if (this.props.location !== prevProps.location) {
-      this.removeListeners();
-      this.loadProjectData();
+      this.removeListeners()
+      this.loadProjectData()
     }
-  }
-
-  saveSections () {
-    database.ref(`sections/${this.state.slug}`).set(this.state.sections);
   }
 
   loadProjectData () {
     const slug = this.props.location.pathname.split('/')[1]
+
     this.setState({
       slug,
     })
 
     // Get project
-    this.projectRef = database.ref(`projects/${slug}`);
-    this.projectRef.on('value', (snapshot) => {
+    this.projectRef = database.ref(`projects/${slug}`)
+    this.projectRef.on('value', snapshot => {
       this.setState({
         project: snapshot.val(),
       })
-    });
+    })
 
     // database.ref(`sections/${slug}`).set(this.state.sections);
 
     // Get sections
-    this.sectionsRef = database.ref(`sections/${slug}`);
-    this.sectionsRef.on('value', (snapshot) => {
+    this.sectionsRef = database.ref(`sections/${slug}`)
+    this.sectionsRef.on('value', snapshot => {
       this.setState({
         sections: snapshot.val(),
       })
-    });
+    })
   }
 
   removeListeners () {
     if (this.projectRef) {
-      this.projectRef.off();
+      this.projectRef.off()
     }
 
     if (this.sectionsRef) {
-      this.sectionsRef.off();
+      this.sectionsRef.off()
     }
   }
 
