@@ -2,7 +2,6 @@ import './index.css'
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import slugify from '@sindresorhus/slugify'
 
 import { withState } from '../../storage'
 
@@ -23,7 +22,6 @@ class Tool extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     sections: PropTypes.array.isRequired,
-    history: PropTypes.any.isRequired,
   }
 
   static defaultProps = {
@@ -43,12 +41,6 @@ class Tool extends Component {
   }
 
   componentDidMount () {
-    const { sectionSlug } = this.props.match.params
-
-    if (sectionSlug) {
-      setTimeout(() => this.toggleSectionFocus({ index: sectionSlug }), 50)
-    }
-
     window.addEventListener('resize', this.handleResize)
   }
 
@@ -59,15 +51,9 @@ class Tool extends Component {
   handleResize = () => {
     const { focus } = this.state
 
-    if (focus) {
-      this.toggleSectionFocus({ index: false })
+    if (focus || focus === 0) {
+      this.setState({ focus: false })
     }
-  }
-
-  getSectionIndex = slug => {
-    const { sections } = this.props
-
-    return sections.findIndex(({ title }) => slugify(title) === slug)
   }
 
   animateTo = ({ index, speedy }) => {
@@ -88,25 +74,16 @@ class Tool extends Component {
     })
 
     setTimeout(
-      () => this.setState({ focus: index }, this.makeURL),
+      () => this.setState({ focus: index }),
       duration / (speedy ? 5 : 3)
     )
   }
 
-  makeURL = () => {
-    const { slug } = this.props.match.params
-    const { focus } = this.state
-
-    this.props.history.push({
-      pathname: `/${slug}/${focus || ''}`,
-    })
-  }
-
   toggleSectionFocus = index => () => {
-    if ((index || index === 0) && this.state.focus !== index) {
+    if (index !== false && this.state.focus !== index) {
       this.animateTo({ index, speedy: !!this.state.focus })
     } else {
-      this.setState({ focus: false }, this.makeURL)
+      this.setState({ focus: false })
     }
   }
 
@@ -119,7 +96,7 @@ class Tool extends Component {
         <div {...classes('content')}>
           {sections.map((item, index) => (
             <Section
-              key={item.slug}
+              key={index}
               title={item.title}
               handleClick={this.toggleSectionFocus(index)}
               active={focus === index}
