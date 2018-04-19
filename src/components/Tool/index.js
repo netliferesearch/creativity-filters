@@ -94,10 +94,11 @@ class Tool extends Component {
   }
 
   makeURL = () => {
+    const { slug } = this.props.match.params
     const { focus } = this.state
 
     this.props.history.push({
-      pathname: `/${focus || ''}`,
+      pathname: `/${slug}/${focus || ''}`,
     })
   }
 
