@@ -10,9 +10,20 @@
 
         &:after {
             content: '';
-            width: 13vw;
+            width: $spacing / 2;
             flex-shrink: 0;
         }
+    }
+
+    &__add-new {
+        @include font-size(large);
+        align-self: center;
+        width: 13vw;
+        height: 13vw;
+        flex-shrink: 0;
+        margin: $spacing;
+        color: $color-light;
+        background-color: rgba(color(neutral, xdark), 0.5);
     }
 
     &--focus {

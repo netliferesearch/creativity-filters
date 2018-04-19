@@ -99,6 +99,24 @@ class Tool extends Component {
     }
   }
 
+  addSection = () => {
+    const newSections = this.props.sections
+
+    newSections.push({
+      title: 'Title',
+      type: 'priority',
+      content: [{ content: '' }],
+    })
+
+    this.props.setGlobalState({
+      sections: newSections,
+    })
+
+    setTimeout(() => {
+      this.toggleSectionFocus(newSections.length - 1)()
+    }, 100)
+  }
+
   render () {
     const { sections } = this.props
     const { focus } = this.state
@@ -108,25 +126,36 @@ class Tool extends Component {
         {...classes('', focus !== false && 'focus')}
         ref={el => (this.wrapper = el)}
       >
-        <div {...classes('content')}>
-          {sections.map((item, index) => (
-            <Section
-              key={index}
-              title={item.title}
-              handleClick={this.toggleSectionFocus(index)}
-              active={focus === index}
-              ref={ref => (this.sections[index] = ref)}
-              handleChange={this.handleChange(index)}
+        {sections &&
+          !!sections.length && (
+          <div {...classes('content')}>
+            {sections.map((item, index) => (
+              <Section
+                key={index}
+                title={item.title}
+                handleClick={this.toggleSectionFocus(index)}
+                active={focus === index}
+                ref={ref => (this.sections[index] = ref)}
+                handleChange={this.handleChange(index)}
+              >
+                {item.type === 'priority' && (
+                  <List
+                    content={item.content}
+                    handleChange={this.handleChange(index)}
+                  />
+                )}
+              </Section>
+            ))}
+
+            <button
+              type="button"
+              {...classes('add-new')}
+              onClick={this.addSection}
             >
-              {item.type === 'priority' && (
-                <List
-                  content={item.content}
-                  handleChange={this.handleChange(index)}
-                />
-              )}
-            </Section>
-          ))}
-        </div>
+                +
+            </button>
+          </div>
+        )}
       </article>
     )
   }
