@@ -23,6 +23,7 @@ const SCALE = 0.8
 class Tool extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
+    sections: PropTypes.array.isRequired,
   }
 
   static defaultProps = {
@@ -116,66 +117,26 @@ class Tool extends Component {
   }
 
   render () {
+    const { sections } = this.props
     const { focus } = this.state
 
     return (
       <article {...classes('', { focus })} ref={el => (this.wrapper = el)}>
         <div {...classes('content')}>
-          <Section
-            title="Problemstillinger"
-            handleClick={this.toggleSectionFocus}
-            name="problems"
-            active={focus === 'problems'}
-            ref={ref => (this.sections.problems = ref)}
-          >
-            <List
-              items={[
-                'Du er problem',
-                'Nei, du er problem',
-                'Hva er problemet deres?!',
-              ]}
-            />
-          </Section>
-
-          <Section
-            title="Målgrupper"
-            handleClick={this.toggleSectionFocus}
-            name="targetgroup"
-            active={focus === 'targetgroup'}
-            ref={ref => (this.sections.targetgroup = ref)}
-          >
-            Her putter du målgrupper i prioritert rekkefølge
-          </Section>
-
-          <Section
-            title="Målsetninger"
-            handleClick={this.toggleSectionFocus}
-            name="goals"
-            active={focus === 'goals'}
-            ref={ref => (this.sections.goals = ref)}
-          >
-            Her putter du målsetninger
-          </Section>
-
-          <Section
-            title="Brukeroppgaver"
-            handleClick={this.toggleSectionFocus}
-            name="usertasks"
-            active={focus === 'usertasks'}
-            ref={ref => (this.sections.usertasks = ref)}
-          >
-            Her putter du brukeroppgaver
-          </Section>
-
-          <Section
-            title="Oppfattelse"
-            handleClick={this.toggleSectionFocus}
-            name="attributes"
-            active={focus === 'attributes'}
-            ref={ref => (this.sections.attributes = ref)}
-          >
-            Her putter du hvordan du ønsker å oppfattes
-          </Section>
+          {sections.map(item => (
+            <Section
+              key={item.slug}
+              title={item.title}
+              handleClick={this.toggleSectionFocus}
+              name={item.slug}
+              active={focus === item.slug}
+              ref={ref => (this.sections[item.slug] = ref)}
+            >
+              {item.type === 'priority' && (
+                <List items={item.content.map(({ content }) => content)} />
+              )}
+            </Section>
+          ))}
         </div>
       </article>
     )
