@@ -170,6 +170,7 @@ class Storage extends Component {
     const sections = projectTemplate.sections;
 
     // Does project exist?
+    if (!slug || !slug.trim()) { return }
 
     // Create new
     let updates = {};
