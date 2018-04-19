@@ -9,6 +9,7 @@ const classes = new BEMHelper('input')
 export default class Input extends Component {
   static propTypes = {
     className: PropTypes.string,
+    onChange: PropTypes.func,
   }
 
   state = {
@@ -23,8 +24,10 @@ export default class Input extends Component {
     setTimeout(this.setWidth, 300)
   }
 
-  handleChange = ({ target }) => {
+  handleChange = event => {
     this.setWidth()
+
+    this.props.onChange(event)
   }
 
   setWidth = () => {
