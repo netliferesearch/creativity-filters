@@ -23,6 +23,12 @@ export default class Input extends Component {
     setTimeout(this.setWidth, 50)
     setTimeout(this.setWidth, 100)
     setTimeout(this.setWidth, 300)
+
+    window.addEventListener('resize', this.setWidth)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.setWidth)
   }
 
   componentDidUpdate (prevProps) {

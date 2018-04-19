@@ -15,6 +15,9 @@ $fonts: (
 );
 
 $font-size: (
+    small: (
+        base: (calc(15px + 0.5vw), 1.2),
+    ),
     base: (
         base: (calc(16px + 1vw), 1.4),
     ),

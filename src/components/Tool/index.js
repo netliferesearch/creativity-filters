@@ -7,6 +7,7 @@ import { withState } from '../../storage'
 
 import Section from '../Section'
 import List from '../List'
+import Sliders from '../Sliders'
 
 import getPosition from '../../helpers/getPosition'
 import scrollTo from '../../helpers/scrollTo'
@@ -89,7 +90,7 @@ class Tool extends Component {
   }
 
   handleChange = index => (key, value) => {
-    if (key && value) {
+    if (key) {
       const { sections } = this.props
       sections[index][key] = value
 
@@ -104,7 +105,7 @@ class Tool extends Component {
 
     newSections.push({
       title: 'Title',
-      type: 'priority',
+      type: 'sliders',
       content: [{ content: '' }],
     })
 
@@ -140,6 +141,12 @@ class Tool extends Component {
               >
                 {item.type === 'priority' && (
                   <List
+                    content={item.content}
+                    handleChange={this.handleChange(index)}
+                  />
+                )}
+                {item.type === 'sliders' && (
+                  <Sliders
                     content={item.content}
                     handleChange={this.handleChange(index)}
                   />

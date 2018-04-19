@@ -1,0 +1,101 @@
+@import '../../styles/helpers';
+
+.sliders {
+    $this: &;
+
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+
+    &__list {
+        display: grid;
+        grid-template-columns: 0.5fr 1fr 0.5fr;
+        grid-column-gap: $spacing--medium;
+        grid-row-gap: $spacing;
+        align-items: center;
+        min-width: 80%;
+    }
+
+    &__add-new {
+        @include font-size(small);
+        align-self: center;
+        margin-top: $spacing--large;
+        padding: #{$spacing--xsmall - 1} $spacing #{$spacing--xsmall + 1};
+        border: 2px dashed currentColor;
+        // grid-column: 2;
+    }
+
+    &__add-new-icon {
+        @include font(base, bold);
+
+        &:before {
+            content: '+';
+            position: relative;
+            top: 1px;
+            font-size: 1.1em;
+            margin-right: $spacing--xsmall;
+        }
+    }
+
+    &__value {
+        &--from {
+            text-align: right;
+        }
+    }
+
+    &__slider-wrapper {
+        position: relative;
+        min-width: 40vw;
+        height: 60px;
+    }
+
+    &__indicator {
+        position: absolute;
+        top: calc(50% - 7px);
+        height: 18px;
+        width: $border-width--medium;
+        background-color: color(primary, dark);
+
+        &:nth-child(1) {
+            left: 0;
+        }
+
+        &:nth-child(2) {
+            left: 50%;
+        }
+
+        &:nth-child(3) {
+            right: -2px;
+        }
+    }
+
+    &__slider {
+        position: absolute;
+        z-index: 2;
+        appearance: none;
+        width: 100%;
+        top: calc(50% - #{$border-width--medium / 2});
+        height: $border-width--medium;
+        background-color: color(primary, dark);
+        outline: none;
+
+        &::-webkit-slider-thumb {
+            appearance: none;
+            width: calc(1vw + 22px);
+            height: calc(1vw + 22px);
+            cursor: pointer;
+            border-radius: 50%;
+            background-color: color(neutral);
+        }
+
+        &::-moz-range-thumb {
+            appearance: none;
+            width: $unit * 5;
+            height: $unit * 5;
+            cursor: pointer;
+            border-radius: 50%;
+            background-color: color(neutral);
+        }
+    }
+
+}
