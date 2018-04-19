@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Switch, BrowserRouter, Route } from 'react-router-dom'
 
-import { Storage } from './storage'
+import Storage from './storage'
 import registerServiceWorker from './registerServiceWorker'
 import Page from './components/Page'
 import Tool from './components/Tool'
@@ -14,21 +14,19 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Page>
-            <Route path="/:sectionSlug" exact component={Tool} />
-            <Route path="/" exact component={Tool} />
-          </Page>
+          <Storage>
+            <Page>
+              <Route path="/:slug" exact component={Tool} />
+              <Route path="/:slug/:sectionSlug" exact component={Tool} />
+              <Route path="/" exact component={() => <h1>Home</h1>} />
+            </Page>
+          </Storage>
         </Switch>
       </BrowserRouter>
     )
   }
 }
 
-ReactDOM.render(
-  <Storage>
-    <App />
-  </Storage>,
-  document.getElementById('root')
-)
+ReactDOM.render(<App />, document.getElementById('root'))
 
 registerServiceWorker()

@@ -12,11 +12,9 @@ import List from '../List'
 import getPosition from '../../helpers/getPosition'
 import scrollTo from '../../helpers/scrollTo'
 
-import createHistory from 'history/createBrowserHistory'
 import BEMHelper from 'react-bem-helper'
 
 const classes = new BEMHelper('tool')
-const history = createHistory()
 
 // This needs to match the scale in css
 const SCALE = 0.8
@@ -25,6 +23,7 @@ class Tool extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     sections: PropTypes.array.isRequired,
+    history: PropTypes.any.isRequired,
   }
 
   static defaultProps = {
@@ -97,7 +96,7 @@ class Tool extends Component {
   makeURL = () => {
     const { focus } = this.state
 
-    history.push({
+    this.props.history.push({
       pathname: `/${focus || ''}`,
     })
   }

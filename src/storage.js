@@ -1,9 +1,31 @@
 import './styles/styles.css'
 
 import React, { Component, createContext } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import createHistory from 'history/createBrowserHistory'
 
+const history = createHistory()
 const { Consumer, Provider } = createContext()
+
+// import * as firebase from 'firebase/app';
+// import 'firebase/database';
+
+//
+// firebase.initializeApp({
+//   apiKey: "AIzaSyDDxR0BcYP0GRsT70RJLJ27hr_b4z5DEys",
+//   authDomain: "creativity-filters.firebaseapp.com",
+//   databaseURL: "https://creativity-filters.firebaseio.com",
+//   projectId: "creativity-filters",
+//   storageBucket: "creativity-filters.appspot.com",
+//   messagingSenderId: "740131108588"
+// });
+//
+// let database = firebase.database();
+// let slug = new Date().getTime();
+// database.ref(`projects/${slug}`).set({
+//   'title': 'Moo'
+// });
 
 const store = {
   sections: [
@@ -73,20 +95,25 @@ const store = {
   ],
 }
 
-export class Storage extends Component {
+class Storage extends Component {
   static propTypes = {
-    initialState: PropTypes.object,
     children: PropTypes.any,
   }
 
   state = {
-    ...this.props.initialState,
     ...store,
+    history,
     setGlobalState: this.setState.bind(this),
   }
 
   componentDidMount () {
     // This is where we fetch stuff
+    // this.setState({
+    //   sections: ['dsadasd'],
+    // })
+    // history.listen((location, action) => {
+    //   console.log(this.props.match.params)
+    // })
   }
 
   render () {
@@ -95,6 +122,8 @@ export class Storage extends Component {
     return <Provider value={this.state}>{children}</Provider>
   }
 }
+
+export default withRouter(Storage)
 
 // eslint-disable-next-line react/display-name
 export const withState = WrappedComponent => props => (
