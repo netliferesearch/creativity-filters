@@ -2,19 +2,22 @@ import './index.css'
 
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
+import { withState } from '../../storage'
 
 import BEMHelper from 'react-bem-helper'
 const classes = new BEMHelper('home')
 
-export default class Home extends Component {
+class Home extends Component {
   static propTypes = {}
 
   makeProject = event => {
     event.preventDefault()
 
-    // TODO: Make logic for creating something here
-
-    window.location.href = `/${this.input.value}`
+    this.props.setGlobalState({
+      newProject: {
+        title: this.input.value
+      }
+    })
   }
 
   render () {
@@ -41,3 +44,5 @@ export default class Home extends Component {
     )
   }
 }
+
+export default withState(Home)

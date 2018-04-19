@@ -3,6 +3,7 @@ import './styles/styles.css'
 import React, { Component, createContext } from 'react'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import * as slugify from '@sindresorhus/slugify';
 
 import * as firebase from 'firebase/app'
 import 'firebase/database'
@@ -19,10 +20,17 @@ firebase.initializeApp({
 })
 
 const database = firebase.database()
-// let slug = new Date().getTime();
-// database.ref(`projects/${slug}`).set({
-//   'title': 'Moo'
-// });
+
+const projectTemplate = {
+  title: '',
+  sections: [{
+    title: "Problemstillinger",
+    type: "priority",
+    content: [
+      { content: "Kake" }
+    ]
+  }]
+}
 
 const store = {
   slug: '',
@@ -108,6 +116,10 @@ class Storage extends Component {
     if (props.sections) {
       database.ref(`sections/${this.state.slug}`).set(props.sections)
     }
+
+    if (props.newProject) {
+      this.createProject(props.newProject);
+    }
   }
 
   state = {
@@ -151,6 +163,24 @@ class Storage extends Component {
         sections: snapshot.val(),
       })
     })
+  }
+
+  createProject (project) {
+    const slug = slugify(project.title);
+    const sections = projectTemplate.sections;
+
+    // Does project exist?
+
+    // Create new
+    let updates = {};
+    updates[`projects/${slug}`] = project;
+    updates[`sections/${slug}`] = sections;
+    database.ref().update(updates).then(() => {
+      window.location.href = `/${slug}`
+    });
+
+    // database.ref(`projects/${slug}`).set(project);
+    // database.ref(`sections/${slug}`).set(sections);
   }
 
   removeListeners () {
