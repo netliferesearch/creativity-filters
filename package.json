@@ -3,16 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build-css":
-      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css":
-      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start-react": "react-scripts start",
     "build-react": "react-scripts build",
     "dev": "npm run watch-css & npm run start-react",
     "build": "npm run build-css && npm run build-react"
   },
   "dependencies": {
+    "firebase": "^4.12.1",
     "history": "^4.7.2",
     "node-sass-chokidar": "^1.2.2",
     "prop-types": "^15.6.1",
@@ -36,14 +35,23 @@
     "standard-loader": "^6.0.1"
   },
   "babel": {
-    "presets": ["es2015", "react", "stage-0"]
+    "presets": [
+      "es2015",
+      "react",
+      "stage-0"
+    ]
   },
   "standard": {
-    "ignore": ["public"]
+    "ignore": [
+      "public"
+    ]
   },
   "eslintConfig": {
     "parser": "babel-eslint",
-    "extends": ["standard", "standard-react"],
+    "extends": [
+      "standard",
+      "standard-react"
+    ],
     "rules": {
       "react/forbid-prop-types": 0,
       "react/jsx-filename-extension": 0
