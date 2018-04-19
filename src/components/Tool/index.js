@@ -22,6 +22,7 @@ class Tool extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     sections: PropTypes.array.isRequired,
+    setGlobalState: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -87,6 +88,15 @@ class Tool extends Component {
     }
   }
 
+  handleChange = index => (key, value) => {
+    const { sections } = this.props
+    sections[index][key] = value
+
+    this.props.setGlobalState({
+      sections,
+    })
+  }
+
   render () {
     const { sections } = this.props
     const { focus } = this.state
@@ -101,6 +111,7 @@ class Tool extends Component {
               handleClick={this.toggleSectionFocus(index)}
               active={focus === index}
               ref={ref => (this.sections[index] = ref)}
+              handleChange={this.handleChange(index)}
             >
               {item.type === 'priority' && (
                 <List items={item.content.map(({ content }) => content)} />

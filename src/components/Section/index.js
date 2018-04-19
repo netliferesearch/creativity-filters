@@ -13,6 +13,7 @@ export default class Section extends PureComponent {
     title: PropTypes.string.isRequired,
     children: PropTypes.any.isRequired,
     handleClick: PropTypes.func.isRequired,
+    handleChange: PropTypes.func.isRequired,
     active: PropTypes.bool,
   }
 
@@ -25,7 +26,7 @@ export default class Section extends PureComponent {
   }
 
   render () {
-    const { children, title, handleClick, active } = this.props
+    const { children, title, handleClick, active, handleChange } = this.props
 
     const sectionProps = active
       ? {}
@@ -54,7 +55,11 @@ export default class Section extends PureComponent {
           <span {...classes('close-icon')} />
         </button>
 
-        <Input {...classes('title')} defaultValue={title} />
+        <Input
+          {...classes('title')}
+          value={title}
+          onChange={({ target }) => handleChange('title', target.value)}
+        />
         {children}
       </section>
     )
