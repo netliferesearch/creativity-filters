@@ -8,6 +8,7 @@
     background-color: transparent;
     outline: 0;
     border-bottom: $border-width--medium solid transparent;
+    max-width: 100%;
 
     &:focus {
         border-color: color(primary, dark);

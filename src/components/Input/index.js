@@ -10,6 +10,7 @@ export default class Input extends Component {
   static propTypes = {
     className: PropTypes.string,
     onChange: PropTypes.func,
+    value: PropTypes.string,
   }
 
   state = {
@@ -22,6 +23,12 @@ export default class Input extends Component {
     setTimeout(this.setWidth, 50)
     setTimeout(this.setWidth, 100)
     setTimeout(this.setWidth, 300)
+  }
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.value !== this.props.value) {
+      this.setWidth()
+    }
   }
 
   handleChange = event => {
