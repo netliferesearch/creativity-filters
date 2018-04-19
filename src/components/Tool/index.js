@@ -89,12 +89,14 @@ class Tool extends Component {
   }
 
   handleChange = index => (key, value) => {
-    const { sections } = this.props
-    sections[index][key] = value
+    if (key && value) {
+      const { sections } = this.props
+      sections[index][key] = value
 
-    this.props.setGlobalState({
-      sections,
-    })
+      this.props.setGlobalState({
+        sections,
+      })
+    }
   }
 
   render () {
@@ -102,7 +104,10 @@ class Tool extends Component {
     const { focus } = this.state
 
     return (
-      <article {...classes('', { focus })} ref={el => (this.wrapper = el)}>
+      <article
+        {...classes('', focus !== false && 'focus')}
+        ref={el => (this.wrapper = el)}
+      >
         <div {...classes('content')}>
           {sections.map((item, index) => (
             <Section
@@ -114,7 +119,10 @@ class Tool extends Component {
               handleChange={this.handleChange(index)}
             >
               {item.type === 'priority' && (
-                <List items={item.content.map(({ content }) => content)} />
+                <List
+                  content={item.content}
+                  handleChange={this.handleChange(index)}
+                />
               )}
             </Section>
           ))}

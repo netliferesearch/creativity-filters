@@ -55,11 +55,12 @@ export default class Section extends PureComponent {
           <span {...classes('close-icon')} />
         </button>
 
-        <Input
-          {...classes('title')}
-          value={title}
-          onChange={({ target }) => handleChange('title', target.value)}
-        />
+        <h2 {...classes('title')}>
+          <Input
+            value={title}
+            onChange={({ target }) => handleChange('title', target.value)}
+          />
+        </h2>
         {children}
       </section>
     )
