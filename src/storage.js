@@ -25,6 +25,7 @@ const database = firebase.database();
 // });
 
 const store = {
+  slug: '',
   project: {
     title: ''
   },
@@ -107,9 +108,6 @@ class Storage extends Component {
 
   componentDidMount () {
     // This is where we fetch stuff
-    // this.setState({
-    //   sections: ['dsadasd'],
-    // })
     this.loadProjectData();
   }
 
@@ -120,8 +118,15 @@ class Storage extends Component {
     }
   }
 
+  saveSections () {
+    database.ref(`sections/${this.state.slug}`).set(this.state.sections);
+  }
+
   loadProjectData () {
-    let slug = this.props.location.pathname.split('/')[1];
+    const slug = this.props.location.pathname.split('/')[1]
+    this.setState({
+      slug,
+    })
 
     // Get project
     this.projectRef = database.ref(`projects/${slug}`);
