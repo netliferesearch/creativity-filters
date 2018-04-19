@@ -3,4 +3,13 @@
 .input {
     $this: &;
 
+    border: 0;
+    line-height: 0.8;
+    background-color: transparent;
+    outline: 0;
+    border-bottom: $border-width--medium solid transparent;
+
+    &:focus {
+        border-color: color(primary, dark);
+    }
 }

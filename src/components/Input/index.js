@@ -4,24 +4,54 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import BEMHelper from 'react-bem-helper'
-const classes = new BEMHelper('section')
+const classes = new BEMHelper('input')
 
 export default class Input extends Component {
   static propTypes = {
-    value: PropTypes.string.isRequired,
+    className: PropTypes.string,
   }
 
-  handleChange = event => {
-    console.log(event, [event.target])
+  state = {
+    width: 0,
+  }
+
+  componentDidMount () {
+    this.setWidth()
+
+    setTimeout(this.setWidth, 50)
+    setTimeout(this.setWidth, 100)
+    setTimeout(this.setWidth, 300)
+  }
+
+  handleChange = ({ target }) => {
+    this.setWidth()
+  }
+
+  setWidth = () => {
+    this.setState(
+      {
+        width: 0,
+      },
+      () => {
+        this.setState({
+          width: `${this.element.scrollWidth + 1}px`,
+        })
+      }
+    )
   }
 
   render () {
+    const { className } = this.props
+    const { width } = this.state
+    const styles = { width }
+
     return (
       <input
-        {...classes('')}
+        {...this.props}
+        {...classes('', '', className)}
         ref={ref => (this.element = ref)}
         onChange={this.handleChange}
-        {...this.props}
+        style={styles}
       />
     )
   }

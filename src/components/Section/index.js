@@ -3,6 +3,8 @@ import './index.css'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
+import Input from '../Input'
+
 import BEMHelper from 'react-bem-helper'
 const classes = new BEMHelper('section')
 
@@ -11,25 +13,24 @@ export default class Section extends PureComponent {
     title: PropTypes.string.isRequired,
     children: PropTypes.any.isRequired,
     handleClick: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired,
     active: PropTypes.bool,
   }
 
   handleSectionKeyPress = ({ charCode }) => {
     if (charCode === 32 || charCode === 13) {
-      const { handleClick, name } = this.props
+      const { handleClick } = this.props
 
-      handleClick({ name })
+      handleClick()
     }
   }
 
   render () {
-    const { children, title, handleClick, name, active } = this.props
+    const { children, title, handleClick, active } = this.props
 
     const sectionProps = active
       ? {}
       : {
-        onClick: () => handleClick({ name }),
+        onClick: handleClick,
         onKeyPress: this.handleSectionKeyPress,
         role: 'button',
         tabIndex: 0,
@@ -37,7 +38,7 @@ export default class Section extends PureComponent {
 
     const buttonProps = active
       ? {
-        onClick: () => handleClick({ name }),
+        onClick: handleClick,
       }
       : {
         tabIndex: -1,
@@ -53,7 +54,7 @@ export default class Section extends PureComponent {
           <span {...classes('close-icon')} />
         </button>
 
-        <input {...classes('title')} value={title} />
+        <Input {...classes('title')} defaultValue={title} />
         {children}
       </section>
     )

@@ -2,6 +2,7 @@ import './index.css'
 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import slugify from '@sindresorhus/slugify'
 
 import { withState } from '../../storage'
 
@@ -35,20 +36,18 @@ class Tool extends Component {
   constructor (props) {
     super(props)
 
-    // const { page } = this.props.match.params
-
     this.state = {
       focus: false,
     }
 
-    this.sections = {}
+    this.sections = []
   }
 
   componentDidMount () {
-    const { page } = this.props.match.params
+    const { sectionSlug } = this.props.match.params
 
-    if (page) {
-      setTimeout(() => this.toggleSectionFocus({ name: page }), 50)
+    if (sectionSlug) {
+      setTimeout(() => this.toggleSectionFocus({ index: sectionSlug }), 50)
     }
 
     window.addEventListener('resize', this.handleResize)
@@ -62,12 +61,18 @@ class Tool extends Component {
     const { focus } = this.state
 
     if (focus) {
-      this.toggleSectionFocus({ name: false })
+      this.toggleSectionFocus({ index: false })
     }
   }
 
-  animateTo = ({ name, speedy }) => {
-    const { element } = this.sections[name]
+  getSectionIndex = slug => {
+    const { sections } = this.props
+
+    return sections.findIndex(({ title }) => slugify(title) === slug)
+  }
+
+  animateTo = ({ index, speedy }) => {
+    const { element } = this.sections[index]
 
     if (!element) {
       return
@@ -84,13 +89,7 @@ class Tool extends Component {
     })
 
     setTimeout(
-      () =>
-        this.setState(
-          {
-            focus: name,
-          },
-          this.makeURL
-        ),
+      () => this.setState({ focus: index }, this.makeURL),
       duration / (speedy ? 5 : 3)
     )
   }
@@ -103,16 +102,11 @@ class Tool extends Component {
     })
   }
 
-  toggleSectionFocus = ({ name }) => {
-    if (name && this.state.focus !== name) {
-      this.animateTo({ name, speedy: this.state.focus })
+  toggleSectionFocus = index => () => {
+    if ((index || index === 0) && this.state.focus !== index) {
+      this.animateTo({ index, speedy: !!this.state.focus })
     } else {
-      this.setState(
-        {
-          focus: false,
-        },
-        this.makeURL
-      )
+      this.setState({ focus: false }, this.makeURL)
     }
   }
 
@@ -123,14 +117,13 @@ class Tool extends Component {
     return (
       <article {...classes('', { focus })} ref={el => (this.wrapper = el)}>
         <div {...classes('content')}>
-          {sections.map(item => (
+          {sections.map((item, index) => (
             <Section
               key={item.slug}
               title={item.title}
-              handleClick={this.toggleSectionFocus}
-              name={item.slug}
-              active={focus === item.slug}
-              ref={ref => (this.sections[item.slug] = ref)}
+              handleClick={this.toggleSectionFocus(index)}
+              active={focus === index}
+              ref={ref => (this.sections[index] = ref)}
             >
               {item.type === 'priority' && (
                 <List items={item.content.map(({ content }) => content)} />

@@ -42,6 +42,7 @@
     &__title {
         @include font(header, bold);
         @include font-size(large);
+        margin-bottom: 1em;
 
         @include min-width(lg) {
             margin-top: -($spacing--large);

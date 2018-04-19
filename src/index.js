@@ -15,7 +15,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Page>
-            <Route path="/:page" exact component={Tool} />
+            <Route path="/:sectionSlug" exact component={Tool} />
             <Route path="/" exact component={Tool} />
           </Page>
         </Switch>
