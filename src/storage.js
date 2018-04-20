@@ -167,7 +167,7 @@ class Storage extends Component {
 
   createProject (project) {
     const slug = slugify(project.title)
-    const sections = projectTemplate.sections
+    const sections = projectTemplate.sections.slice();
 
     // Require slug
     if (!slug || !slug.trim()) { return }
@@ -181,15 +181,61 @@ class Storage extends Component {
           window.location.href = `/${slug}`
         } else {
           // Create new
-          const updates = {}
-          updates[`projects/${slug}`] = project
-          updates[`sections/${slug}`] = sections
           database
-            .ref()
-            .update(updates)
+            .ref(`projects/${slug}`)
+            .set(project)
             .then(() => {
-              window.location.href = `/${slug}`
-            })
+
+              let sectionsRef = database.ref(`projects/${slug}/sections`)
+
+              let updates = {};
+              let sectionRef, contentRef, sectionContent;
+
+              for (let section of sections) {
+                sectionContent = section.content;
+                delete section.content;
+
+                // Add template sections
+                sectionRef = sectionsRef.push(section)
+                // updates[`projects/${slug}/sections/${sectionRef.key}`] = section
+
+                // Add template content
+                for (let content of sectionContent) {
+                  contentRef = database.ref(`projects/${slug}/sections/${sectionRef.key}/content`).push()
+                  updates[`projects/${slug}/sections/${sectionRef.key}/content/${contentRef.key}`] = content
+                }
+              }
+
+              database
+                .ref()
+                .update(updates)
+                .then(() => {
+                  window.location.href = `/${slug}`
+                })
+
+
+
+                // .push(sections[0])
+                // .then(() => {
+                //
+                //   database
+                //     .ref(`projects/${slug}/sections`)
+                //     .push(sections[0])
+                //     .then(() => {
+                //       window.location.href = `/${slug}`
+                //     })
+                // })
+            });
+
+          // const updates = {}
+          // updates[`projects/${slug}`] = project
+          // updates[`sections/${slug}`] = {}
+          // database
+          //   .ref()
+          //   .update(updates)
+          //   .then(() => {
+          //     window.location.href = `/${slug}`
+          //   })
         }
       })
 
