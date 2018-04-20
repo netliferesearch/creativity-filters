@@ -106,7 +106,7 @@ class Tool extends Component {
     newSections.push({
       title: 'Title',
       type: 'sliders',
-      content: [{ content: '' }],
+      content: [{ value: 50, from: '', to: '' }],
     })
 
     this.props.setGlobalState({
