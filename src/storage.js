@@ -113,9 +113,9 @@ class Storage extends Component {
   setGlobalState ({ ...props }) {
     this.setState({ ...props })
 
-    if (props.sections) {
-      database.ref(`sections/${this.state.slug}`).set(props.sections)
-    }
+    // if (props.sections) {
+    //   database.ref(`sections/${this.state.slug}`).set(props.sections)
+    // }
 
     if (props.newProject) {
       this.createProject(props.newProject)
@@ -208,6 +208,10 @@ class Storage extends Component {
 
     // database.ref(`projects/${slug}`).set(project);
     // database.ref(`sections/${slug}`).set(sections);
+  }
+
+  createSection () {
+    
   }
 
   removeListeners () {
