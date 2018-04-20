@@ -123,14 +123,13 @@ class Tool extends Component {
                     key={index}
                     section={item}
                     handleClick={this.toggleSectionFocus(index)}
-
                     active={true}
                   >
                     {item.type === 'priority' && (
                       <List sectionId={item.id} content={item.content} />
                     )}
                     {item.type === 'sliders' && (
-                      <Sliders content={item.content} />
+                      <Sliders content={item.content} section={item} />
                     )}
                     {!item.type && <NewSection section={item} />}
                   </Section>
