@@ -11,7 +11,7 @@ const classes = new BEMHelper('sliders')
 
 class Sliders extends Component {
   static propTypes = {
-    content: PropTypes.array,
+    content: PropTypes.object,
     sectionId: PropTypes.string.isRequired,
     updateContent: PropTypes.func.isRequired,
     createContent: PropTypes.func.isRequired,
