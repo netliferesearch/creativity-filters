@@ -12,6 +12,7 @@ export default class Input extends Component {
     onChange: PropTypes.func,
     value: PropTypes.string,
     autoFocus: PropTypes.bool,
+    notRequired: PropTypes.bool,
   }
 
   state = {
@@ -30,7 +31,7 @@ export default class Input extends Component {
     window.addEventListener('resize', this.setWidth)
 
     if (this.props.autoFocus && !this.doneAutoFocus) {
-      setTimeout(() => this.element.focus(), 50)
+      this.element.focus()
 
       this.doneAutoFocus = true
     }
@@ -43,6 +44,11 @@ export default class Input extends Component {
   componentDidUpdate (prevProps) {
     if (prevProps.value !== this.props.value) {
       this.setWidth()
+    }
+
+    if (prevProps.autoFocus !== this.props.autoFocus && this.props.autoFocus) {
+      this.element.select()
+      this.doneAutoFocus = true
     }
   }
 
@@ -61,9 +67,8 @@ export default class Input extends Component {
   }
 
   render () {
-    const { className, autoFocus, ...props } = this.props
+    const { className, autoFocus, notRequired, ...props } = this.props
     const { width } = this.state
-    const styles = { width }
 
     return (
       <input
@@ -71,7 +76,8 @@ export default class Input extends Component {
         {...classes('', '', className)}
         ref={ref => (this.element = ref)}
         onChange={this.handleChange}
-        style={styles}
+        style={{ width }}
+        required={!notRequired}
       />
     )
   }

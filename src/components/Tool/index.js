@@ -135,6 +135,7 @@ class Tool extends Component {
               <Section
                 key={index}
                 title={item.title}
+                type={item.type}
                 handleClick={this.toggleSectionFocus(index)}
                 active={focus === index}
                 ref={ref => (this.sections[index] = ref)}
