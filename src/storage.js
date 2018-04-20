@@ -169,18 +169,28 @@ class Storage extends Component {
     const slug = slugify(project.title)
     const sections = projectTemplate.sections
 
-    // Does project exist?
+    // Require slug
     if (!slug || !slug.trim()) { return }
 
-    // Create new
-    const updates = {}
-    updates[`projects/${slug}`] = project
-    updates[`sections/${slug}`] = sections
+    // Does project exist?
     database
-      .ref()
-      .update(updates)
-      .then(() => {
-        window.location.href = `/${slug}`
+      .ref(`projects/${slug}`)
+      .once('value')
+      .then(snapshot => {
+        if (snapshot.val()) {
+          window.location.href = `/${slug}`
+        } else {
+          // Create new
+          const updates = {}
+          updates[`projects/${slug}`] = project
+          updates[`sections/${slug}`] = sections
+          database
+            .ref()
+            .update(updates)
+            .then(() => {
+              window.location.href = `/${slug}`
+            })
+        }
       })
 
     // database.ref(`projects/${slug}`).set(project);

@@ -31,6 +31,7 @@ class Home extends Component {
               Name it
               <input
                 type="text"
+                required
                 {...classes('input')}
                 ref={ref => (this.input = ref)}
               />
