@@ -12,7 +12,10 @@ const classes = new BEMHelper('list')
 class List extends Component {
   static propTypes = {
     content: PropTypes.object,
-    handleChange: PropTypes.func.isRequired,
+    createContent: PropTypes.func.isRequired,
+    updateContent: PropTypes.func.isRequired,
+    deleteContent: PropTypes.func.isRequired,
+    sectionId: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -25,12 +28,12 @@ class List extends Component {
 
   handleItemChange = id => ({ target }) => {
     const { sectionId, updateContent } = this.props
-    updateContent(sectionId, { id, content: target.value });
+    updateContent(sectionId, { id, content: target.value })
   }
 
   deleteItem = id => () => {
     const { sectionId, deleteContent } = this.props
-    deleteContent(sectionId, id);
+    deleteContent(sectionId, id)
   }
 
   addNew = () => {
@@ -42,7 +45,6 @@ class List extends Component {
     setTimeout(() => {
       this.setState({ autoFocus: false })
     }, 100)
-
   }
 
   handleKeyPress = ({ charCode }) => {

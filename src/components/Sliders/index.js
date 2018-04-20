@@ -12,7 +12,9 @@ const classes = new BEMHelper('sliders')
 class Sliders extends Component {
   static propTypes = {
     content: PropTypes.array,
-    handleChange: PropTypes.func.isRequired,
+    sectionId: PropTypes.string.isRequired,
+    updateContent: PropTypes.func.isRequired,
+    createContent: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -25,13 +27,11 @@ class Sliders extends Component {
 
   handleUpdate = (id, key) => ({ target }) => {
     const { sectionId, updateContent } = this.props
-
-    updateContent(sectionId, { id, [key]: target.value} );
+    updateContent(sectionId, { id, [key]: target.value })
   }
 
   addNew = () => {
     const { sectionId, createContent } = this.props
-
     createContent(sectionId, { from: '', to: '', value: 50 })
 
     this.setState({ autoFocus: true })
@@ -48,40 +48,40 @@ class Sliders extends Component {
       <div {...classes('')}>
         {content && (
           <div {...classes('list')}>
-          {Object.keys(content)
-            .map(key => ({ id: key, ...content[key] }))
-            .map((item, index) => (
-              <Fragment key={index}>
-                <span {...classes('value', 'from')}>
-                  <Input
-                    value={item.from}
-                    onChange={this.handleUpdate(item.id, 'from')}
-                    autoFocus={autoFocus}
-                  />
-                </span>
+            {Object.keys(content)
+              .map(key => ({ id: key, ...content[key] }))
+              .map((item, index) => (
+                <Fragment key={index}>
+                  <span {...classes('value', 'from')}>
+                    <Input
+                      value={item.from}
+                      onChange={this.handleUpdate(item.id, 'from')}
+                      autoFocus={autoFocus}
+                    />
+                  </span>
 
-                <label {...classes('slider-wrapper')}>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={item.value}
-                    onChange={this.handleUpdate(item.id, 'value')}
-                    {...classes('slider')}
-                  />
-                  <span {...classes('indicator')} />
-                  <span {...classes('indicator')} />
-                  <span {...classes('indicator')} />
-                </label>
+                  <label {...classes('slider-wrapper')}>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={item.value}
+                      onChange={this.handleUpdate(item.id, 'value')}
+                      {...classes('slider')}
+                    />
+                    <span {...classes('indicator')} />
+                    <span {...classes('indicator')} />
+                    <span {...classes('indicator')} />
+                  </label>
 
-                <span {...classes('value', 'to')}>
-                  <Input
-                    value={item.to}
-                    onChange={this.handleUpdate(item.id, 'to')}
-                  />
-                </span>
-              </Fragment>
-            ))}
+                  <span {...classes('value', 'to')}>
+                    <Input
+                      value={item.to}
+                      onChange={this.handleUpdate(item.id, 'to')}
+                    />
+                  </span>
+                </Fragment>
+              ))}
           </div>
         )}
 
