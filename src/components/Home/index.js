@@ -13,10 +13,8 @@ class Home extends Component {
   makeProject = event => {
     event.preventDefault()
 
-    this.props.setGlobalState({
-      newProject: {
-        title: this.input.value
-      }
+    this.props.createProject({
+      title: this.input.value
     })
   }
 

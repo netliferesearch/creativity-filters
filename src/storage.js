@@ -112,6 +112,7 @@ class Storage extends Component {
 
   state = {
     ...store,
+    createProject: this.createProject.bind(this),
     createSection: this.createSection.bind(this),
     updateSection: this.updateSection.bind(this),
     deleteSection: this.deleteSection.bind(this),
