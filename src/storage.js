@@ -153,16 +153,6 @@ class Storage extends Component {
         project: snapshot.val(),
       })
     })
-
-    // database.ref(`sections/${slug}`).set(this.state.sections);
-
-    // Get sections
-    this.sectionsRef = database.ref(`sections/${slug}`)
-    this.sectionsRef.on('value', snapshot => {
-      this.setState({
-        sections: snapshot.val(),
-      })
-    })
   }
 
   createProject (project) {
@@ -186,9 +176,9 @@ class Storage extends Component {
             .set(project)
             .then(() => {
 
-              let sectionsRef = database.ref(`projects/${slug}/sections`)
+              const sectionListRef = database.ref(`projects/${slug}/sections`)
 
-              let updates = {};
+              const updates = {};
               let sectionRef, contentRef, sectionContent;
 
               for (let section of sections) {
@@ -196,8 +186,7 @@ class Storage extends Component {
                 delete section.content;
 
                 // Add template sections
-                sectionRef = sectionsRef.push(section)
-                // updates[`projects/${slug}/sections/${sectionRef.key}`] = section
+                sectionRef = sectionListRef.push(section)
 
                 // Add template content
                 for (let content of sectionContent) {
@@ -213,29 +202,7 @@ class Storage extends Component {
                   window.location.href = `/${slug}`
                 })
 
-
-
-                // .push(sections[0])
-                // .then(() => {
-                //
-                //   database
-                //     .ref(`projects/${slug}/sections`)
-                //     .push(sections[0])
-                //     .then(() => {
-                //       window.location.href = `/${slug}`
-                //     })
-                // })
             });
-
-          // const updates = {}
-          // updates[`projects/${slug}`] = project
-          // updates[`sections/${slug}`] = {}
-          // database
-          //   .ref()
-          //   .update(updates)
-          //   .then(() => {
-          //     window.location.href = `/${slug}`
-          //   })
         }
       })
 
