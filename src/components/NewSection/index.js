@@ -14,24 +14,37 @@ function NewSection ({ section, updateSection }) {
       <button
         type="button"
         {...classes('option')}
-        onClick={() => updateSection({
-          ...section,
-          type: 'priority',
-        })}
+        onClick={() =>
+          updateSection({
+            ...section,
+            type: 'priority',
+          })
+        }
       >
         Prioritized list
       </button>
       <button
         type="button"
         {...classes('option')}
-        onClick={() => updateSection({
-          ...section,
-          type: 'sliders',
-        })}
+        onClick={() =>
+          updateSection({
+            ...section,
+            type: 'sliders',
+          })
+        }
       >
         Sliders
       </button>
-      <button type="button" {...classes('option')}>
+      <button
+        type="button"
+        {...classes('option')}
+        onClick={() =>
+          updateSection({
+            ...section,
+            type: 'plot',
+          })
+        }
+      >
         Plot chart
       </button>
     </nav>

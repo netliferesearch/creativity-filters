@@ -8,6 +8,7 @@ import { withState } from '../../storage'
 import Section from '../Section'
 import List from '../List'
 import Sliders from '../Sliders'
+import Plot from '../Plot'
 import NewSection from '../NewSection'
 
 import getPosition from '../../helpers/getPosition'
@@ -45,6 +46,19 @@ class Tool extends Component {
 
   componentDidMount () {
     window.addEventListener('resize', this.handleResize)
+  }
+
+  componentDidUpdate () {
+    // TODO: Remove!!!!
+    // const { sections } = this.props.project
+    //
+    // if (
+    //   sections &&
+    //   Object.keys(sections).length === 1 &&
+    //   this.state.focus === false
+    // ) {
+    //   this.toggleSectionFocus(0)()
+    // }
   }
 
   componentWillUnmount () {
@@ -134,6 +148,9 @@ class Tool extends Component {
                     )}
                     {item.type === 'sliders' && (
                       <Sliders sectionId={item.id} content={item.content} />
+                    )}
+                    {item.type === 'plot' && (
+                      <Plot sectionId={item.id} content={item.content} />
                     )}
                     {!item.type && <NewSection section={item} />}
                   </Section>
