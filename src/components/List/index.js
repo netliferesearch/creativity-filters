@@ -24,16 +24,21 @@ export default class List extends Component {
 
   handleItemChange = index => ({ target }) => {
     const { content, handleChange } = this.props
-
     const newItems = [...content]
     newItems[index].content = target.value
 
     handleChange('content', newItems)
   }
 
+  deleteItem = index => () => {
+    const { content, handleChange } = this.props
+    const newItems = content.filter((item, i) => i !== index)
+
+    handleChange('content', newItems)
+  }
+
   addNew = () => {
     const { content, handleChange } = this.props
-
     const newItems = [...content]
     newItems.push({ content: '' })
 
@@ -66,6 +71,13 @@ export default class List extends Component {
                   onChange={this.handleItemChange(index)}
                   autoFocus={autoFocus}
                   onKeyPress={this.handleKeyPress}
+                  {...classes('input')}
+                />
+
+                <button
+                  type="button"
+                  {...classes('delete')}
+                  onClick={this.deleteItem(index)}
                 />
               </li>
             ))}
