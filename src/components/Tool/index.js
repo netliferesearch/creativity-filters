@@ -129,7 +129,7 @@ class Tool extends Component {
                       <List sectionId={item.id} content={item.content} />
                     )}
                     {item.type === 'sliders' && (
-                      <Sliders content={item.content} section={item} />
+                      <Sliders sectionId={item} content={item.content} />
                     )}
                     {!item.type && <NewSection section={item} />}
                   </Section>

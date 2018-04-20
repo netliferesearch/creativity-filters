@@ -27,13 +27,7 @@ class Section extends PureComponent {
   }
 
   render () {
-    const {
-      children,
-      section,
-      handleClick,
-      active,
-      updateSection,
-    } = this.props
+    const { children, section, handleClick, active, updateSection } = this.props
 
     const sectionProps = active
       ? {}
@@ -47,11 +41,7 @@ class Section extends PureComponent {
     const buttonProps = active ? { onClick: handleClick } : { tabIndex: -1 }
 
     return (
-      <section
-        {...classes('', { active })}
-        {...sectionProps}
-        ref={ref => (this.ref = ref)}
-      >
+      <section {...classes('', { active })} {...sectionProps} id={section.id}>
         <button {...classes('close')} type="button" {...buttonProps}>
           <span {...classes('close-icon')} />
         </button>
@@ -59,10 +49,12 @@ class Section extends PureComponent {
         <h2 {...classes('title')}>
           <Input
             value={section.title}
-            onChange={({ target }) => updateSection({
-              ...section,
-              title: target.value
-            })}
+            onChange={({ target }) =>
+              updateSection({
+                ...section,
+                title: target.value,
+              })
+            }
             autoFocus={!section.type && active}
           />
         </h2>
