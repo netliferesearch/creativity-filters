@@ -3,23 +3,31 @@ import './index.css'
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { withState } from '../../storage'
+
 import BEMHelper from 'react-bem-helper'
 const classes = new BEMHelper('new-section')
 
-export default function Section ({ handleChange }) {
+function NewSection ({ section, updateSection }) {
   return (
     <nav {...classes('')}>
       <button
         type="button"
         {...classes('option')}
-        onClick={() => handleChange('type', 'priority')}
+        onClick={() => updateSection({
+          ...section,
+          type: 'priority',
+        })}
       >
         Prioritized list
       </button>
       <button
         type="button"
         {...classes('option')}
-        onClick={() => handleChange('type', 'sliders')}
+        onClick={() => updateSection({
+          ...section,
+          type: 'sliders',
+        })}
       >
         Sliders
       </button>
@@ -30,6 +38,9 @@ export default function Section ({ handleChange }) {
   )
 }
 
-Section.propTypes = {
-  handleChange: PropTypes.func.isRequired,
+NewSection.propTypes = {
+  updateSection: PropTypes.func.isRequired,
+  section: PropTypes.object.isRequired,
 }
+
+export default withState(NewSection)

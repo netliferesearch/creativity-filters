@@ -125,6 +125,11 @@ class Storage extends Component {
   state = {
     ...store,
     setGlobalState: this.setGlobalState.bind(this),
+    createSection: this.createSection.bind(this),
+    updateSection: this.updateSection.bind(this),
+    createContent: this.createContent.bind(this),
+    updateContent: this.updateContent.bind(this),
+    deleteContent: this.deleteContent.bind(this),
   }
 
   componentDidMount () {
@@ -210,8 +215,46 @@ class Storage extends Component {
     // database.ref(`sections/${slug}`).set(sections);
   }
 
-  createSection () {
-    
+  createSection (section) {
+    const slug = this.state.slug
+
+    database
+      .ref(`projects/${slug}/sections`)
+      .push(section)
+  }
+
+  updateSection (section) {
+    const slug = this.state.slug
+    const { content, id, ...newSection } = section
+
+    database
+      .ref(`projects/${slug}/sections/${id}`)
+      .update(newSection)
+  }
+
+  createContent (sectionId, content) {
+    const slug = this.state.slug
+
+    database
+      .ref(`projects/${slug}/sections/${sectionId}/content`)
+      .push(content)
+  }
+
+  updateContent (sectionId, content) {
+    const slug = this.state.slug
+    const { id, ...newContent } = content
+
+    database
+      .ref(`projects/${slug}/sections/${sectionId}/content/${id}`)
+      .update(newContent)
+  }
+
+  deleteContent (sectionId, contentId) {
+    const slug = this.state.slug
+
+    database
+      .ref(`projects/${slug}/sections/${sectionId}/content/${contentId}`)
+      .remove()
   }
 
   removeListeners () {

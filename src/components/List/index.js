@@ -4,11 +4,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Input from '../Input'
+import { withState } from '../../storage'
 
 import BEMHelper from 'react-bem-helper'
 const classes = new BEMHelper('list')
 
-export default class List extends Component {
+class List extends Component {
   static propTypes = {
     content: PropTypes.object,
     handleChange: PropTypes.func.isRequired,
@@ -22,32 +23,26 @@ export default class List extends Component {
     autoFocus: false,
   }
 
-  handleItemChange = index => ({ target }) => {
-    const { content, handleChange } = this.props
-    const newItems = [...content]
-    newItems[index].content = target.value
-
-    handleChange('content', newItems)
+  handleItemChange = id => ({ target }) => {
+    const { sectionId, updateContent } = this.props
+    updateContent(sectionId, { id, content: target.value });
   }
 
-  deleteItem = index => () => {
-    const { content, handleChange } = this.props
-    const newItems = content.filter((item, i) => i !== index)
-
-    handleChange('content', newItems)
+  deleteItem = id => () => {
+    const { sectionId, deleteContent } = this.props
+    deleteContent(sectionId, id);
   }
 
   addNew = () => {
-    const { content, handleChange } = this.props
-    const newItems = [...content]
-    newItems.push({ content: '' })
+    const { sectionId, createContent } = this.props
+
+    createContent(sectionId, { content: '' })
 
     this.setState({ autoFocus: true })
     setTimeout(() => {
       this.setState({ autoFocus: false })
     }, 100)
 
-    handleChange('content', newItems)
   }
 
   handleKeyPress = ({ charCode }) => {
@@ -70,7 +65,7 @@ export default class List extends Component {
                 <li key={index} {...classes('item')}>
                   <Input
                     value={item.content}
-                    onChange={this.handleItemChange(index)}
+                    onChange={this.handleItemChange(item.id)}
                     autoFocus={autoFocus}
                     onKeyPress={this.handleKeyPress}
                     {...classes('input')}
@@ -79,7 +74,7 @@ export default class List extends Component {
                   <button
                     type="button"
                     {...classes('delete')}
-                    onClick={this.deleteItem(index)}
+                    onClick={this.deleteItem(item.id)}
                   />
                 </li>
               ))}
@@ -93,3 +88,5 @@ export default class List extends Component {
     )
   }
 }
+
+export default withState(List)

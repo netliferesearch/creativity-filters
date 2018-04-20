@@ -4,17 +4,17 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import Input from '../Input'
+import { withState } from '../../storage'
 
 import BEMHelper from 'react-bem-helper'
 const classes = new BEMHelper('section')
 
-export default class Section extends PureComponent {
+class Section extends PureComponent {
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string,
+    section: PropTypes.object.isRequired,
     children: PropTypes.any.isRequired,
     handleClick: PropTypes.func.isRequired,
-    handleChange: PropTypes.func.isRequired,
+    updateSection: PropTypes.func.isRequired,
     active: PropTypes.bool,
   }
 
@@ -29,11 +29,10 @@ export default class Section extends PureComponent {
   render () {
     const {
       children,
-      title,
+      section,
       handleClick,
       active,
-      type,
-      handleChange,
+      updateSection,
     } = this.props
 
     const sectionProps = active
@@ -51,7 +50,7 @@ export default class Section extends PureComponent {
       <section
         {...classes('', { active })}
         {...sectionProps}
-        ref={ref => (this.element = ref)}
+        ref={ref => (this.ref = ref)}
       >
         <button {...classes('close')} type="button" {...buttonProps}>
           <span {...classes('close-icon')} />
@@ -59,9 +58,12 @@ export default class Section extends PureComponent {
 
         <h2 {...classes('title')}>
           <Input
-            value={title}
-            onChange={({ target }) => handleChange('title', target.value)}
-            autoFocus={!type && active}
+            value={section.title}
+            onChange={({ target }) => updateSection({
+              ...section,
+              title: target.value
+            })}
+            autoFocus={!section.type && active}
           />
         </h2>
         {children}
@@ -69,3 +71,5 @@ export default class Section extends PureComponent {
     )
   }
 }
+
+export default withState(Section)

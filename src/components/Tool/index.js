@@ -91,21 +91,17 @@ class Tool extends Component {
   }
 
   addSection = () => {
-    const newSections = this.props.project.sections
-
-    newSections.push({
+    const newSection = {
       title: 'Title',
       type: null,
       content: null,
-    })
+    }
 
-    this.props.setGlobalState({
-      sections: newSections,
-    })
+    this.props.createSection(newSection)
 
-    setTimeout(() => {
-      this.toggleSectionFocus(newSections.length - 1)()
-    }, 100)
+    // setTimeout(() => {
+    //   this.toggleSectionFocus(newSections.length - 1)()
+    // }, 100)
   }
 
   render () {
@@ -122,21 +118,23 @@ class Tool extends Component {
             {Object.keys(sections)
               .map(key => ({ id: key, ...sections[key] }))
               .map((item, index) => (
-                <Section
-                  key={index}
-                  {...item}
-                  handleClick={this.toggleSectionFocus(index)}
-                  active={focus === index}
-                  ref={ref => (this.sections[index] = ref)}
-                >
-                  {item.type === 'priority' && (
-                    <List sectionId={item.id} content={item.content} />
-                  )}
-                  {item.type === 'sliders' && (
-                    <Sliders content={item.content} />
-                  )}
-                  {!item.type && <NewSection />}
-                </Section>
+                <div ref={ref => (this.sections[index] = ref)} key={index}>
+                  <Section
+                    key={index}
+                    section={item}
+                    handleClick={this.toggleSectionFocus(index)}
+
+                    active={true}
+                  >
+                    {item.type === 'priority' && (
+                      <List sectionId={item.id} content={item.content} />
+                    )}
+                    {item.type === 'sliders' && (
+                      <Sliders content={item.content} />
+                    )}
+                    {!item.type && <NewSection section={item} />}
+                  </Section>
+                </div>
               ))}
 
             <button
