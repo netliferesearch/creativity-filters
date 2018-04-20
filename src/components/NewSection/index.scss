@@ -1,0 +1,32 @@
+@import '../../styles/helpers';
+
+.list {
+    $this: &;
+
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+
+    &__list {
+        counter-reset: counter;
+    }
+
+    &__item {
+        margin-bottom: $spacing--small;
+
+        &:before {
+            content: counter(counter) '.';
+            counter-increment: counter;
+            @include font(header, bold);
+            @include font-size(medium);
+            display: inline-block;
+            width: 1.3em;
+        }
+    }
+
+    &__add-new {
+        @include font(base, bold);
+        font-size: 1.1em;
+        align-self: flex-start;
+    }
+}

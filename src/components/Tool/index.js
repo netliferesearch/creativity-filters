@@ -8,6 +8,7 @@ import { withState } from '../../storage'
 import Section from '../Section'
 import List from '../List'
 import Sliders from '../Sliders'
+import NewSection from '../NewSection'
 
 import getPosition from '../../helpers/getPosition'
 import scrollTo from '../../helpers/scrollTo'
@@ -105,8 +106,8 @@ class Tool extends Component {
 
     newSections.push({
       title: 'Title',
-      type: 'sliders',
-      content: [{ value: 50, from: '', to: '' }],
+      type: null,
+      content: null,
     })
 
     this.props.setGlobalState({
@@ -150,6 +151,9 @@ class Tool extends Component {
                     content={item.content}
                     handleChange={this.handleChange(index)}
                   />
+                )}
+                {!item.type && (
+                  <NewSection handleChange={this.handleChange(index)} />
                 )}
               </Section>
             ))}
