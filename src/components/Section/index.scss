@@ -16,10 +16,6 @@
 
     transition: transform 400ms $ease-in-quart, box-shadow 400ms ease-in;
 
-    &:not(:last-child) {
-        margin-right: $spacing--small;
-    }
-
     &[role='button'] {
         cursor: pointer;
         outline: 0;

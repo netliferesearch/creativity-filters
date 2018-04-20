@@ -15,6 +15,12 @@
         }
     }
 
+    &__item {
+        &:not(:last-child) {
+            margin-right: $spacing--small;
+        }
+    }
+
     &__add-new {
         @include font-size(large);
         align-self: center;

@@ -24,7 +24,7 @@ class Tool extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     project: PropTypes.object.isRequired,
-    setGlobalState: PropTypes.func.isRequired,
+    createSection: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -60,7 +60,7 @@ class Tool extends Component {
   }
 
   animateTo = ({ index, speedy }) => {
-    const { element } = this.sections[index]
+    const element = this.sections[index]
 
     if (!element) {
       return
@@ -99,9 +99,10 @@ class Tool extends Component {
 
     this.props.createSection(newSection)
 
-    // setTimeout(() => {
-    //   this.toggleSectionFocus(newSections.length - 1)()
-    // }, 100)
+    setTimeout(() => {
+      const { sections } = this.props.project
+      this.toggleSectionFocus(Object.keys(sections).length - 1)()
+    }, 100)
   }
 
   render () {
@@ -114,16 +115,19 @@ class Tool extends Component {
         ref={el => (this.wrapper = el)}
       >
         {sections && (
-          <div {...classes('content')}>
+          <ul {...classes('content')}>
             {Object.keys(sections)
               .map(key => ({ id: key, ...sections[key] }))
               .map((item, index) => (
-                <div ref={ref => (this.sections[index] = ref)} key={index}>
+                <li
+                  ref={ref => (this.sections[index] = ref)}
+                  key={index}
+                  {...classes('item')}
+                >
                   <Section
-                    key={index}
                     section={item}
                     handleClick={this.toggleSectionFocus(index)}
-                    active={true}
+                    active={index === focus}
                   >
                     {item.type === 'priority' && (
                       <List sectionId={item.id} content={item.content} />
@@ -133,7 +137,7 @@ class Tool extends Component {
                     )}
                     {!item.type && <NewSection section={item} />}
                   </Section>
-                </div>
+                </li>
               ))}
 
             <button
@@ -143,7 +147,7 @@ class Tool extends Component {
             >
               +
             </button>
-          </div>
+          </ul>
         )}
       </article>
     )
