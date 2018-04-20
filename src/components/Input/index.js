@@ -11,11 +11,14 @@ export default class Input extends Component {
     className: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.string,
+    autoFocus: PropTypes.bool,
   }
 
   state = {
     width: 0,
   }
+
+  doneAutoFocus = false
 
   componentDidMount () {
     this.setWidth()
@@ -25,6 +28,12 @@ export default class Input extends Component {
     setTimeout(this.setWidth, 300)
 
     window.addEventListener('resize', this.setWidth)
+
+    if (this.props.autoFocus && !this.doneAutoFocus) {
+      setTimeout(() => this.element.focus(), 50)
+
+      this.doneAutoFocus = true
+    }
   }
 
   componentWillUnmount () {
@@ -44,26 +53,21 @@ export default class Input extends Component {
   }
 
   setWidth = () => {
-    this.setState(
-      {
-        width: 0,
-      },
-      () => {
-        this.setState({
-          width: `${this.element.scrollWidth + 1}px`,
-        })
-      }
-    )
+    this.setState({ width: 0 }, () => {
+      this.setState({
+        width: `${this.element.scrollWidth + 1}px`,
+      })
+    })
   }
 
   render () {
-    const { className } = this.props
+    const { className, autoFocus, ...props } = this.props
     const { width } = this.state
     const styles = { width }
 
     return (
       <input
-        {...this.props}
+        {...props}
         {...classes('', '', className)}
         ref={ref => (this.element = ref)}
         onChange={this.handleChange}
