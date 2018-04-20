@@ -4,11 +4,12 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import Input from '../Input'
+import { withState } from '../../storage'
 
 import BEMHelper from 'react-bem-helper'
 const classes = new BEMHelper('sliders')
 
-export default class Sliders extends Component {
+class Sliders extends Component {
   static propTypes = {
     content: PropTypes.array,
     handleChange: PropTypes.func.isRequired,
@@ -22,31 +23,21 @@ export default class Sliders extends Component {
     autoFocus: false,
   }
 
-  handleUpdate = (index, key) => ({ target }) => {
-    const { content, handleChange } = this.props
+  handleUpdate = (id, key) => ({ target }) => {
+    const { sectionId, updateContent } = this.props
 
-    const newContent = content.map((item, i) => {
-      if (i === index) {
-        return { ...item, [key]: target.value }
-      }
-      return { ...item }
-    })
-
-    handleChange('content', newContent)
+    updateContent(sectionId, { id, [key]: target.value} );
   }
 
   addNew = () => {
-    const { content, handleChange } = this.props
+    const { sectionId, createContent } = this.props
 
-    const newItems = content.filter(item => !!item) // Not sure why I need to filter this
-    newItems.push({ from: '', to: '', value: 50 })
+    createContent(sectionId, { from: '', to: '', value: 50 })
 
     this.setState({ autoFocus: true })
     setTimeout(() => {
       this.setState({ autoFocus: false })
     }, 100)
-
-    handleChange('content', newItems)
   }
 
   render () {
@@ -57,12 +48,14 @@ export default class Sliders extends Component {
       <div {...classes('')}>
         {content && (
           <div {...classes('list')}>
-            {content.map((item, index) => (
+          {Object.keys(content)
+            .map(key => ({ id: key, ...content[key] }))
+            .map((item, index) => (
               <Fragment key={index}>
                 <span {...classes('value', 'from')}>
                   <Input
                     value={item.from}
-                    onChange={this.handleUpdate(index, 'from')}
+                    onChange={this.handleUpdate(item.id, 'from')}
                     autoFocus={autoFocus}
                   />
                 </span>
@@ -73,7 +66,7 @@ export default class Sliders extends Component {
                     min="0"
                     max="100"
                     value={item.value}
-                    onChange={this.handleUpdate(index, 'value')}
+                    onChange={this.handleUpdate(item.id, 'value')}
                     {...classes('slider')}
                   />
                   <span {...classes('indicator')} />
@@ -84,7 +77,7 @@ export default class Sliders extends Component {
                 <span {...classes('value', 'to')}>
                   <Input
                     value={item.to}
-                    onChange={this.handleUpdate(index, 'to')}
+                    onChange={this.handleUpdate(item.id, 'to')}
                   />
                 </span>
               </Fragment>
@@ -99,3 +92,5 @@ export default class Sliders extends Component {
     )
   }
 }
+
+export default withState(Sliders)
