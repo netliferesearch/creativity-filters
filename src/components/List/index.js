@@ -10,12 +10,12 @@ const classes = new BEMHelper('list')
 
 export default class List extends Component {
   static propTypes = {
-    content: PropTypes.array,
+    content: PropTypes.object,
     handleChange: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
-    content: [],
+    content: {},
   }
 
   state = {
@@ -64,23 +64,25 @@ export default class List extends Component {
       <div {...classes('')}>
         {content && (
           <ol {...classes('list')}>
-            {content.map((item, index) => (
-              <li key={index} {...classes('item')}>
-                <Input
-                  value={item.content}
-                  onChange={this.handleItemChange(index)}
-                  autoFocus={autoFocus}
-                  onKeyPress={this.handleKeyPress}
-                  {...classes('input')}
-                />
+            {Object.keys(content)
+              .map(key => ({ id: key, ...content[key] }))
+              .map((item, index) => (
+                <li key={index} {...classes('item')}>
+                  <Input
+                    value={item.content}
+                    onChange={this.handleItemChange(index)}
+                    autoFocus={autoFocus}
+                    onKeyPress={this.handleKeyPress}
+                    {...classes('input')}
+                  />
 
-                <button
-                  type="button"
-                  {...classes('delete')}
-                  onClick={this.deleteItem(index)}
-                />
-              </li>
-            ))}
+                  <button
+                    type="button"
+                    {...classes('delete')}
+                    onClick={this.deleteItem(index)}
+                  />
+                </li>
+              ))}
           </ol>
         )}
 

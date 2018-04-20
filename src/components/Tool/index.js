@@ -23,7 +23,7 @@ const SCALE = 0.8
 class Tool extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
-    sections: PropTypes.array.isRequired,
+    project: PropTypes.object.isRequired,
     setGlobalState: PropTypes.func.isRequired,
   }
 
@@ -90,19 +90,8 @@ class Tool extends Component {
     }
   }
 
-  handleChange = index => (key, value) => {
-    if (key) {
-      const { sections } = this.props
-      sections[index][key] = value
-
-      this.props.setGlobalState({
-        sections,
-      })
-    }
-  }
-
   addSection = () => {
-    const newSections = this.props.sections
+    const newSections = this.props.project.sections
 
     newSections.push({
       title: 'Title',
@@ -120,7 +109,7 @@ class Tool extends Component {
   }
 
   render () {
-    const { sections } = this.props
+    const { sections } = this.props.project
     const { focus } = this.state
 
     return (
@@ -128,43 +117,34 @@ class Tool extends Component {
         {...classes('', focus !== false && 'focus')}
         ref={el => (this.wrapper = el)}
       >
-        {sections &&
-          !!sections.length && (
+        {sections && (
           <div {...classes('content')}>
-            {sections.map((item, index) => (
-              <Section
-                key={index}
-                title={item.title}
-                type={item.type}
-                handleClick={this.toggleSectionFocus(index)}
-                active={focus === index}
-                ref={ref => (this.sections[index] = ref)}
-                handleChange={this.handleChange(index)}
-              >
-                {item.type === 'priority' && (
-                  <List
-                    content={item.content}
-                    handleChange={this.handleChange(index)}
-                  />
-                )}
-                {item.type === 'sliders' && (
-                  <Sliders
-                    content={item.content}
-                    handleChange={this.handleChange(index)}
-                  />
-                )}
-                {!item.type && (
-                  <NewSection handleChange={this.handleChange(index)} />
-                )}
-              </Section>
-            ))}
+            {Object.keys(sections)
+              .map(key => ({ id: key, ...sections[key] }))
+              .map((item, index) => (
+                <Section
+                  key={index}
+                  {...item}
+                  handleClick={this.toggleSectionFocus(index)}
+                  active={focus === index}
+                  ref={ref => (this.sections[index] = ref)}
+                >
+                  {item.type === 'priority' && (
+                    <List sectionId={item.id} content={item.content} />
+                  )}
+                  {item.type === 'sliders' && (
+                    <Sliders content={item.content} />
+                  )}
+                  {!item.type && <NewSection />}
+                </Section>
+              ))}
 
             <button
               type="button"
               {...classes('add-new')}
               onClick={this.addSection}
             >
-                +
+              +
             </button>
           </div>
         )}
