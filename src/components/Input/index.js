@@ -55,7 +55,9 @@ export default class Input extends Component {
   handleChange = event => {
     this.setWidth()
 
-    this.props.onChange(event)
+    if (this.props.onChange) {
+      this.props.onChange(event)
+    }
   }
 
   setWidth = () => {
