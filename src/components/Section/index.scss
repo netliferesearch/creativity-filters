@@ -11,7 +11,7 @@
     flex-shrink: 0;
     width: 100vw;
     min-height: 100vh;
-    padding: $spacing--small $spacing $spacing--large;
+    padding: $spacing--small $spacing $spacing--xlarge;
     background-color: color(primary);
 
     transition: transform 400ms $ease-in-quart, box-shadow 400ms ease-in;
@@ -43,10 +43,6 @@
         @include font(header, bold);
         @include font-size(large);
         margin-bottom: 1em;
-
-        @include min-width(lg) {
-            margin-top: -($spacing--large);
-        }
     }
 
     &__close {
