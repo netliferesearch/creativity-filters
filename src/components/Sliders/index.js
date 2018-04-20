@@ -42,9 +42,8 @@ export default class Sliders extends Component {
     newItems.push({ from: '', to: '', value: 50 })
 
     this.setState({ autoFocus: true })
-
     setTimeout(() => {
-      this.setState({ autoFocus: true })
+      this.setState({ autoFocus: false })
     }, 100)
 
     handleChange('content', newItems)

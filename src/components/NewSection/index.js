@@ -9,7 +9,6 @@ const classes = new BEMHelper('new-section')
 export default function Section ({ handleChange }) {
   return (
     <nav {...classes('')}>
-      <h3>What type?</h3>
       <button
         type="button"
         {...classes('option')}

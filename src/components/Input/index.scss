@@ -11,10 +11,11 @@
     background-color: transparent;
     outline: 0;
     border-bottom: $border-width--medium solid transparent;
-    min-width: 50px;
+    min-width: 75px;
     max-width: 100%;
 
-    &:focus {
+    &:focus,
+    &:invalid {
         border-color: color(primary, dark);
     }
 }

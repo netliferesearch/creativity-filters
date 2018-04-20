@@ -1,6 +1,6 @@
 import './index.css'
 
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Input from '../Input'
@@ -8,45 +8,74 @@ import Input from '../Input'
 import BEMHelper from 'react-bem-helper'
 const classes = new BEMHelper('list')
 
-export default function List ({ content, handleChange }) {
-  const handleItemChange = index => ({ target }) => {
+export default class List extends Component {
+  static propTypes = {
+    content: PropTypes.array,
+    handleChange: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    content: [],
+  }
+
+  state = {
+    autoFocus: false,
+  }
+
+  handleItemChange = index => ({ target }) => {
+    const { content, handleChange } = this.props
+
     const newItems = [...content]
     newItems[index].content = target.value
 
     handleChange('content', newItems)
   }
 
-  const addNew = () => {
+  addNew = () => {
+    const { content, handleChange } = this.props
+
     const newItems = [...content]
     newItems.push({ content: '' })
+
+    this.setState({ autoFocus: true })
+    setTimeout(() => {
+      this.setState({ autoFocus: false })
+    }, 100)
 
     handleChange('content', newItems)
   }
 
-  return (
-    <div {...classes('')}>
-      {content && (
-        <ol {...classes('list')}>
-          {content.map((item, index) => (
-            <li key={index} {...classes('item')}>
-              <Input value={item.content} onChange={handleItemChange(index)} />
-            </li>
-          ))}
-        </ol>
-      )}
+  handleKeyPress = ({ charCode }) => {
+    if (charCode === 13) {
+      this.addNew()
+    }
+  }
 
-      <button type="button" {...classes('add-new')} onClick={addNew}>
-        +
-      </button>
-    </div>
-  )
-}
+  render () {
+    const { autoFocus } = this.state
+    const { content } = this.props
 
-List.propTypes = {
-  content: PropTypes.array,
-  handleChange: PropTypes.func.isRequired,
-}
+    return (
+      <div {...classes('')}>
+        {content && (
+          <ol {...classes('list')}>
+            {content.map((item, index) => (
+              <li key={index} {...classes('item')}>
+                <Input
+                  value={item.content}
+                  onChange={this.handleItemChange(index)}
+                  autoFocus={autoFocus}
+                  onKeyPress={this.handleKeyPress}
+                />
+              </li>
+            ))}
+          </ol>
+        )}
 
-List.defaultProps = {
-  content: [],
+        <button type="button" {...classes('add-new')} onClick={this.addNew}>
+          +
+        </button>
+      </div>
+    )
+  }
 }
