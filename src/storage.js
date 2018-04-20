@@ -114,6 +114,7 @@ class Storage extends Component {
     ...store,
     createSection: this.createSection.bind(this),
     updateSection: this.updateSection.bind(this),
+    deleteSection: this.deleteSection.bind(this),
     createContent: this.createContent.bind(this),
     updateContent: this.updateContent.bind(this),
     deleteContent: this.deleteContent.bind(this),
@@ -217,6 +218,14 @@ class Storage extends Component {
     const { content, id, ...newSection } = section
 
     database.ref(`projects/${slug}/sections/${id}`).update(newSection)
+  }
+
+  deleteSection (sectionId) {
+    const slug = this.state.slug
+
+    database
+      .ref(`projects/${slug}/sections/${sectionId}`)
+      .remove()
   }
 
   createContent (sectionId, content) {
