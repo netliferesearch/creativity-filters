@@ -110,21 +110,8 @@ class Storage extends Component {
     location: PropTypes.object,
   }
 
-  setGlobalState ({ ...props }) {
-    this.setState({ ...props })
-
-    // if (props.sections) {
-    //   database.ref(`sections/${this.state.slug}`).set(props.sections)
-    // }
-
-    if (props.newProject) {
-      this.createProject(props.newProject)
-    }
-  }
-
   state = {
     ...store,
-    setGlobalState: this.setGlobalState.bind(this),
     createSection: this.createSection.bind(this),
     updateSection: this.updateSection.bind(this),
     createContent: this.createContent.bind(this),
@@ -162,10 +149,12 @@ class Storage extends Component {
 
   createProject (project) {
     const slug = slugify(project.title)
-    const sections = projectTemplate.sections.slice();
+    const sections = projectTemplate.sections.slice()
 
     // Require slug
-    if (!slug || !slug.trim()) { return }
+    if (!slug || !slug.trim()) {
+      return
+    }
 
     // Does project exist?
     database
@@ -180,23 +169,29 @@ class Storage extends Component {
             .ref(`projects/${slug}`)
             .set(project)
             .then(() => {
-
               const sectionListRef = database.ref(`projects/${slug}/sections`)
 
-              const updates = {};
-              let sectionRef, contentRef, sectionContent;
+              const updates = {}
+              let sectionRef, contentRef, sectionContent
 
-              for (let section of sections) {
-                sectionContent = section.content;
-                delete section.content;
+              for (const section of sections) {
+                sectionContent = section.content
+                delete section.content
 
                 // Add template sections
                 sectionRef = sectionListRef.push(section)
 
                 // Add template content
-                for (let content of sectionContent) {
-                  contentRef = database.ref(`projects/${slug}/sections/${sectionRef.key}/content`).push()
-                  updates[`projects/${slug}/sections/${sectionRef.key}/content/${contentRef.key}`] = content
+                for (const content of sectionContent) {
+                  contentRef = database
+                    .ref(`projects/${slug}/sections/${sectionRef.key}/content`)
+                    .push()
+
+                  const key = `projects/${slug}/sections/${
+                    sectionRef.key
+                  }/content/${contentRef.key}`
+
+                  updates[key] = content
                 }
               }
 
@@ -206,38 +201,28 @@ class Storage extends Component {
                 .then(() => {
                   window.location.href = `/${slug}`
                 })
-
-            });
+            })
         }
       })
-
-    // database.ref(`projects/${slug}`).set(project);
-    // database.ref(`sections/${slug}`).set(sections);
   }
 
   createSection (section) {
     const slug = this.state.slug
 
-    database
-      .ref(`projects/${slug}/sections`)
-      .push(section)
+    database.ref(`projects/${slug}/sections`).push(section)
   }
 
   updateSection (section) {
     const slug = this.state.slug
     const { content, id, ...newSection } = section
 
-    database
-      .ref(`projects/${slug}/sections/${id}`)
-      .update(newSection)
+    database.ref(`projects/${slug}/sections/${id}`).update(newSection)
   }
 
   createContent (sectionId, content) {
     const slug = this.state.slug
 
-    database
-      .ref(`projects/${slug}/sections/${sectionId}/content`)
-      .push(content)
+    database.ref(`projects/${slug}/sections/${sectionId}/content`).push(content)
   }
 
   updateContent (sectionId, content) {
