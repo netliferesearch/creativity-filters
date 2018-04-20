@@ -2,6 +2,7 @@ import './index.css'
 
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
+import SlotMachine from '../SlotMachine'
 import { withState } from '../../storage'
 
 import BEMHelper from 'react-bem-helper'
@@ -39,6 +40,8 @@ class Home extends Component {
             </button>
           </form>
         </div>
+
+        <SlotMachine />
       </article>
     )
   }
