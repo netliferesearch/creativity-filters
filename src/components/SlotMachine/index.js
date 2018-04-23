@@ -31,7 +31,9 @@ class SlotMachine extends Component {
 
     return (
       <div {...classes('')}>
+        {/* eslint-disable */}
         <h1 {...classes('title')}>🌈 🦄 Slot Machine 🦄 🌈</h1>
+        {/* eslint-enable */}
 
         <div {...classes('frame')}>
           <div {...classes('bar-window')}>
