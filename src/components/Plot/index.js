@@ -60,14 +60,21 @@ class Plot extends Component {
 
     updateContent(sectionId, { id: content.id, items: newContent.items })
   }
+  handleDragEnd = (content, index) => ({ clientX, clientY }) => {
+    const { sectionId, updateContent } = this.props
+    const xPos = clientX - this.plot.offsetLeft
+    const yPos = clientY - this.plot.offsetTop
+    const width = this.plot.offsetWidth
+    const height = this.plot.offsetHeight
 
-  handleDragEnd = ({ clientX, clientY }) => {
-    console.log(
-      clientX - this.plot.offsetLeft,
-      clientY - this.plot.offsetTop,
-      this.plot.offsetWidth,
-      this.plot.offsetHeight
-    )
+    const x = Math.min(100, Math.max(0, xPos * 100 / width))
+    const y = Math.min(100, Math.max(0, yPos * 100 / height))
+
+    const newContent = { ...content }
+    newContent.items[index].x = x
+    newContent.items[index].y = y
+
+    updateContent(sectionId, { id: content.id, items: newContent.items })
   }
 
   render () {
@@ -138,14 +145,15 @@ class Plot extends Component {
                     {...classes('item')}
                     key={index}
                     style={{
-                      top: `${100 - item.y}%`,
-                      left: `${100 - item.x}%`,
+                      top: `${item.y}%`,
+                      left: `${item.x}%`,
                     }}
-                    onDragEnd={this.handleDragEnd}
+                    onDragEnd={this.handleDragEnd(content, index)}
                     draggable
                   >
                     <span {...classes('drag-handle')} />
                     <Input
+                      {...classes('input', 'small')}
                       value={item.content}
                       onChange={this.updateItem(content, 'content', index)}
                     />

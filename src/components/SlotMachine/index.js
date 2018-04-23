@@ -22,39 +22,49 @@ class SlotMachine extends Component {
 
   makeProject () {
     this.props.createProject({
-      title: 'random'
+      title: 'random',
     })
   }
 
   render () {
-    const data = SlotMachineData;
+    const data = SlotMachineData
 
     return (
       <div {...classes('')}>
         <h1 {...classes('title')}>🌈 🦄 Slot Machine 🦄 🌈</h1>
+
         <div {...classes('frame')}>
           <div {...classes('bar-window')}>
-            <div {...classes('bar')}>
+            <ul {...classes('bar')}>
               {data.list1.map((item, i) => (
-                <div {...classes('bar-item')} key={i}>{item}</div>
+                <li {...classes('bar-item')} key={i}>
+                  {item}
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
+
           <div {...classes('bar-window')}>
-            <div {...classes('bar')}>
+            <ul {...classes('bar')}>
               {data.list2.map((item, i) => (
-                <div {...classes('bar-item')} key={i}>{item}</div>
+                <li {...classes('bar-item')} key={i}>
+                  {item}
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
+
           <div {...classes('bar-window')}>
-            <div {...classes('bar')}>
+            <ul {...classes('bar')}>
               {data.list3.map((item, i) => (
-                <div {...classes('bar-item')} key={i}>{item}</div>
+                <li {...classes('bar-item')} key={i}>
+                  {item}
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
+
         <form onSubmit={this.playSlotMachine}>
           <button type="submit" {...classes('action')}>
             Make magic

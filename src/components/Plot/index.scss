@@ -5,7 +5,8 @@
 
     position: relative;
     width: 80vw;
-    height: 60vh;
+    height: calc(90vh - 180px);
+    min-height: 400px;
 
     &__x {
         position: absolute;
@@ -46,18 +47,27 @@
             text-align: center;
             min-width: 40px;
         }
+
+        &--small {
+            min-width: 40px;
+        }
     }
 
     &__item {
+        @include font-size(small);
         position: absolute;
         display: flex;
         align-items: center;
+        height: $unit * 5;
+        margin-top: -($unit * 2.5);
+        margin-left: -($unit * 2.5);
     }
 
     &__drag-handle {
         cursor: grab;
         width: $unit * 5;
         height: $unit * 5;
+        margin-right: $spacing--small;
         border-radius: 50%;
         background-color: color(primary, dark);
 
