@@ -8,6 +8,13 @@
     height: calc(90vh - 180px);
     min-height: 400px;
 
+    &__add-new {
+        @include font(base, bold);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
     &__x {
         position: absolute;
         display: flex;

@@ -18,7 +18,7 @@ class Sliders extends Component {
   }
 
   static defaultProps = {
-    content: [],
+    content: {},
   }
 
   state = {

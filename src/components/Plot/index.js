@@ -26,15 +26,13 @@ class Plot extends Component {
     updateContent(sectionId, { id, [key]: target.value })
   }
 
-  addNew = () => {
+  addNewPlot = () => {
     const { sectionId, createContent } = this.props
+
     createContent(sectionId, {
-      x: ['Smart', 'Dum'],
-      y: ['Teit', 'Dust'],
-      items: [
-        { content: 'Navn', x: 20, y: 40 },
-        { content: 'Kake', x: 20, y: 40 },
-      ],
+      x: ['From', 'To'],
+      y: ['From', 'To'],
+      items: [{ content: 'Example', x: 20, y: 40 }],
     })
 
     this.setState({ autoFocus: true })
@@ -60,6 +58,16 @@ class Plot extends Component {
 
     updateContent(sectionId, { id: content.id, items: newContent.items })
   }
+
+  addItem = content => ({ target }) => {
+    const { sectionId, updateContent } = this.props
+
+    const newContent = { ...content }
+    newContent.items.push({ content: 'Name', x: 80, y: 80 })
+
+    updateContent(sectionId, { id: content.id, items: newContent.items })
+  }
+
   handleDragEnd = (content, index) => ({ clientX, clientY }) => {
     const { sectionId, updateContent } = this.props
     const xPos = clientX - this.plot.offsetLeft
@@ -75,6 +83,14 @@ class Plot extends Component {
     newContent.items[index].y = y
 
     updateContent(sectionId, { id: content.id, items: newContent.items })
+  }
+
+  componentDidMount () {
+    const { content } = this.props
+
+    if (!Object.keys(content).length) {
+      this.addNewPlot()
+    }
   }
 
   render () {
@@ -103,6 +119,14 @@ class Plot extends Component {
               key={content.id}
               ref={ref => (this.plot = ref)}
             >
+              <button
+                type="button"
+                {...classes('add-new')}
+                onClick={this.addItem(content)}
+              >
+                +
+              </button>
+
               <span {...classes('x')}>
                 <span {...classes('value', 'x')}>
                   <Input
