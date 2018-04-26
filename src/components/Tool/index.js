@@ -233,7 +233,9 @@ class Tool extends Component {
             </button>
           </ul>
         )}
-        <Toolbar active={activeIndex} bulletClick={this.toggleSectionFocus} />
+        {sections && (
+          <Toolbar active={activeIndex} bulletClick={this.toggleSectionFocus} />
+        )}
       </article>
     )
   }

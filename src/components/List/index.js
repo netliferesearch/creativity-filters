@@ -61,7 +61,6 @@ class List extends Component {
   dragging = false
   dragElement = null
   ghostElement = null
-  originalIndex = -1
 
   abortKeyPress = node => ['INPUT', 'TEXTAREA'].includes(node)
 
@@ -100,10 +99,9 @@ class List extends Component {
       this.dragging = true
     }
 
-    const dragOverElement = document.elementFromPoint(
-      event.clientX,
-      event.clientY
-    ).closest('.list__item')
+    const dragOverElement = document
+      .elementFromPoint(event.clientX, event.clientY)
+      .closest('.list__item')
 
     if (!dragOverElement) {
       return
@@ -118,34 +116,55 @@ class List extends Component {
 
     // Move ghost
     const rect = dragOverElement.getBoundingClientRect()
-    if (event.clientY - (rect.top + (rect.height / 2)) > 0) {
-      dragOverElement.parentNode.insertBefore(this.ghostElement, dragOverElement.nextSibling)
+    if (event.clientY - (rect.top + rect.height / 2) > 0) {
+      dragOverElement.parentNode.insertBefore(
+        this.ghostElement,
+        dragOverElement.nextSibling
+      )
     } else {
-      dragOverElement.parentNode.insertBefore(this.ghostElement, dragOverElement)
+      dragOverElement.parentNode.insertBefore(
+        this.ghostElement,
+        dragOverElement
+      )
     }
   }
 
-  handleDragEnd = event => {
+  handleDragEnd = index => event => {
+    const { content, sectionId, updateContent } = this.props
     const element = this.dragElement
     const ghost = this.wrapper.querySelector('.list__ghost')
+    let dropIndex = -1
 
     if (element) {
-      element.style.opacity = '1'
+      element.style.opacity = ''
       element.style.visibility = ''
       element.style.position = ''
     }
 
     if (ghost) {
-      let dropIndex = [...element.parentElement.children].indexOf(ghost)
+      dropIndex = [...element.parentElement.children].indexOf(ghost)
+
       if (dropIndex > this.originalIndex) {
         dropIndex -= 1
       }
 
-      this.setItemOrder(dropIndex, this.originalIndex)
-
       ghost.remove()
-
     }
+
+    const updatedList = [...this.list.children].map((item, index) => ({
+      id: item.id,
+      content: content[item.id].content,
+    }))
+
+    updatedList.splice(dropIndex, 0, ...updatedList.splice(index, 1))
+
+    updatedList.forEach((item, index) => {
+      updateContent(sectionId, {
+        id: item.id,
+        content: item.content,
+        sortIndex: index + 1,
+      })
+    })
 
     this.dragging = false
     this.dragElement = null
@@ -155,40 +174,6 @@ class List extends Component {
 
   allowDrop = event => {
     event.preventDefault()
-  }
-
-  setItemOrder = (newIndex, oldIndex) => {
-    const newContent = { ...this.props.content }
-    const { sectionId, updateContent } = this.props
-
-    const contentArrayLength = Object.keys(this.props.content).length
-    let arr = Object.keys(this.props.content)
-      .map((key, index) => ({
-        id: key,
-        ...this.props.content[key],
-        sortIndex: index === oldIndex ? newIndex : this.props.content[key].sortIndex || contentArrayLength + index,
-      }))
-      .sort((a, b) => {
-        return a.sortIndex - b.sortIndex
-      })
-
-      // Move!
-      let item = arr[oldIndex]
-      arr.splice(oldIndex, 1)
-
-      if (newIndex < oldIndex) {
-        arr.splice(newIndex-1, 0, item)
-      } else {
-        arr.splice(newIndex, 0, item)
-      }
-
-      arr.forEach((item, index) => {
-        newContent[item.id].sortIndex = index;
-
-        updateContent(sectionId, { id: item.id, sortIndex: index })
-      })
-
-      console.log(newContent)
   }
 
   render () {
@@ -207,10 +192,13 @@ class List extends Component {
       })
 
     return (
-      <div {...classes('')}
-        ref={ref => this.wrapper = ref}>
+      <div {...classes('')} ref={ref => (this.wrapper = ref)}>
         {contentArray && (
-          <ol {...classes('list')} onDragOver={this.allowDrop}>
+          <ol
+            {...classes('list')}
+            onDragOver={this.allowDrop}
+            ref={ref => (this.list = ref)}
+          >
             {contentArray.map((item, index) => (
               <li
                 key={index}
@@ -218,8 +206,9 @@ class List extends Component {
                 draggable
                 onDragStart={this.handleDragStart(index)}
                 onDrag={this.handleDrag}
-                onDragEnd={this.handleDragEnd}
+                onDragEnd={this.handleDragEnd(index)}
                 onMouseDown={this.handleMouseDown}
+                id={item.id}
               >
                 <Input
                   value={item.content}
