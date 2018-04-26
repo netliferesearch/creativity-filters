@@ -94,6 +94,11 @@
     }
 }
 
+html:fullscreen {
+  .section--focused {
+    @extend .section--active;
+  }
+}
 
 @keyframes section-focus {
     from {

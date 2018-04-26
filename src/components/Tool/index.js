@@ -119,11 +119,13 @@ class Tool extends Component {
   }
 
   handleResize = () => {
-    const { focus } = this.state
+    const { focus, activeIndex } = this.state
 
     if (focus || focus === 0) {
       this.setState({ focus: false })
     }
+
+    this.animateTo({ activeIndex })
   }
 
   animateTo = ({ index, speedy }) => {
@@ -195,6 +197,7 @@ class Tool extends Component {
                     section={item}
                     handleClick={this.toggleSectionFocus(index)}
                     active={index === focus}
+                    focused={index === activeIndex}
                   >
                     {item.type === 'priority' && (
                       <List sectionId={item.id} content={item.content} />
@@ -219,7 +222,8 @@ class Tool extends Component {
             </button>
           </ul>
         )}
-        <Toolbar active={activeIndex} bulletClick={this.toggleSectionFocus} />
+        <Toolbar active={activeIndex}
+                 bulletClick={this.toggleSectionFocus} />
       </article>
     )
   }
