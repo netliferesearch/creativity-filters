@@ -53,6 +53,14 @@ class List extends Component {
     }
   }
 
+  handleDragStart = event => {
+    console.log(event)
+  }
+
+  handleDrag = event => {
+    console.log('drag', event)
+  }
+
   render () {
     const { autoFocus } = this.state
     const { content } = this.props
@@ -63,8 +71,12 @@ class List extends Component {
           <ol {...classes('list')}>
             {Object.keys(content)
               .map(key => ({ id: key, ...content[key] }))
+              .sort((a, b) => a.sortIndex - b.sortIndex)
               .map((item, index) => (
-                <li key={index} {...classes('item')}>
+                <li key={index} {...classes('item')}
+                    draggable="true"
+                    onDragStart={this.handleDragStart}
+                    onDrag={this.handleDrag}>
                   <Input
                     value={item.content}
                     onChange={this.handleItemChange(item.id)}
