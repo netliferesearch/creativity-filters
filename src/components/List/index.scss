@@ -23,6 +23,13 @@
         margin-bottom: $spacing--small;
         padding-right: $spacing--large;
 
+        &--hidden {
+          // height: 0;
+          // overflow: hidden;
+          // opacity: 0;
+          // margin: 0;
+        }
+
         &:before {
             content: counter(counter) '.';
             counter-increment: counter;

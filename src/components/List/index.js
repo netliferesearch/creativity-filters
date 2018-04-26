@@ -58,7 +58,10 @@ class List extends Component {
   }
 
   abortDrag = false
-  dragElementIndex = -1
+  dragging = false
+  dragElement = null
+  ghostElement = null
+  originalIndex = -1
 
   abortKeyPress = node => ['INPUT', 'TEXTAREA'].includes(node)
 
@@ -70,39 +73,122 @@ class List extends Component {
     if (this.abortDrag) {
       event.preventDefault()
     } else {
-      const newContent = { ...this.props.content }
-      newContent.ghost = { isGhost: true, sortIndex: index }
-
-      // this.setState({
-      //   content: newContent,
-      // })
+      this.dragElement = event.target.closest('.list__item')
+      this.originalIndex = index
     }
   }
 
   handleDrag = event => {
-    // const { content } = this.props
-    // const sortIndex = 7;
-    //
-    // content['ghost'] = { isGhost: true, sortIndex: sortIndex };
-    //
-    // this.setState({
-    //   content
-    // })
+    if (!this.dragging) {
+      const element = this.dragElement
+      element.classList.add('list__item--hidden')
+
+      // Create ghost
+      const ghost = document.createElement('li')
+      ghost.classList.add('list__ghost')
+      ghost.style.height = `${element.offsetHeight}px`
+      ghost.style.display = 'none'
+      this.ghostElement = ghost
+
+      // Hide element
+      element.style.opacity = '0'
+      element.style.visibility = 'hidden'
+      element.style.position = 'absolute'
+
+      element.parentNode.insertBefore(ghost, element.nextSibling)
+
+      this.dragging = true
+    }
+
+    const dragOverElement = document.elementFromPoint(
+      event.clientX,
+      event.clientY
+    ).closest('.list__item')
+
+    if (!dragOverElement) {
+      return
+    }
+
+    // Hide Ghost when over initial element
+    if (dragOverElement === this.dragElement) {
+      this.ghostElement.style.display = 'none'
+    } else {
+      this.ghostElement.style.display = 'block'
+    }
+
+    // Move ghost
+    const rect = dragOverElement.getBoundingClientRect()
+    if (event.clientY - (rect.top + (rect.height / 2)) > 0) {
+      dragOverElement.parentNode.insertBefore(this.ghostElement, dragOverElement.nextSibling)
+    } else {
+      dragOverElement.parentNode.insertBefore(this.ghostElement, dragOverElement)
+    }
   }
 
   handleDragEnd = event => {
-    const { content } = this.props
-    const { ghost, ...newContent } = content
+    const element = this.dragElement
+    const ghost = this.wrapper.querySelector('.list__ghost')
 
-    // this.setState({
-    //   content: newContent,
-    // })
+    if (element) {
+      element.style.opacity = '1'
+      element.style.visibility = ''
+      element.style.position = ''
+    }
 
-    this.dragElementIndex = -1
+    if (ghost) {
+      let dropIndex = [...element.parentElement.children].indexOf(ghost)
+      if (dropIndex > this.originalIndex) {
+        dropIndex -= 1
+      }
+
+      this.setItemOrder(dropIndex, this.originalIndex)
+
+      ghost.remove()
+
+    }
+
+    this.dragging = false
+    this.dragElement = null
+    this.ghostElement = null
+    this.originalIndex = -1
   }
 
   allowDrop = event => {
     event.preventDefault()
+  }
+
+  setItemOrder = (newIndex, oldIndex) => {
+    const newContent = { ...this.props.content }
+    const { sectionId, updateContent } = this.props
+
+    const contentArrayLength = Object.keys(this.props.content).length
+    let arr = Object.keys(this.props.content)
+      .map((key, index) => ({
+        id: key,
+        ...this.props.content[key],
+        sortIndex: index === oldIndex ? newIndex : this.props.content[key].sortIndex || contentArrayLength + index,
+      }))
+      .sort((a, b) => {
+        return a.sortIndex - b.sortIndex
+      })
+
+      // Move!
+      let item = arr[oldIndex]
+      arr.splice(oldIndex, 1)
+
+      if (newIndex < oldIndex) {
+        arr.splice(newIndex-1, 0, item)
+      } else {
+        arr.splice(newIndex, 0, item)
+      }
+
+      arr.forEach((item, index) => {
+        newContent[item.id].sortIndex = index;
+
+        updateContent(sectionId, { id: item.id, sortIndex: index })
+      })
+
+      console.log(newContent)
   }
 
   render () {
@@ -114,24 +200,25 @@ class List extends Component {
       .map((key, index) => ({
         id: key,
         ...content[key],
-        sortIndex: content[key].sortIndex || contentArrayLength,
+        sortIndex: content[key].sortIndex || contentArrayLength + index,
       }))
       .sort((a, b) => {
         return a.sortIndex - b.sortIndex
       })
 
     return (
-      <div {...classes('')}>
+      <div {...classes('')}
+        ref={ref => this.wrapper = ref}>
         {contentArray && (
           <ol {...classes('list')} onDragOver={this.allowDrop}>
             {contentArray.map((item, index) => (
               <li
                 key={index}
                 {...classes('item')}
-                draggable="true"
-                onDragEnd={this.handleDragEnd}
+                draggable
                 onDragStart={this.handleDragStart(index)}
                 onDrag={this.handleDrag}
+                onDragEnd={this.handleDragEnd}
                 onMouseDown={this.handleMouseDown}
               >
                 <Input
