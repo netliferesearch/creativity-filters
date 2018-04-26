@@ -1,0 +1,19 @@
+@import '../../styles/helpers';
+
+.pagination {
+    $this: &;
+
+    display: flex;
+
+    &__bullet {
+      width: 8px;
+      height: 8px;
+      margin: 0 4px;
+      border-radius: 50%;
+      background-color: rgba($color-light, .5);
+
+      &--active {
+        background-color: color(primary);
+      }
+    }
+}
