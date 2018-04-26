@@ -3,18 +3,30 @@
 .toolbar {
     $this: &;
 
-    display: flex;
     position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     bottom: 3.5vh;
-    left: 10vw;
-    width: 80vw;
-    background-color: rgba(color(neutral, xdark), 0.5);
+    left: calc(50% - 100px);
+    width: 200px;
 
     &__fullscreen {
-      color: $color-light;
+        margin-right: -($spacing + 23px);
+        margin-left: $spacing;
+        color: $color-light;
+        opacity: 0.5;
+
+        &:hover,
+        &:focus {
+            opacity: 1;
+        }
     }
 
-    .pagination {
-      align-self: center;
+    &__stroke {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-miterlimit: 10;
     }
 }
