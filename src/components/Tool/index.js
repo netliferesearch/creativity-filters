@@ -166,6 +166,7 @@ class Tool extends Component {
             </button>
           </ul>
         )}
+        hej grabban
       </article>
     )
   }
