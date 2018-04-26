@@ -40,13 +40,14 @@ class Tool extends Component {
 
     this.state = {
       focus: false,
+      activeIndex: 0
     }
 
     this.sections = []
   }
 
   componentDidMount () {
-    window.addEventListener('scroll', this.handleScroll)
+    this.wrapper.addEventListener('scroll', this.handleScroll)
     window.addEventListener('wheel', this.handleMouseWheel)
     window.addEventListener('resize', this.handleResize)
     window.addEventListener('keyup', this.handleKeyUp)
@@ -66,13 +67,22 @@ class Tool extends Component {
   }
 
   componentWillUnmount () {
-    window.removeEventListener('scroll', this.handleScroll)
+    this.wrapper.removeEventListener('scroll', this.handleScroll)
     window.removeEventListener('wheel', this.handleMouseWheel)
     window.removeEventListener('resize', this.handleResize)
   }
 
   handleScroll = event => {
-    // const center = 
+    const centerX = this.wrapper.offsetWidth / 2
+    const centerY = this.wrapper.offsetHeight / 2
+
+    const element = document.elementFromPoint(centerX, centerY).closest('.tool__item');
+
+    if(!element) { return }
+
+    this.setState({
+      activeIndex: Math.max([...element.parentElement.children].indexOf(element), 0)
+    })
   }
 
   handleMouseWheel = event => {
@@ -164,7 +174,7 @@ class Tool extends Component {
 
   render () {
     const { sections } = this.props.project
-    const { focus } = this.state
+    const { focus, activeIndex } = this.state
 
     return (
       <article
@@ -209,7 +219,7 @@ class Tool extends Component {
             </button>
           </ul>
         )}
-        <Toolbar active={focus} bulletClick={this.toggleSectionFocus} />
+        <Toolbar active={activeIndex} bulletClick={this.toggleSectionFocus} />
       </article>
     )
   }
