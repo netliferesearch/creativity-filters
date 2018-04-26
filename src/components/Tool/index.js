@@ -155,6 +155,7 @@ class Tool extends Component {
       duration,
     })
 
+    // TODO: Add window.innerWidth to this formula..
     setTimeout(
       () => this.setState({ focus: index }),
       duration / (speedy ? 5 : 3)

@@ -9,17 +9,48 @@
     min-height: 100vh;
 
     &__content {
-        padding: $spacing;
+        text-align: center;
+        width: 600px;
+        max-width: 100%;
+        padding: $spacing--large;
         background-color: color(primary);
     }
 
-    .slot-machine {
-      margin-top: $spacing--large;
+    &__title {
+        @include font-size(medium);
     }
 
     &__input {
+        @include font-size(small);
         display: block;
         width: 100%;
-        padding: $spacing--small;
+        padding: $spacing--medium $spacing;
+        border: 0;
+    }
+
+    &__form {
+        display: flex;
+        width: 100%;
+    }
+
+    &__label {
+        width: 100%;
+    }
+
+    &__action {
+        @include font(base, bold);
+        @include font-size(small);
+        padding: 0 $spacing--medium;
+        background-color: color(primary, dark);
+    }
+
+    &__description {
+        @include font-size(small);
+        margin-top: $spacing;
+        margin-bottom: 0;
+    }
+
+    .slot-machine {
+        margin-top: $spacing--large;
     }
 }
