@@ -10,7 +10,10 @@
     justify-content: center;
     flex-shrink: 0;
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: $spacing--small $spacing--medium $spacing;
     background-color: color(primary);
 
@@ -99,9 +102,9 @@
 }
 
 html:fullscreen {
-  .section--focused {
-    @extend .section--active;
-  }
+    .section--focused {
+        @extend .section--active;
+    }
 }
 
 @keyframes section-focus {

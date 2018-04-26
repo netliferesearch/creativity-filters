@@ -14,6 +14,7 @@ class Sliders extends Component {
     content: PropTypes.object,
     sectionId: PropTypes.string.isRequired,
     updateContent: PropTypes.func.isRequired,
+    deleteContent: PropTypes.func.isRequired,
     createContent: PropTypes.func.isRequired,
   }
 
@@ -38,6 +39,12 @@ class Sliders extends Component {
     setTimeout(() => {
       this.setState({ autoFocus: false })
     }, 100)
+  }
+
+  deleteItem = id => () => {
+    const { sectionId, deleteContent } = this.props
+
+    deleteContent(sectionId, id)
   }
 
   render () {
@@ -79,15 +86,19 @@ class Sliders extends Component {
                       value={item.to}
                       onChange={this.handleUpdate(item.id, 'to')}
                     />
+
+                    <button
+                      type="button"
+                      {...classes('delete')}
+                      onClick={this.deleteItem(item.id)}
+                    />
                   </span>
                 </Fragment>
               ))}
           </div>
         )}
 
-        <button type="button" {...classes('add-new')} onClick={this.addNew}>
-          <span {...classes('add-new-icon')} /> Add slider
-        </button>
+        <button type="button" {...classes('add-new')} onClick={this.addNew} />
       </div>
     )
   }

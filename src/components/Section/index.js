@@ -16,6 +16,7 @@ class Section extends PureComponent {
     handleClick: PropTypes.func.isRequired,
     updateSection: PropTypes.func.isRequired,
     active: PropTypes.bool,
+    focused: PropTypes.bool,
   }
 
   handleSectionKeyPress = ({ charCode }) => {
@@ -27,7 +28,14 @@ class Section extends PureComponent {
   }
 
   render () {
-    const { children, section, handleClick, active, focused, updateSection } = this.props
+    const {
+      children,
+      section,
+      handleClick,
+      active,
+      focused,
+      updateSection,
+    } = this.props
 
     const sectionProps = active
       ? {}
@@ -41,7 +49,11 @@ class Section extends PureComponent {
     const buttonProps = active ? { onClick: handleClick } : { tabIndex: -1 }
 
     return (
-      <section {...classes('', { active, focused })} {...sectionProps} id={section.id}>
+      <section
+        {...classes('', { active, focused })}
+        {...sectionProps}
+        id={section.id}
+      >
         <button {...classes('close')} type="button" {...buttonProps}>
           <span {...classes('close-icon')} />
         </button>
