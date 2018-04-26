@@ -10,6 +10,7 @@ import List from '../List'
 import Sliders from '../Sliders'
 import Plot from '../Plot'
 import NewSection from '../NewSection'
+import Toolbar from '../Toolbar';
 
 import getPosition from '../../helpers/getPosition'
 import scrollTo from '../../helpers/scrollTo'
@@ -166,7 +167,8 @@ class Tool extends Component {
             </button>
           </ul>
         )}
-        hej grabban
+
+        <Toolbar></Toolbar>
       </article>
     )
   }

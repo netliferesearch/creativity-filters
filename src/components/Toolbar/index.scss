@@ -1,39 +1,15 @@
 @import '../../styles/helpers';
 
-.tool {
+.toolbar {
     $this: &;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
 
-    &__content {
-        display: flex;
-        transform: scale(0.8);
+    position: fixed;
+    bottom: 40px;
 
-        &:after {
-            content: '';
-            width: $spacing / 2;
-            flex-shrink: 0;
-        }
-    }
+    width: 100%;
+    text-align: center;
 
-    &__item {
-        &:not(:last-child) {
-            margin-right: $spacing--small;
-        }
-    }
-
-    &__add-new {
-        @include font-size(large);
-        align-self: center;
-        width: 13vw;
-        height: 13vw;
-        flex-shrink: 0;
-        margin: $spacing;
-        color: $color-light;
-        background-color: rgba(color(neutral, xdark), 0.5);
-    }
-
-    &--focus {
-        overflow-x: hidden;
+    &__fullscreen {
+      color: $color-light;
     }
 }
