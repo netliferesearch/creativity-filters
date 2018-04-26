@@ -92,8 +92,8 @@
 
     &__drag-handle {
         cursor: grab;
-        width: $unit * 5;
-        height: $unit * 5;
+        width: $unit * 4;
+        height: $unit * 4;
         margin-right: $spacing--small;
         border-radius: 50%;
         background-color: color(primary, dark);

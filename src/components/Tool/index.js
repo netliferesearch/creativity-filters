@@ -53,17 +53,20 @@ class Tool extends Component {
     window.addEventListener('keyup', this.handleKeyUp)
   }
 
-  componentDidUpdate () {
-    // TODO: Remove!!!!
-    // const { sections } = this.props.project
-    //
-    // if (
-    //   sections &&
-    //   Object.keys(sections).length >= 1 &&
-    //   this.state.focus === false
-    // ) {
-    //   this.toggleSectionFocus(0)()
-    // }
+  componentDidUpdate (prevProps) {
+    // Need to set focus to false if a section has been deleted
+    const { focus } = this.state
+    const prevSections = prevProps.project.sections || {}
+    const sections = this.props.project.sections || {}
+
+    if (
+      Object.keys(prevSections).length !== Object.keys(sections).length &&
+      focus !== false
+    ) {
+      this.setState({
+        focus: false,
+      })
+    }
   }
 
   componentWillUnmount () {
@@ -152,6 +155,7 @@ class Tool extends Component {
       duration,
     })
 
+    // TODO: Add window.innerWidth to this formula..
     setTimeout(
       () => this.setState({ focus: index }),
       duration / (speedy ? 5 : 3)

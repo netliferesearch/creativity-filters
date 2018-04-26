@@ -75,6 +75,16 @@
         }
     }
 
+    &__menu {
+        &#{$this}__menu {
+            display: none;
+
+            position: absolute;
+            top: $spacing;
+            right: $spacing + $unit * 7;
+        }
+    }
+
     &__close-icon {
         display: block;
         transform: rotate(45deg);
@@ -98,12 +108,18 @@
             animation: section-close-in 700ms $ease-out-quart both;
             animation-delay: 250ms;
         }
+
+        #{$this}__menu {
+            display: block;
+            animation: section-close-in 700ms $ease-out-quart both;
+            animation-delay: 250ms;
+        }
     }
 }
 
 html:fullscreen {
     .section--focused {
-        @extend .section--active;
+        // @extend .section--active;
     }
 }
 

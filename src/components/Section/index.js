@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import Input from '../Input'
+import Menu from '../Menu'
 import { withState } from '../../storage'
 
 import BEMHelper from 'react-bem-helper'
@@ -15,6 +16,7 @@ class Section extends PureComponent {
     children: PropTypes.any.isRequired,
     handleClick: PropTypes.func.isRequired,
     updateSection: PropTypes.func.isRequired,
+    deleteSection: PropTypes.func.isRequired,
     active: PropTypes.bool,
     focused: PropTypes.bool,
   }
@@ -25,6 +27,12 @@ class Section extends PureComponent {
 
       handleClick()
     }
+  }
+
+  deleteSection = () => {
+    const { section, deleteSection } = this.props
+
+    deleteSection(section.id)
   }
 
   render () {
@@ -57,6 +65,12 @@ class Section extends PureComponent {
         <button {...classes('close')} type="button" {...buttonProps}>
           <span {...classes('close-icon')} />
         </button>
+
+        <Menu {...classes('menu')}>
+          <button type="button" onClick={this.deleteSection}>
+            Delete
+          </button>
+        </Menu>
 
         <h2 {...classes('title')}>
           <Input
