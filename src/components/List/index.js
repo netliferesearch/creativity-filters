@@ -27,7 +27,6 @@ class List extends Component {
 
     this.state = {
       autoFocus: false,
-      content: props.content,
     }
   }
 
@@ -71,17 +70,17 @@ class List extends Component {
     if (this.abortDrag) {
       event.preventDefault()
     } else {
-      const newContent = { ...this.state.content }
-      newContent.ghost = { isGhost: true, sortIndex: index };
+      const newContent = { ...this.props.content }
+      newContent.ghost = { isGhost: true, sortIndex: index }
 
-      this.setState({
-        content: newContent
-      })
+      // this.setState({
+      //   content: newContent,
+      // })
     }
   }
 
   handleDrag = event => {
-    // const { content } = this.state
+    // const { content } = this.props
     // const sortIndex = 7;
     //
     // content['ghost'] = { isGhost: true, sortIndex: sortIndex };
@@ -92,12 +91,12 @@ class List extends Component {
   }
 
   handleDragEnd = event => {
-    const { content } = this.state
+    const { content } = this.props
     const { ghost, ...newContent } = content
 
-    this.setState({
-      content: newContent
-    })
+    // this.setState({
+    //   content: newContent,
+    // })
 
     this.dragElementIndex = -1
   }
@@ -107,11 +106,16 @@ class List extends Component {
   }
 
   render () {
-    const { content, autoFocus } = this.state
+    const { autoFocus } = this.state
+    const { content } = this.props
     const contentArrayLength = Object.keys(content).length
 
     const contentArray = Object.keys(content)
-      .map((key, index) => ({ id: key, ...content[key], sortIndex: content[key].sortIndex || contentArrayLength }))
+      .map((key, index) => ({
+        id: key,
+        ...content[key],
+        sortIndex: content[key].sortIndex || contentArrayLength,
+      }))
       .sort((a, b) => {
         return a.sortIndex - b.sortIndex
       })
@@ -119,35 +123,32 @@ class List extends Component {
     return (
       <div {...classes('')}>
         {contentArray && (
-          <ol {...classes('list')}
-            onDragOver={this.allowDrop}>
-            {contentArray.map((item, index) => {
-                if (item.isGhost) {
-                  return <li key={index}
-                             {...classes('ghost')} />
-                } else {
-                  return <li key={index} {...classes('item')}
-                      draggable="true"
-                      onDragEnd={this.handleDragEnd}
-                      onDragStart={this.handleDragStart(index)}
-                      onDrag={this.handleDrag}
-                      onMouseDown={this.handleMouseDown}>
-                    <Input
-                      value={item.content}
-                      onChange={this.handleItemChange(item.id)}
-                      autoFocus={autoFocus}
-                      onKeyPress={this.handleKeyPress}
-                      {...classes('input')}
-                    />
+          <ol {...classes('list')} onDragOver={this.allowDrop}>
+            {contentArray.map((item, index) => (
+              <li
+                key={index}
+                {...classes('item')}
+                draggable="true"
+                onDragEnd={this.handleDragEnd}
+                onDragStart={this.handleDragStart(index)}
+                onDrag={this.handleDrag}
+                onMouseDown={this.handleMouseDown}
+              >
+                <Input
+                  value={item.content}
+                  onChange={this.handleItemChange(item.id)}
+                  autoFocus={autoFocus}
+                  onKeyPress={this.handleKeyPress}
+                  {...classes('input')}
+                />
 
-                    <button
-                      type="button"
-                      {...classes('delete')}
-                      onClick={this.deleteItem(item.id)}
-                    />
-                  </li>
-                }
-              })}
+                <button
+                  type="button"
+                  {...classes('delete')}
+                  onClick={this.deleteItem(item.id)}
+                />
+              </li>
+            ))}
           </ol>
         )}
 
