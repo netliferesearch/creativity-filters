@@ -80,8 +80,9 @@ class Tool extends Component {
   abortKeyPress = node => ['INPUT', 'TEXTAREA'].includes(node)
 
   handleKeyUp = event => {
+    const { focus } = this.state
+
     if (event.keyCode === 37 && !this.abortKeyPress(event.target.nodeName)) {
-      const { focus } = this.state
       const prev = Math.max(focus - 1, 0)
       if (prev !== focus) {
         event.preventDefault()
@@ -91,12 +92,13 @@ class Tool extends Component {
       event.keyCode === 39 &&
       !this.abortKeyPress(event.target.nodeName)
     ) {
-      const { focus } = this.state
       const prev = Math.min(focus + 1, this.sections.length - 1)
       if (prev !== focus) {
         event.preventDefault()
         this.toggleSectionFocus(prev)()
       }
+    } else if (event.keyCode === 27 && focus !== false) {
+      this.toggleSectionFocus(focus)()
     }
   }
 
@@ -201,7 +203,7 @@ class Tool extends Component {
             </button>
           </ul>
         )}
-        <Toolbar active={focus} bulletClick={this.toggleSectionFocus}/>
+        <Toolbar active={focus} bulletClick={this.toggleSectionFocus} />
       </article>
     )
   }
