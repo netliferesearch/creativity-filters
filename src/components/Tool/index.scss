@@ -11,6 +11,8 @@
 
 
     &__content {
+        position: relative;
+        z-index: 2;
         display: flex;
         transform: scale(0.8);
 
@@ -22,6 +24,7 @@
     }
 
     &__item {
+
         &:not(:last-child) {
             margin-right: $spacing--small;
         }
