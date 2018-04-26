@@ -6,14 +6,15 @@
     display: flex;
 
     &__bullet {
-      width: 16px;
-      height: 16px;
-      margin: 0 $spacing--xsmall;
-      border-radius: 50%;
-      background-color: rgba($color-light, .5);
+        width: 10px;
+        height: 10px;
+        margin: 0 $spacing--xsmall;
+        border-radius: 50%;
+        opacity: 0.3;
+        background-color: $color-light;
 
-      &--active {
-        background-color: color(primary);
-      }
+        &--active {
+            opacity: 0.8;
+        }
     }
 }
