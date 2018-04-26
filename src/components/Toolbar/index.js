@@ -66,11 +66,8 @@ class Toolbar extends PureComponent {
         type="button"
         {...classes('fullscreen')}
         onClick={this.toggleFullscreen}
-      >
-      Fullscreen
-
-      <Pagination></Pagination>
-      </button>
+      >Fullscreen</button>
+      <Pagination {...this.props} />
     </nav>
   }
 }
