@@ -1,7 +1,7 @@
 h1,
 h2,
 h3 {
-    @include hyphens;
+    // @include hyphens;
     @include font(header, bold);
     margin: 0;
     margin-bottom: 1em;
