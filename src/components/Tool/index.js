@@ -104,7 +104,7 @@ class Tool extends Component {
         this.toggleSectionFocus(prev)()
       }
     } else if (event.keyCode === 27 && focus !== false) {
-      this.toggleSectionFocus(focus)()
+      this.toggleSectionFocus(false)()
     }
   }
 
