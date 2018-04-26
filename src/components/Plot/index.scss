@@ -4,9 +4,13 @@
     $this: &;
 
     position: relative;
-    width: 80vw;
+    width: 100%;
     height: calc(90vh - 180px);
     min-height: 400px;
+
+    @include min-width(md) {
+        width: 80vw;
+    }
 
     &__add-new {
         @include font(base, bold);
@@ -50,13 +54,14 @@
     }
 
     &__input {
+        min-width: 40px;
+
         &--y {
             text-align: center;
-            min-width: 40px;
         }
 
         &--small {
-            min-width: 40px;
+            min-width: 45px;
         }
 
         &:focus ~ #{$this}__delete {
@@ -78,6 +83,10 @@
             #{$this}__delete {
                 opacity: 1;
             }
+        }
+
+        &--swap {
+            // TODO...
         }
     }
 

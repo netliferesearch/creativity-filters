@@ -11,10 +11,14 @@
     flex-shrink: 0;
     width: 100vw;
     min-height: 100vh;
-    padding: $spacing--small $spacing $spacing--xlarge;
+    padding: $spacing--small $spacing--medium $spacing;
     background-color: color(primary);
 
     transition: transform 400ms $ease-in-quart, box-shadow 400ms ease-in;
+
+    @include min-width(md) {
+        padding: $spacing--small $spacing $spacing--xlarge;
+    }
 
     &[role='button'] {
         cursor: pointer;

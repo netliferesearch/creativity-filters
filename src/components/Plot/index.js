@@ -72,6 +72,22 @@ class Plot extends Component {
     updateContent(sectionId, { id: content.id, items: newContent.items })
   }
 
+  abortDrag = false
+
+  handleMouseDown = event => {
+    if (!event.target.classList.contains('plot__drag-handle')) {
+      this.abortDrag = true
+    } else {
+      this.abortDrag = false
+    }
+  }
+
+  handleDragStart = event => {
+    if (this.abortDrag) {
+      event.preventDefault()
+    }
+  }
+
   handleDragEnd = (content, index) => event => {
     const { clientX, clientY } = event
     const { sectionId, updateContent } = this.props
@@ -114,19 +130,6 @@ class Plot extends Component {
 
   render () {
     const { content } = this.props
-
-    /*
-    {
-      id: {
-        x: ['Smart', 'Dum'],
-        y: ['Teit', 'Dust'],
-        items: [
-          { content: 'Navn', x: 20, y: 40 },
-          { content: 'Kake', x: 20, y: 40 },
-        ],
-      },
-    }
-    */
 
     return (
       <Fragment>
@@ -187,12 +190,14 @@ class Plot extends Component {
                 <ul {...classes('items')}>
                   {content.items.map((item, index) => (
                     <li
-                      {...classes('item')}
+                      {...classes('item', item.x > 80 && 'swap')}
                       key={index}
                       style={{
                         top: `${item.y}%`,
                         left: `${item.x}%`,
                       }}
+                      onMouseDown={this.handleMouseDown}
+                      onDragStart={this.handleDragStart}
                       onDragEnd={this.handleDragEnd(content, index)}
                       draggable
                     >
