@@ -46,6 +46,7 @@ class Tool extends Component {
   }
 
   componentDidMount () {
+    window.addEventListener('scroll', this.handleScroll)
     window.addEventListener('wheel', this.handleMouseWheel)
     window.addEventListener('resize', this.handleResize)
     window.addEventListener('keyup', this.handleKeyUp)
@@ -65,8 +66,13 @@ class Tool extends Component {
   }
 
   componentWillUnmount () {
+    window.removeEventListener('scroll', this.handleScroll)
     window.removeEventListener('wheel', this.handleMouseWheel)
     window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleScroll = event => {
+    // const center = 
   }
 
   handleMouseWheel = event => {
