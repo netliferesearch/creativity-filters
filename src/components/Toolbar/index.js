@@ -3,7 +3,8 @@ import './index.css'
 import React, { PureComponent } from 'react'
 // import PropTypes from 'prop-types'
 
-// import { withState } from '../../storage'
+import { withState } from '../../storage'
+import Pagination from '../Pagination'
 //
 // import getPosition from '../../helpers/getPosition'
 // import scrollTo from '../../helpers/scrollTo'
@@ -12,7 +13,7 @@ import BEMHelper from 'react-bem-helper'
 
 const classes = new BEMHelper('toolbar')
 
-export default class Toolbar extends PureComponent {
+class Toolbar extends PureComponent {
   static propTypes = {
     // ...
   }
@@ -63,10 +64,15 @@ export default class Toolbar extends PureComponent {
     return <nav {...classes('')}>
       <button
         type="button"
+        {...classes('fullscreen')}
         onClick={this.toggleFullscreen}
       >
       Fullscreen
+
+      <Pagination></Pagination>
       </button>
     </nav>
   }
 }
+
+export default withState(Toolbar)
