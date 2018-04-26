@@ -11,6 +11,13 @@
         counter-reset: counter;
     }
 
+    &__ghost {
+      width: 100%;
+      height: 32.8px;
+      margin-bottom: $spacing--small;
+      background-color: rgba(color(neutral, xdark), 0.1);
+    }
+
     &__item {
         position: relative;
         margin-bottom: $spacing--small;
