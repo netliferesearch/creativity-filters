@@ -23,13 +23,21 @@ class Pagination extends PureComponent {
 
 
   render () {
-    return <nav {...classes('')}>
-      <button {...classes('bullet', 'active')}></button>
-      <button {...classes('bullet')}></button>
-      <button {...classes('bullet')}></button>
-      <button {...classes('bullet')}></button>
-      <button {...classes('bullet')}></button>
-    </nav>
+    const { sections } = this.props.project
+
+    if(sections) {
+      return <nav {...classes('')}>
+        {Object.keys(sections)
+          .map(key => ({ id: key, ...sections[key] }))
+          .map((item, index) => (
+            <button {...classes('bullet', this.props.active === index && 'active')}
+                    onClick={this.props.bulletClick(index)}
+                    key={index}></button>
+        ))}
+      </nav>
+    }
+
+    return null
   }
 }
 

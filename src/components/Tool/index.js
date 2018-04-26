@@ -201,7 +201,7 @@ class Tool extends Component {
             </button>
           </ul>
         )}
-        <Toolbar />
+        <Toolbar active={focus} bulletClick={this.toggleSectionFocus}/>
       </article>
     )
   }
