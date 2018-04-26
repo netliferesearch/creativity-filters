@@ -23,37 +23,39 @@ class Toolbar extends PureComponent {
   }
 
   enterFullscreen (el) {
-    const element = el || document.documentElement;
+    const element = el || document.documentElement
 
-    if(element.requestFullscreen) {
+    if (element.requestFullscreen) {
       element.requestFullscreen()
-    } else if(element.mozRequestFullScreen) {
+    } else if (element.mozRequestFullScreen) {
       element.mozRequestFullScreen()
-    } else if(element.webkitRequestFullscreen) {
+    } else if (element.webkitRequestFullscreen) {
       element.webkitRequestFullscreen()
-    } else if(element.msRequestFullscreen) {
+    } else if (element.msRequestFullscreen) {
       element.msRequestFullscreen()
     }
-  };
+  }
 
   exitFullscreen () {
-    if(document.exitFullscreen) {
+    if (document.exitFullscreen) {
       document.exitFullscreen()
-    } else if(document.mozCancelFullScreen) {
+    } else if (document.mozCancelFullScreen) {
       document.mozCancelFullScreen()
-    } else if(document.webkitExitFullscreen) {
+    } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen()
     }
-  };
+  }
 
   isFullscreen () {
-    return !!(document.FullscreenElement ||
-           document.mozFullscreenElement ||
-           document.webkitFullscreenElement);
+    return !!(
+      document.FullscreenElement ||
+      document.mozFullscreenElement ||
+      document.webkitFullscreenElement
+    )
   }
 
   toggleFullscreen = () => {
-    if(this.isFullscreen()) {
+    if (this.isFullscreen()) {
       this.exitFullscreen()
     } else {
       this.enterFullscreen()
@@ -61,14 +63,19 @@ class Toolbar extends PureComponent {
   }
 
   render () {
-    return <nav {...classes('')}>
-      <button
-        type="button"
-        {...classes('fullscreen')}
-        onClick={this.toggleFullscreen}
-      >Fullscreen</button>
-      <Pagination {...this.props} />
-    </nav>
+    return (
+      <nav {...classes('')}>
+        <Pagination {...this.props} />
+
+        <button
+          type="button"
+          {...classes('fullscreen')}
+          onClick={this.toggleFullscreen}
+        >
+          Fullscreen
+        </button>
+      </nav>
+    )
   }
 }
 

@@ -4,9 +4,13 @@
     $this: &;
 
     position: relative;
-    width: 80vw;
+    width: 100%;
     height: calc(90vh - 180px);
     min-height: 400px;
+
+    @include min-width(md) {
+        width: 80vw;
+    }
 
     &__add-new {
         @include font(base, bold);
@@ -50,13 +54,18 @@
     }
 
     &__input {
+        min-width: 40px;
+
         &--y {
             text-align: center;
-            min-width: 40px;
         }
 
         &--small {
-            min-width: 40px;
+            min-width: 45px;
+        }
+
+        &:focus ~ #{$this}__delete {
+            opacity: 1;
         }
     }
 
@@ -68,6 +77,17 @@
         height: $unit * 5;
         margin-top: -($unit * 2.5);
         margin-left: -($unit * 2.5);
+        padding-right: $unit * 4;
+
+        &:hover {
+            #{$this}__delete {
+                opacity: 1;
+            }
+        }
+
+        &--swap {
+            // TODO...
+        }
     }
 
     &__drag-handle {
@@ -80,6 +100,21 @@
 
         &:active {
             cursor: grabbing;
+        }
+    }
+
+    &__delete {
+        opacity: 0;
+
+        position: absolute;
+        top: calc(50% - 1px);
+        right: 0;
+        transform: translateY(-50%);
+
+        &:before {
+            display: block;
+            content: '+';
+            transform: rotate(45deg);
         }
     }
 }

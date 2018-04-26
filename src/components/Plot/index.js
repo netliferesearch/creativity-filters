@@ -34,11 +34,6 @@ class Plot extends Component {
       y: ['From', 'To'],
       items: [{ content: 'Example', x: 20, y: 40 }],
     })
-
-    this.setState({ autoFocus: true })
-    setTimeout(() => {
-      this.setState({ autoFocus: false })
-    }, 100)
   }
 
   updateAxis = (content, axis, index) => ({ target }) => {
@@ -63,12 +58,38 @@ class Plot extends Component {
     const { sectionId, updateContent } = this.props
 
     const newContent = { ...content }
-    newContent.items.push({ content: 'Name', x: 80, y: 80 })
+
+    if (!newContent.items) {
+      newContent.items = []
+    }
+
+    newContent.items.push({
+      content: '',
+      x: 70 + Math.round(Math.random() * 25),
+      y: 70 + Math.round(Math.random() * 25),
+    })
 
     updateContent(sectionId, { id: content.id, items: newContent.items })
   }
 
-  handleDragEnd = (content, index) => ({ clientX, clientY }) => {
+  abortDrag = false
+
+  handleMouseDown = event => {
+    if (!event.target.classList.contains('plot__drag-handle')) {
+      this.abortDrag = true
+    } else {
+      this.abortDrag = false
+    }
+  }
+
+  handleDragStart = event => {
+    if (this.abortDrag) {
+      event.preventDefault()
+    }
+  }
+
+  handleDragEnd = (content, index) => event => {
+    const { clientX, clientY } = event
     const { sectionId, updateContent } = this.props
     const xPos = clientX - this.plot.offsetLeft
     const yPos = clientY - this.plot.offsetTop
@@ -82,7 +103,17 @@ class Plot extends Component {
     newContent.items[index].x = x
     newContent.items[index].y = y
 
+    // console.log(event.target.style.top )
+    event.target.style.left = `${x}%`
+    event.target.style.top = `${y}%`
+
     updateContent(sectionId, { id: content.id, items: newContent.items })
+  }
+
+  deleteItem = (content, index) => () => {
+    const { sectionId, updateContent } = this.props
+    const newItems = [...content.items.filter((item, i) => i !== index)]
+    updateContent(sectionId, { id: content.id, items: newItems })
   }
 
   componentDidMount () {
@@ -93,21 +124,12 @@ class Plot extends Component {
     }
   }
 
+  allowDrop = event => {
+    event.preventDefault()
+  }
+
   render () {
     const { content } = this.props
-
-    /*
-    {
-      id: {
-        x: ['Smart', 'Dum'],
-        y: ['Teit', 'Dust'],
-        items: [
-          { content: 'Navn', x: 20, y: 40 },
-          { content: 'Kake', x: 20, y: 40 },
-        ],
-      },
-    }
-    */
 
     return (
       <Fragment>
@@ -118,6 +140,7 @@ class Plot extends Component {
               {...classes('')}
               key={content.id}
               ref={ref => (this.plot = ref)}
+              onDragOver={this.allowDrop}
             >
               <button
                 type="button"
@@ -163,27 +186,37 @@ class Plot extends Component {
                 </span>
               </span>
 
-              <ul {...classes('items')}>
-                {content.items.map((item, index) => (
-                  <li
-                    {...classes('item')}
-                    key={index}
-                    style={{
-                      top: `${item.y}%`,
-                      left: `${item.x}%`,
-                    }}
-                    onDragEnd={this.handleDragEnd(content, index)}
-                    draggable
-                  >
-                    <span {...classes('drag-handle')} />
-                    <Input
-                      {...classes('input', 'small')}
-                      value={item.content}
-                      onChange={this.updateItem(content, 'content', index)}
-                    />
-                  </li>
-                ))}
-              </ul>
+              {content.items && (
+                <ul {...classes('items')}>
+                  {content.items.map((item, index) => (
+                    <li
+                      {...classes('item', item.x > 80 && 'swap')}
+                      key={index}
+                      style={{
+                        top: `${item.y}%`,
+                        left: `${item.x}%`,
+                      }}
+                      onMouseDown={this.handleMouseDown}
+                      onDragStart={this.handleDragStart}
+                      onDragEnd={this.handleDragEnd(content, index)}
+                      draggable
+                    >
+                      <span {...classes('drag-handle')} />
+                      <Input
+                        {...classes('input', 'small')}
+                        value={item.content}
+                        autoFocus={item.content === ''}
+                        onChange={this.updateItem(content, 'content', index)}
+                      />
+                      <button
+                        type="button"
+                        {...classes('delete')}
+                        onClick={this.deleteItem(content, index)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))}
       </Fragment>
