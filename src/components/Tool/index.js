@@ -10,7 +10,7 @@ import List from '../List'
 import Sliders from '../Sliders'
 import Plot from '../Plot'
 import NewSection from '../NewSection'
-import Toolbar from '../Toolbar';
+import Toolbar from '../Toolbar'
 
 import getPosition from '../../helpers/getPosition'
 import scrollTo from '../../helpers/scrollTo'
@@ -46,7 +46,9 @@ class Tool extends Component {
   }
 
   componentDidMount () {
+    window.addEventListener('wheel', this.handleMouseWheel)
     window.addEventListener('resize', this.handleResize)
+    window.addEventListener('keyup', this.handleKeyUp)
   }
 
   componentDidUpdate () {
@@ -55,7 +57,7 @@ class Tool extends Component {
     //
     // if (
     //   sections &&
-    //   Object.keys(sections).length === 1 &&
+    //   Object.keys(sections).length >= 1 &&
     //   this.state.focus === false
     // ) {
     //   this.toggleSectionFocus(0)()
@@ -63,7 +65,39 @@ class Tool extends Component {
   }
 
   componentWillUnmount () {
+    window.removeEventListener('wheel', this.handleMouseWheel)
     window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleMouseWheel = event => {
+    if (event.deltaY && this.state.focus === false) {
+      event.preventDefault()
+      const scrollPos = this.wrapper.scrollLeft
+      this.wrapper.scrollLeft = scrollPos + event.deltaY
+    }
+  }
+
+  abortKeyPress = node => ['INPUT', 'TEXTAREA'].includes(node)
+
+  handleKeyUp = event => {
+    if (event.keyCode === 37 && !this.abortKeyPress(event.target.nodeName)) {
+      const { focus } = this.state
+      const prev = Math.max(focus - 1, 0)
+      if (prev !== focus) {
+        event.preventDefault()
+        this.toggleSectionFocus(prev)()
+      }
+    } else if (
+      event.keyCode === 39 &&
+      !this.abortKeyPress(event.target.nodeName)
+    ) {
+      const { focus } = this.state
+      const prev = Math.min(focus + 1, this.sections.length - 1)
+      if (prev !== focus) {
+        event.preventDefault()
+        this.toggleSectionFocus(prev)()
+      }
+    }
   }
 
   handleResize = () => {
@@ -167,8 +201,7 @@ class Tool extends Component {
             </button>
           </ul>
         )}
-
-        <Toolbar></Toolbar>
+        <Toolbar />
       </article>
     )
   }
