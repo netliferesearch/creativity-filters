@@ -62,7 +62,6 @@ export default class Input extends Component {
 
   setWidth = () => {
     this.setState({ width: 0 }, () => {
-      console.log(this.element.scrollWidth)
       this.setState({
         width: `${this.element.scrollWidth + 1}px`,
       })

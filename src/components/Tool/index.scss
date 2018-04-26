@@ -24,7 +24,6 @@
     }
 
     &__item {
-
         &:not(:last-child) {
             margin-right: $spacing--small;
         }
