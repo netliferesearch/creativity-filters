@@ -40,7 +40,7 @@ class Tool extends Component {
 
     this.state = {
       focus: false,
-      activeIndex: 0
+      activeIndex: 0,
     }
 
     this.sections = []
@@ -76,12 +76,19 @@ class Tool extends Component {
     const centerX = this.wrapper.offsetWidth / 2
     const centerY = this.wrapper.offsetHeight / 2
 
-    const element = document.elementFromPoint(centerX, centerY).closest('.tool__item');
+    const element = document
+      .elementFromPoint(centerX, centerY)
+      .closest('.tool__item')
 
-    if(!element) { return }
+    if (!element) {
+      return
+    }
 
     this.setState({
-      activeIndex: Math.max([...element.parentElement.children].indexOf(element), 0)
+      activeIndex: Math.max(
+        [...element.parentElement.children].indexOf(element),
+        0
+      ),
     })
   }
 
@@ -222,8 +229,7 @@ class Tool extends Component {
             </button>
           </ul>
         )}
-        <Toolbar active={activeIndex}
-                 bulletClick={this.toggleSectionFocus} />
+        <Toolbar active={activeIndex} bulletClick={this.toggleSectionFocus} />
       </article>
     )
   }
