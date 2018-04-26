@@ -58,6 +58,10 @@
         &--small {
             min-width: 40px;
         }
+
+        &:focus ~ #{$this}__delete {
+            opacity: 1;
+        }
     }
 
     &__item {
@@ -68,6 +72,13 @@
         height: $unit * 5;
         margin-top: -($unit * 2.5);
         margin-left: -($unit * 2.5);
+        padding-right: $unit * 4;
+
+        &:hover {
+            #{$this}__delete {
+                opacity: 1;
+            }
+        }
     }
 
     &__drag-handle {
@@ -80,6 +91,21 @@
 
         &:active {
             cursor: grabbing;
+        }
+    }
+
+    &__delete {
+        opacity: 0;
+
+        position: absolute;
+        top: calc(50% - 1px);
+        right: 0;
+        transform: translateY(-50%);
+
+        &:before {
+            display: block;
+            content: '+';
+            transform: rotate(45deg);
         }
     }
 }
