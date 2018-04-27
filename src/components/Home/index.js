@@ -25,7 +25,7 @@ class Home extends Component {
     return (
       <article {...classes('')}>
         <div {...classes('content')}>
-          <h1 {...classes('title')}>Create a project link</h1>
+          <h1 {...classes('title')}>Create a project</h1>
 
           <form onSubmit={this.makeProject} {...classes('form')}>
             <label {...classes('label')}>

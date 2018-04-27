@@ -25,83 +25,18 @@ const projectTemplate = {
   title: '',
   sections: [
     {
-      title: 'Problemstillinger',
-      type: 'priority',
-      content: [{ content: 'Kake' }],
+      title: 'Title',
+      content: [{ content: '' }],
     },
   ],
 }
 
-const store = {
+const initialStore = {
   slug: '',
   project: {
     title: '',
   },
-  sections: [
-    // {
-    //   title: 'Problemstillinger',
-    //   slug: 'problemstillinger',
-    //   type: 'priority',
-    //   content: [
-    //     { content: 'Du er problem' },
-    //     { content: 'Nei, du er problem' },
-    //     { content: 'Hva er problemet deres?!' },
-    //   ],
-    // },
-    // {
-    //   title: 'Målgrupper',
-    //   slug: 'maalgrupper',
-    //   type: 'priority',
-    //   content: [
-    //     { content: 'Tommy' },
-    //     { content: 'Jonny' },
-    //     { content: 'Bobby' },
-    //   ],
-    // },
-    // {
-    //   title: 'Målsetninger',
-    //   slug: 'maalsetninger',
-    //   type: 'priority',
-    //   content: [
-    //     { content: 'Penger' },
-    //     { content: 'Penger' },
-    //     { content: 'Penger' },
-    //   ],
-    // },
-    // {
-    //   title: 'Brukeroppgaver',
-    //   slug: 'brukeroppgaver',
-    //   type: 'priority',
-    //   content: [
-    //     { content: 'Buuuuuu' },
-    //     { content: 'Buuu' },
-    //     { content: 'Buuuuuu' },
-    //   ],
-    // },
-    // {
-    //   title: 'Oppfattelse',
-    //   slug: 'oppfattelse',
-    //   type: 'sliders',
-    //   content: [
-    //     { from: 'Smart', to: 'Dust', value: 80 },
-    //     { from: 'Bra', to: 'Dårlig', value: 20 },
-    //     { from: 'Kake', to: 'Biff', value: 20 },
-    //   ],
-    // },
-    // {
-    //   title: 'Konkurenter',
-    //   slug: 'konkurenter',
-    //   type: 'plot',
-    //   content: {
-    //     x: ['Smart', 'Dum'],
-    //     y: ['Teit', 'Dust'],
-    //     items: [
-    //       { content: 'Navn', x: 20, y: 40 },
-    //       { content: 'Kake', x: 20, y: 40 },
-    //     ],
-    //   },
-    // },
-  ],
+  sections: [],
 }
 
 class Storage extends Component {
@@ -111,7 +46,7 @@ class Storage extends Component {
   }
 
   state = {
-    ...store,
+    ...initialStore,
     createProject: this.createProject.bind(this),
     createSection: this.createSection.bind(this),
     updateSection: this.updateSection.bind(this),
@@ -136,9 +71,7 @@ class Storage extends Component {
   loadProjectData () {
     const slug = this.props.location.pathname.split('/')[1]
 
-    this.setState({
-      slug,
-    })
+    this.setState({ slug })
 
     // Get project
     this.projectRef = database.ref(`projects/${slug}`)
@@ -224,9 +157,7 @@ class Storage extends Component {
   deleteSection (sectionId) {
     const slug = this.state.slug
 
-    database
-      .ref(`projects/${slug}/sections/${sectionId}`)
-      .remove()
+    database.ref(`projects/${slug}/sections/${sectionId}`).remove()
   }
 
   createContent (sectionId, content) {

@@ -6,6 +6,7 @@ import { Switch, BrowserRouter, Route } from 'react-router-dom'
 
 import Storage from './storage'
 import registerServiceWorker from './registerServiceWorker'
+import Meta from './components/Meta'
 import Home from './components/Home'
 import Page from './components/Page'
 import Tool from './components/Tool'
@@ -16,6 +17,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Storage>
+            <Meta />
             <Page>
               <Route path="/:slug" exact component={Tool} />
               <Route path="/:slug/:sectionSlug" exact component={Tool} />

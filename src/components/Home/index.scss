@@ -26,6 +26,11 @@
         width: 100%;
         padding: $spacing--medium $spacing;
         border: 0;
+
+        &:focus {
+            text-decoration: underline;
+            text-decoration-color: color(primary, light);
+        }
     }
 
     &__form {
@@ -41,7 +46,13 @@
         @include font(base, bold);
         @include font-size(small);
         padding: 0 $spacing--medium;
-        background-color: color(primary, dark);
+        color: $color-light;
+        background-color: color(neutral, dark);
+
+        &:hover,
+        &:focus {
+            background-color: color(neutral, xdark);
+        }
     }
 
     &__description {

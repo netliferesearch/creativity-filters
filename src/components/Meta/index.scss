@@ -1,0 +1,79 @@
+@import '../../styles/helpers';
+
+.list {
+    $this: &;
+
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+
+    &__list {
+        counter-reset: counter;
+    }
+
+    &__ghost {
+        width: 100%;
+        height: 32.8px;
+        margin-bottom: $spacing--small;
+        background-color: rgba(color(neutral, xdark), 0.1);
+    }
+
+    &__item {
+        position: relative;
+        margin-bottom: $spacing--small;
+        padding-right: $spacing--large;
+
+        @for $i from 4 through 20 {
+            &:nth-child(#{$i}) {
+                opacity: 0.9 - ($i / 20);
+            }
+        }
+
+        &--hidden {
+            // height: 0;
+            // overflow: hidden;
+            // opacity: 0;
+            // margin: 0;
+        }
+
+        &:before {
+            content: counter(counter) '.';
+            counter-increment: counter;
+            @include font(header, bold);
+            @include font-size(medium);
+            display: inline-block;
+            width: 1.3em;
+        }
+
+        &:hover {
+            #{$this}__delete {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__input:focus ~ #{$this}__delete {
+        opacity: 1;
+    }
+
+    &__delete {
+        opacity: 0;
+
+        position: absolute;
+        top: calc(50% + 2px);
+        right: 0;
+        transform: translateY(-50%);
+
+        &:before {
+            display: block;
+            content: '+';
+            transform: rotate(45deg);
+        }
+    }
+
+    &__add-new {
+        @include font(base, bold);
+        font-size: 1.1em;
+        align-self: flex-start;
+    }
+}
