@@ -25,8 +25,41 @@ const projectTemplate = {
   title: '',
   sections: [
     {
-      title: 'Title',
+      title: 'Goals',
+      type: 'priority',
       content: [{ content: '' }],
+    },
+    {
+      title: 'Values',
+      type: 'priority',
+      content: [{ content: '' }],
+    },
+    {
+      title: 'Audiences',
+      type: 'priority',
+      content: [{ content: '' }],
+    },
+    {
+      title: 'Personality sliders',
+      type: 'sliders',
+      content: [
+        { from: 'Elite', to: 'Mass appeal', value: 50 },
+        { from: 'Serious', to: 'Playful', value: 50 },
+        { from: 'Contentional', to: 'Rebel', value: 50 },
+        { from: 'Friend', to: 'Authority', value: 50 },
+        { from: 'Mature & classic', to: 'Young & innovative', value: 50 },
+      ],
+    },
+    {
+      title: 'Competitive landscape',
+      type: 'plot',
+      content: [
+        {
+          x: ['Classic', 'Modern'],
+          y: ['Expressive', 'Reserved'],
+          items: [{ content: '...', x: 20, y: 40 }],
+        },
+      ],
     },
   ],
 }
