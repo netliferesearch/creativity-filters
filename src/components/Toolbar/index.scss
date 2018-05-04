@@ -18,9 +18,20 @@
 
         &:hover,
         &:focus {
-            #{$this}__stroke {
-                stroke-width: 3;
-            }
+            color: color(primary);
+        }
+    }
+
+    &__grid {
+        display: none;
+
+        margin-left: $spacing + $spacing--medium + 23px;
+        margin-right: -($spacing + $spacing--medium + 23px);
+        color: color(neutral, dark);
+
+        &:hover,
+        &:focus {
+            color: color(primary);
         }
     }
 
@@ -29,5 +40,9 @@
         stroke: currentColor;
         stroke-width: 2;
         stroke-miterlimit: 10;
+    }
+
+    &__fill {
+        fill: currentColor;
     }
 }

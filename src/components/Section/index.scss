@@ -19,6 +19,8 @@
 
     transition: transform 400ms $ease-in-quart;
 
+    animation: section-z-index-out 400ms linear both;
+
     @include min-width(md) {
         padding: $spacing--small $spacing $spacing--xlarge;
     }
@@ -122,6 +124,8 @@
         box-shadow: 0 0 0 $border-width--medium color(neutral, dark);
         transition: transform 550ms $ease-in-out-quart;
 
+        animation: none;
+
         #{$this}__close {
             pointer-events: auto;
 
@@ -140,6 +144,16 @@
 html:fullscreen {
     .section--focused {
         // @extend .section--active;
+    }
+}
+
+@keyframes section-z-index-out {
+    0% {
+        z-index: 2;
+    }
+
+    99% {
+        z-index: 2;
     }
 }
 

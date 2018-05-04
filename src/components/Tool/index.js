@@ -29,6 +29,7 @@ class Tool extends Component {
     match: PropTypes.object.isRequired,
     project: PropTypes.object.isRequired,
     createSection: PropTypes.func.isRequired,
+    grid: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -81,9 +82,9 @@ class Tool extends Component {
     const centerX = this.wrapper.offsetWidth / 2
     const centerY = this.wrapper.offsetHeight / 2
 
-    const element = document
-      .elementFromPoint(centerX, centerY)
-      .closest('.tool__item')
+    const focusElement = document.elementFromPoint(centerX, centerY)
+
+    const element = focusElement && focusElement.closest('.tool__item')
 
     if (!element) {
       return
@@ -188,12 +189,13 @@ class Tool extends Component {
   }
 
   render () {
+    const { grid } = this.props
     const { sections } = this.props.project
     const { focus, activeIndex } = this.state
 
     return (
       <article
-        {...classes('', focus !== false && 'focus')}
+        {...classes('', [focus !== false && 'focus', grid && 'grid'])}
         ref={el => (this.wrapper = el)}
       >
         {sections && (

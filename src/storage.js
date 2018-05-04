@@ -76,7 +76,7 @@ const projectTemplate = {
         {
           x: ['Klassisk', 'Moderne'],
           y: ['Utryksfull', 'Subtil'],
-          items: [{ content: 'You', x: 50, y: 50 }],
+          items: [{ content: 'Deg', x: 55, y: 55 }],
         },
       ],
     },
@@ -89,6 +89,7 @@ const initialStore = {
     title: '',
   },
   sections: [],
+  grid: false,
 }
 
 class Storage extends Component {
@@ -106,6 +107,7 @@ class Storage extends Component {
     createContent: this.createContent.bind(this),
     updateContent: this.updateContent.bind(this),
     deleteContent: this.deleteContent.bind(this),
+    toggleGrid: this.toggleGrid.bind(this),
   }
 
   componentDidMount () {
@@ -118,6 +120,12 @@ class Storage extends Component {
       this.removeListeners()
       this.loadProjectData()
     }
+  }
+
+  toggleGrid () {
+    this.setState({
+      grid: !this.state.grid,
+    })
   }
 
   loadProjectData () {

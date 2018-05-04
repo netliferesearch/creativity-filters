@@ -4,12 +4,14 @@
     $this: &;
 
     display: flex;
+    width: 100%;
     justify-content: center;
 
     &__list {
         position: relative;
         display: flex;
         flex-direction: column;
+        width: 100%;
 
         @include min-width(md) {
             width: 60vw;

@@ -1,7 +1,7 @@
 import './index.css'
 
 import React, { PureComponent } from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import { withState } from '../../storage'
 import Pagination from '../Pagination'
@@ -11,7 +11,7 @@ const classes = new BEMHelper('toolbar')
 
 class Toolbar extends PureComponent {
   static propTypes = {
-    // ...
+    toggleGrid: PropTypes.func.isRequired,
   }
 
   componentDidMount () {
@@ -59,6 +59,8 @@ class Toolbar extends PureComponent {
   }
 
   render () {
+    const { toggleGrid } = this.props
+
     return (
       <nav {...classes('')}>
         <Pagination {...this.props} />
@@ -86,6 +88,49 @@ class Toolbar extends PureComponent {
               y2="10.5"
             />
             <polyline {...classes('stroke')} points="5,10 13,10 13,18 " />
+          </svg>
+        </button>
+
+        <button type="button" {...classes('grid')} onClick={toggleGrid}>
+          <svg
+            width="23px"
+            height="23px"
+            viewBox="0 0 23 23"
+            {...classes('grid-icon')}
+          >
+            <rect {...classes('fill')} width="6.3" height="6.3" />
+            <rect {...classes('fill')} x="8.3" width="6.3" height="6.3" />
+            <rect {...classes('fill')} x="16.7" width="6.3" height="6.3" />
+            <rect {...classes('fill')} y="8.3" width="6.3" height="6.3" />
+            <rect
+              {...classes('fill')}
+              x="8.3"
+              y="8.3"
+              width="6.3"
+              height="6.3"
+            />
+            <rect
+              {...classes('fill')}
+              x="16.7"
+              y="8.3"
+              width="6.3"
+              height="6.3"
+            />
+            <rect {...classes('fill')} y="16.7" width="6.3" height="6.3" />
+            <rect
+              {...classes('fill')}
+              x="8.3"
+              y="16.7"
+              width="6.3"
+              height="6.3"
+            />
+            <rect
+              {...classes('fill')}
+              x="16.7"
+              y="16.7"
+              width="6.3"
+              height="6.3"
+            />
           </svg>
         </button>
       </nav>

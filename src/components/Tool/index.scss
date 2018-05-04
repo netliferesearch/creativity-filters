@@ -46,4 +46,21 @@
     &--focus {
         overflow-x: hidden;
     }
+
+    // &--grid {
+    //     overflow: hidden;
+    //
+    //     #{$this}__content {
+    //         display: grid;
+    //         width: 100vw;
+    //         grid-template-columns: repeat(4, 1fr);
+    //         grid-template-rows: repeat(4, 1fr);
+    //         transform: none;
+    //     }
+    //
+    //     .section {
+    //         width: auto;
+    //         height: auto;
+    //     }
+    // }
 }
