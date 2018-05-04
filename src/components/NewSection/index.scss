@@ -9,7 +9,7 @@
     &__option {
         @include font-size(medium);
         text-align: left;
-        padding: $spacing + $spacing--small;
+        padding: $spacing;
         padding-left: 0;
         padding-right: $spacing--large * 2;
         border-bottom: $border-width--medium solid color(neutral, dark);

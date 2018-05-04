@@ -71,6 +71,18 @@ function NewSection ({ section, updateSection }) {
       >
         Plot chart
       </button>
+      <button
+        type="button"
+        {...classes('option')}
+        onClick={() =>
+          updateSection({
+            ...section,
+            type: 'swot',
+          })
+        }
+      >
+        SWOT
+      </button>
     </nav>
   )
 }

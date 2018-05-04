@@ -1,0 +1,79 @@
+@import '../../styles/helpers';
+
+.swot {
+    $this: &;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 900px;
+    max-width: 100%;
+    // align-items: center;
+
+    &__section {
+        padding: $spacing;
+        border: $border-width--medium solid color(neutral, dark);
+
+        &--strength,
+        &--weaknesses {
+            border-bottom: 0;
+        }
+
+        &--strength,
+        &--opportunities {
+            border-right: 0;
+        }
+    }
+
+    &__item {
+        @include font-size(small);
+
+        position: relative;
+        margin-bottom: $spacing--xsmall;
+        padding-right: $spacing--large;
+
+        &:before {
+            content: '•';
+            position: relative;
+            top: 2px;
+            margin-right: $spacing--small;
+        }
+
+        &:hover {
+            #{$this}__delete {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__title {
+        @include font-size(small);
+        margin: #{-($spacing--small)} auto $spacing--medium;
+        text-align: center;
+    }
+
+    &__input:focus ~ #{$this}__delete {
+        opacity: 1;
+    }
+
+    &__delete {
+        opacity: 0;
+
+        position: absolute;
+        top: calc(50% + 2px);
+        right: 0;
+        transform: translateY(-50%);
+
+        &:before {
+            display: block;
+            content: '+';
+            transform: rotate(45deg);
+        }
+    }
+
+    &__add-new {
+        @include font(base, bold);
+        font-size: 1.1em;
+        margin-left: -0.08em;
+        align-self: flex-start;
+    }
+}
