@@ -1,16 +1,31 @@
+// $fonts: (
+//     base: (
+//         font: 'Montserrat',
+//         fallback: sans-serif,
+//         normal: 400,
+//         medium: 500,
+//         bold: 700,
+//     ),
+//     header: (
+//         font: 'Rozha One',
+//         fallback: sans-serif,
+//         normal: 400,
+//         bold: 400,
+//     ),
+// );
+
 $fonts: (
     base: (
-        font: 'Montserrat',
+        font: 'Netlife',
         fallback: sans-serif,
-        normal: 400,
-        medium: 500,
-        bold: 700,
+        normal: normal,
+        bold: normal,
     ),
     header: (
-        font: 'Rozha One',
+        font: 'Netlife',
         fallback: sans-serif,
-        normal: 400,
-        bold: 400,
+        normal: normal,
+        bold: normal,
     ),
 );
 

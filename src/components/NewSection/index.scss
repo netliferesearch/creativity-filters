@@ -10,11 +10,12 @@
         @include font-size(medium);
         text-align: left;
         padding: $spacing + $spacing--small;
-        padding-right: $spacing--large + $spacing;
-        border-bottom: $border-width--medium solid color(primary, dark);
+        padding-left: 0;
+        padding-right: $spacing--large * 2;
+        border-bottom: $border-width--medium solid color(neutral, dark);
 
         &:first-child {
-            border-top: $border-width--medium solid color(primary, dark);
+            border-top: $border-width--medium solid color(neutral, dark);
         }
     }
 }

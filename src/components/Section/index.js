@@ -36,14 +36,7 @@ class Section extends PureComponent {
   }
 
   render () {
-    const {
-      children,
-      section,
-      handleClick,
-      active,
-      focused,
-      updateSection,
-    } = this.props
+    const { children, section, handleClick, active, updateSection } = this.props
 
     const sectionProps = active
       ? {}
@@ -58,7 +51,7 @@ class Section extends PureComponent {
 
     return (
       <section
-        {...classes('', { active, focused })}
+        {...classes('', [active && 'active', section.type])}
         {...sectionProps}
         id={section.id}
       >

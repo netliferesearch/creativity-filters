@@ -35,8 +35,12 @@
         height: 13vw;
         flex-shrink: 0;
         margin: $spacing;
-        color: $color-light;
-        background-color: rgba(color(neutral, xdark), 0.5);
+        border: $border-width--medium dashed color(neutral, dark);
+
+        &:hover,
+        &:focus {
+            border: $border-width--medium solid color(neutral, dark);
+        }
     }
 
     &--focus {

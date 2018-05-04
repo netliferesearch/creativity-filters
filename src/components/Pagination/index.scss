@@ -10,11 +10,11 @@
         height: 10px;
         margin: 0 $spacing--xsmall;
         border-radius: 50%;
-        opacity: 0.3;
-        background-color: $color-light;
+        background-color: color(neutral);
 
-        &--active {
-            opacity: 0.8;
+        &--active,
+        &:hover {
+            background-color: color(neutral, dark);
         }
     }
 }

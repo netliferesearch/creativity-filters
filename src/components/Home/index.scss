@@ -29,7 +29,7 @@
 
         &:focus {
             text-decoration: underline;
-            text-decoration-color: color(primary, light);
+            text-decoration-color: color(primary);
         }
     }
 
@@ -51,7 +51,7 @@
 
         &:hover,
         &:focus {
-            background-color: color(neutral, xdark);
+            background-color: color(neutral, dark);
         }
     }
 

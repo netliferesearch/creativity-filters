@@ -1,27 +1,63 @@
-$color-primary: #F5D664;
-$color-secondary: #0092c2;
+// $color-primary: #F5D664;
+// $color-secondary: #0092c2;
+//
+// $colors: (
+//     primary: (
+//         dark: #EDC451,
+//         base: $color-primary,
+//         light: tint($color-primary, 5%),
+//     ),
+//     neutral: (
+//         light: #fff,
+//         base: #424147,
+//         dark: #25262D,
+//         xdark: #000,
+//     )
+// );
+//
+// $color-light: #fff;
+// $color-dark: color(neutral, xdark);
+//
+// // Specific colors.
+// // Variables are there to be reused, so being to specific or creating to many will create the opposite situation
+// $color-warning: #b20e10;
+// $color-background: color(neutral, dark);
+// $color-text: $color-dark;
+// $color-muted: color(neutral, dark);
+// $color-links: $color-text;
+// $color-links--hover: shade($color-text, 10%);
+
+
+$color-primary: #29CB7E;
 
 $colors: (
     primary: (
-        dark: #EDC451,
+        dark: shade(#29CB7E, 10%),
         base: $color-primary,
         light: tint($color-primary, 5%),
     ),
+    type: (
+        plot: #bde8ff,
+        what-how-why: #FFCAD4,
+        priority: #FEBD93,
+        sliders: #CCBCFF,
+        timeline: #FFEC97,
+    ),
     neutral: (
         light: #fff,
-        base: #424147,
-        dark: #25262D,
+        base: #E7E1DC,
+        dark: #000,
         xdark: #000,
     )
 );
 
 $color-light: #fff;
-$color-dark: color(neutral, xdark);
+$color-dark: color(neutral, dark);
 
 // Specific colors.
 // Variables are there to be reused, so being to specific or creating to many will create the opposite situation
 $color-warning: #b20e10;
-$color-background: color(neutral, dark);
+$color-background: color(neutral, light);
 $color-text: $color-dark;
 $color-muted: color(neutral, dark);
 $color-links: $color-text;

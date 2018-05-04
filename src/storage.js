@@ -76,7 +76,7 @@ const projectTemplate = {
         {
           x: ['Classic', 'Modern'],
           y: ['Expressive', 'Reserved'],
-          items: [{ content: '...', x: 20, y: 40 }],
+          items: [{ content: 'You', x: 20, y: 40 }],
         },
       ],
     },

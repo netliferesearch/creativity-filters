@@ -29,7 +29,6 @@
         padding-left: $spacing--small;
         padding-right: $spacing--small;
         margin: $spacing--small auto 0;
-        background-color: color(primary);
     }
 
     &__item {
@@ -38,7 +37,7 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
-        border: $border-width solid color(primary, dark);
+        border: $border-width--medium solid color(neutral, dark);
 
         &:not(:last-child) {
             border-bottom: 0;

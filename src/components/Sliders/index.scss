@@ -49,7 +49,7 @@
         top: calc(50% - 7px);
         height: 18px;
         width: $border-width--medium;
-        background-color: color(primary, dark);
+        background-color: color(neutral, dark);
 
         &:nth-child(1) {
             left: 0;
@@ -71,7 +71,7 @@
         width: 100%;
         top: calc(50% - #{$border-width--medium / 2});
         height: $border-width--medium;
-        background-color: color(primary, dark);
+        background-color: color(neutral, dark);
         outline: none;
 
         &::-webkit-slider-thumb {
@@ -80,7 +80,7 @@
             height: calc(1vw + 22px);
             cursor: pointer;
             border-radius: 50%;
-            background-color: color(neutral);
+            background-color: color(neutral, light);
         }
 
         &::-moz-range-thumb {
@@ -89,7 +89,7 @@
             height: $unit * 5;
             cursor: pointer;
             border-radius: 50%;
-            background-color: color(neutral);
+            background-color: color(neutral, light);
         }
     }
 

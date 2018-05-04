@@ -20,7 +20,7 @@
             top: 15px;
             height: 20px;
             width: $border-width--medium;
-            background-color: color(primary, dark);
+            background-color: color(neutral, dark);
         }
 
         &:after {
@@ -37,7 +37,7 @@
         padding-left: $spacing--small;
         padding-right: $spacing--small;
         margin: 0 auto $spacing--medium;
-        background-color: color(primary);
+        background-color: color(type, timeline);
     }
 
     &__item {
@@ -54,7 +54,7 @@
             left: 0;
             height: $border-width--medium;
             width: 100%;
-            background-color: color(primary, dark);
+            background-color: color(neutral, dark);
         }
     }
 

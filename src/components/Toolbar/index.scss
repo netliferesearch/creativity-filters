@@ -14,12 +14,13 @@
     &__fullscreen {
         margin-right: -($spacing + 23px);
         margin-left: $spacing;
-        color: $color-light;
-        opacity: 0.5;
+        color: color(neutral, dark);
 
         &:hover,
         &:focus {
-            opacity: 1;
+            #{$this}__stroke {
+                stroke-width: 3;
+            }
         }
     }
 
