@@ -1,0 +1,22 @@
+@import '../../styles/helpers';
+
+.textarea {
+    $this: &;
+
+    display: block;
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+    border: 0;
+    line-height: 1.2;
+    background-color: transparent;
+    outline: 0;
+    border-bottom: $border-width--medium solid transparent;
+    max-width: 100%;
+    max-height: 40vh;
+
+    &:focus,
+    &:invalid {
+        border-color: color(primary, dark);
+    }
+}

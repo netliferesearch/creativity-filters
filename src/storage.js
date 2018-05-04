@@ -2,6 +2,7 @@ import './styles/styles.css'
 
 import React, { Component, createContext } from 'react'
 import { withRouter } from 'react-router-dom'
+import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import slugify from './helpers/slugify'
 
@@ -124,6 +125,8 @@ class Storage extends Component {
       return
     }
 
+    // project.createdDate = new Date() // TODO
+
     // Does project exist?
     database
       .ref(`projects/${slug}`)
@@ -135,7 +138,10 @@ class Storage extends Component {
           // Create new
           database
             .ref(`projects/${slug}`)
-            .set(project)
+            .set({
+              ...project,
+              createdDate: format(new Date(), 'YYYY-MM-DD, H:mm'),
+            })
             .then(() => {
               const sectionListRef = database.ref(`projects/${slug}/sections`)
 

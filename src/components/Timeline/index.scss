@@ -1,0 +1,80 @@
+@import '../../styles/helpers';
+
+.timeline {
+    $this: &;
+
+    display: flex;
+    width: 80vw;
+
+    &__list {
+        position: relative;
+        display: flex;
+        width: calc(100% - 24px);
+        overflow: hidden;
+
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            height: 20px;
+            width: $border-width--medium;
+            background-color: color(primary, dark);
+        }
+
+        &:after {
+            right: 0;
+        }
+    }
+
+    &__input {
+        @include font(header, bold);
+        @include font-size(medium);
+        position: relative;
+        text-align: center;
+        min-width: 1ch;
+        padding-left: $spacing--small;
+        padding-right: $spacing--small;
+        margin: 0 auto $spacing--medium;
+        background-color: color(primary);
+    }
+
+    &__item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 0;
+            height: $border-width--medium;
+            width: 100%;
+            background-color: color(primary, dark);
+        }
+    }
+
+    &__textarea {
+        &.textarea {
+            text-align: center;
+            width: calc(100% - #{$border-width});
+
+            &:invalid,
+            &:focus {
+                background-color: rgba(white, 0.15);
+                border-color: transparent;
+            }
+        }
+    }
+
+    &__add-new {
+        @include font(base, bold);
+        margin-top: 3px;
+        margin-left: $spacing--small;
+        font-size: 1.1em;
+        align-self: flex-start;
+    }
+}

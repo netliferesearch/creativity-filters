@@ -9,6 +9,7 @@ import Section from '../Section'
 import List from '../List'
 import Sliders from '../Sliders'
 import Plot from '../Plot'
+import Timeline from '../Timeline'
 import NewSection from '../NewSection'
 import Toolbar from '../Toolbar'
 
@@ -210,6 +211,9 @@ class Tool extends Component {
                     active={index === focus}
                     focused={index === activeIndex}
                   >
+                    {item.type === 'timeline' && (
+                      <Timeline sectionId={item.id} content={item.content} />
+                    )}
                     {item.type === 'priority' && (
                       <List sectionId={item.id} content={item.content} />
                     )}

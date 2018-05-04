@@ -12,6 +12,7 @@
     "deploy": "npm run build && firebase deploy"
   },
   "dependencies": {
+    "date-fns": "^1.29.0",
     "firebase": "^4.12.1",
     "history": "^4.7.2",
     "lodash": "^4.17.10",

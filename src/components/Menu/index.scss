@@ -37,6 +37,10 @@
         background-color: white;
         animation: menu-backdrop 400ms ease-out both;
     }
+
+    &--expanded {
+        z-index: $level-3;
+    }
 }
 
 @keyframes menu-backdrop {

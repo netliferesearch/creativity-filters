@@ -17,6 +17,18 @@ function NewSection ({ section, updateSection }) {
         onClick={() =>
           updateSection({
             ...section,
+            type: 'timeline',
+          })
+        }
+      >
+        Timeline
+      </button>
+      <button
+        type="button"
+        {...classes('option')}
+        onClick={() =>
+          updateSection({
+            ...section,
             type: 'priority',
           })
         }
