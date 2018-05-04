@@ -35,6 +35,15 @@ const projectTemplate = {
       ],
     },
     {
+      title: 'What, How and Why',
+      type: 'what-how-why',
+      content: [
+        { title: 'What', content: '' },
+        { title: 'How', content: '' },
+        { title: 'Why', content: '' },
+      ],
+    },
+    {
       title: 'Goals',
       type: 'priority',
       content: [{ content: '' }],
