@@ -26,6 +26,15 @@ const projectTemplate = {
   title: '',
   sections: [
     {
+      title: 'Timeline',
+      type: 'timeline',
+      content: [
+        { year: '5', content: '' },
+        { year: '10', content: '' },
+        { year: '15', content: '' },
+      ],
+    },
+    {
       title: 'Goals',
       type: 'priority',
       content: [{ content: '' }],

@@ -29,6 +29,18 @@ function NewSection ({ section, updateSection }) {
         onClick={() =>
           updateSection({
             ...section,
+            type: 'what-how-why',
+          })
+        }
+      >
+        What, How and Why
+      </button>
+      <button
+        type="button"
+        {...classes('option')}
+        onClick={() =>
+          updateSection({
+            ...section,
             type: 'priority',
           })
         }

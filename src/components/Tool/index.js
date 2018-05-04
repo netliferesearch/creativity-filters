@@ -10,6 +10,7 @@ import List from '../List'
 import Sliders from '../Sliders'
 import Plot from '../Plot'
 import Timeline from '../Timeline'
+import WhatHowWhy from '../WhatHowWhy'
 import NewSection from '../NewSection'
 import Toolbar from '../Toolbar'
 
@@ -213,6 +214,9 @@ class Tool extends Component {
                   >
                     {item.type === 'timeline' && (
                       <Timeline sectionId={item.id} content={item.content} />
+                    )}
+                    {item.type === 'what-how-why' && (
+                      <WhatHowWhy sectionId={item.id} content={item.content} />
                     )}
                     {item.type === 'priority' && (
                       <List sectionId={item.id} content={item.content} />
