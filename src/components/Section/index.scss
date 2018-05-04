@@ -117,6 +117,10 @@
         background-color: color(type, timeline);
     }
 
+    &--swot {
+        background-color: color(type, swot);
+    }
+
     &--active {
         z-index: 2;
         transform: scale(1.25);
