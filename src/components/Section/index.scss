@@ -124,6 +124,7 @@
     &--active {
         z-index: 2;
         transform: scale(1.25);
+        // transform: scale(1.43);
 
         box-shadow: 0 0 0 $border-width--medium color(neutral, dark);
         transition: transform 550ms $ease-in-out-quart;
