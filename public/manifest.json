@@ -1,6 +1,6 @@
 {
-  "short_name": "Creativity filters",
-  "name": "Creativity filters",
+  "short_name": "Hubstr",
+  "name": "Hubstr",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,6 +10,6 @@
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#EDC451",
-  "background_color": "#25262D"
+  "theme_color": "#29CB7E",
+  "background_color": "#ffffff"
 }
