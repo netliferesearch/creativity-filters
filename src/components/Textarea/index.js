@@ -63,7 +63,7 @@ export default class Textarea extends Component {
   setHeight = () => {
     this.setState({ height: 0 }, () => {
       this.setState({
-        height: `${this.element.scrollHeight + 3}px`,
+        height: `${this.element.scrollHeight + 2}px`,
       })
     })
   }

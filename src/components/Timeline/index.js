@@ -55,17 +55,11 @@ class Timeline extends Component {
   render () {
     const { autoFocus } = this.state
     const { content } = this.props
-    const contentArrayLength = Object.keys(content).length
 
-    const contentArray = Object.keys(content)
-      .map((key, index) => ({
-        id: key,
-        ...content[key],
-        sortIndex: content[key].sortIndex || contentArrayLength + index,
-      }))
-      .sort((a, b) => {
-        return a.sortIndex - b.sortIndex
-      })
+    const contentArray = Object.keys(content).map((key, index) => ({
+      id: key,
+      ...content[key],
+    }))
 
     return (
       <div {...classes('')}>
@@ -82,8 +76,12 @@ class Timeline extends Component {
                 <Textarea
                   value={item.content}
                   onChange={this.handleItemChange(item.id, 'content')}
-                  autoFocus={autoFocus}
                   {...classes('textarea')}
+                />
+                <button
+                  type="button"
+                  {...classes('delete')}
+                  onClick={this.deleteItem(item.id)}
                 />
               </li>
             ))}

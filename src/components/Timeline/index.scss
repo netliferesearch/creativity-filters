@@ -62,6 +62,12 @@
             width: 100%;
             background-color: color(neutral, dark);
         }
+
+        &:hover {
+            #{$this}__delete {
+                opacity: 1;
+            }
+        }
     }
 
     &__textarea {
@@ -86,6 +92,29 @@
         @include min-width(md) {
             margin-top: 3px;
             align-self: flex-start;
+        }
+    }
+
+    &__textarea,
+    &__input {
+        &:focus ~ #{$this}__delete {
+            opacity: 1;
+        }
+    }
+
+    &__delete {
+        margin-top: $spacing--medium;
+        opacity: 0;
+
+        &:hover,
+        &:focus {
+            opacity: 1;
+        }
+
+        &:before {
+            display: block;
+            content: '+';
+            transform: rotate(45deg);
         }
     }
 }
