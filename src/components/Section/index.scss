@@ -121,6 +121,10 @@
         background-color: color(type, swot);
     }
 
+    &--core-page {
+        background-color: color(type, core-page);
+    }
+
     &--active {
         z-index: 2;
         transform: scale(1.25);

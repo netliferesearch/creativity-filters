@@ -83,6 +83,18 @@ function NewSection ({ section, updateSection }) {
       >
         SWOT
       </button>
+      <button
+        type="button"
+        {...classes('option')}
+        onClick={() =>
+          updateSection({
+            ...section,
+            type: 'core-page',
+          })
+        }
+      >
+        Core page
+      </button>
     </nav>
   )
 }

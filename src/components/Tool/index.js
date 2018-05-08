@@ -12,6 +12,7 @@ import Plot from '../Plot'
 import Timeline from '../Timeline'
 import WhatHowWhy from '../WhatHowWhy'
 import Swot from '../Swot'
+import CorePage from '../CorePage'
 import NewSection from '../NewSection'
 import Toolbar from '../Toolbar'
 
@@ -232,6 +233,9 @@ class Tool extends Component {
                     )}
                     {item.type === 'swot' && (
                       <Swot sectionId={item.id} content={item.content} />
+                    )}
+                    {item.type === 'core-page' && (
+                      <CorePage sectionId={item.id} content={item.content} />
                     )}
                     {!item.type && <NewSection section={item} />}
                   </Section>

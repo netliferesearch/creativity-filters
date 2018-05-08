@@ -1,0 +1,87 @@
+@import '../../styles/helpers';
+
+.core-page {
+    $this: &;
+
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: $spacing--small;
+    width: 1100px;
+    max-width: 100%;
+    // align-items: center;
+
+    &__section {
+        padding: $spacing;
+        border: $border-width--medium solid color(neutral, dark);
+        grid-column: span 2;
+
+        &--goals {
+            grid-column: 1 / span 3;
+        }
+
+        &--usertasks {
+            grid-column: 5 / span 3;
+        }
+
+        &--content {
+            grid-column: span 3;
+        }
+    }
+
+    &__item {
+        @include font-size(small);
+
+        position: relative;
+        margin-bottom: $spacing--xsmall;
+        padding-right: $spacing;
+
+        &:before {
+            content: '•';
+            position: relative;
+            top: 2px;
+            margin-right: $spacing--small;
+        }
+
+        &:hover {
+            #{$this}__delete {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__title {
+        @include font-size(small);
+        margin: #{-($spacing--small)} auto $spacing--medium;
+        text-align: center;
+    }
+
+    &__input {
+        max-width: calc(100% - 0.9em);
+    }
+
+    &__input:focus ~ #{$this}__delete {
+        opacity: 1;
+    }
+
+    &__delete {
+        opacity: 0;
+
+        position: absolute;
+        top: calc(50% + 2px);
+        right: 0;
+        transform: translateY(-50%);
+
+        &:before {
+            display: block;
+            content: '+';
+            transform: rotate(45deg);
+        }
+    }
+
+    &__add-new {
+        @include font(base, bold);
+        font-size: 1.1em;
+        margin-left: -0.08em;
+        align-self: flex-start;
+    }
+}

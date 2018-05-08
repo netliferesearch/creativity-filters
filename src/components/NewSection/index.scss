@@ -8,8 +8,9 @@
 
     &__option {
         @include font-size(medium);
+        flex-shrink: 0;
         text-align: left;
-        padding: $spacing;
+        padding: $spacing--medium;
         padding-left: 0;
         padding-right: $spacing--large * 2;
         border-bottom: $border-width--medium solid color(neutral, dark);
