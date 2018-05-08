@@ -5,6 +5,7 @@ h3 {
     @include font(header, bold);
     margin: 0;
     margin-bottom: 1em;
+    font-feature-settings: 'ss03';
 }
 
 h1 {
